@@ -441,11 +441,11 @@
       left: 50%;
       transform: translate(-50%, -50%);
       z-index: 15;
-      color: var(--stadli-white);
-      font-size: 3.5rem;
-      font-weight: 500;
-      letter-spacing: -0.04em;
-      line-height: 1;
+    }
+    .mockup-hero .hero-logo-center img {
+      display: block;
+      max-width: 100%;
+      height: auto;
     }
     .mockup-hero .hero-lines {
       position: absolute;
@@ -609,31 +609,14 @@
     }
     .mockup-marketing .mkt-email-image {
       width: 100%;
-      height: 180px;
       border-radius: 6px;
-      background: linear-gradient(135deg, var(--stadli-gray-700) 0%, var(--stadli-gray-800) 100%);
-      position: relative;
       overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
-    .mockup-marketing .mkt-email-image::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 30% 40%, rgba(255,255,255,0.08), transparent 60%);
-    }
-    .mockup-marketing .mkt-email-image svg {
-      width: 64px;
-      height: 64px;
-      stroke: var(--stadli-gray-600);
-      fill: none;
-      stroke-width: 1.25;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      position: relative;
-      z-index: 1;
+    .mockup-marketing .mkt-email-image img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
     }
     .mockup-marketing .mkt-email-body {
       font-size: 16px;
@@ -715,14 +698,7 @@
       height: 72px;
       border-radius: 50%;
       border: 2px solid var(--stadli-gray-600);
-      background-color: var(--stadli-gray-700);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      color: var(--stadli-gray-400);
-      font-size: 20px;
-      letter-spacing: 0.05em;
+      object-fit: cover;
     }
     .mockup-crm .crm-side-name {
       font-size: 16px;
@@ -755,14 +731,7 @@
       border-radius: 50%;
       border: 3px solid var(--stadli-gray-600);
       flex-shrink: 0;
-      background-color: var(--stadli-gray-700);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--stadli-gray-200);
-      letter-spacing: 0.05em;
+      object-fit: cover;
     }
     .mockup-crm .crm-info { display: flex; flex-direction: column; gap: 4px; }
     .mockup-crm .crm-name { font-size: 20px; font-weight: 700; color: var(--stadli-gray-100); }
@@ -866,7 +835,6 @@
       width: 1200px;
       height: 600px;
       background-color: #0a0a0a;
-      border: 1px solid var(--stadli-gray-700);
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -1029,10 +997,11 @@
       padding: 32px;
       min-width: 0;
     }
-    .mockup-commerce .cart-seatmap svg {
-      width: 100%;
-      max-width: 520px;
-      height: auto;
+    .mockup-commerce .cart-seatmap img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 8px;
     }
     .mockup-commerce .cart-panel {
       width: 480px;
@@ -1077,21 +1046,15 @@
       height: 72px;
       border-radius: 8px;
       border: 1px solid var(--stadli-gray-600);
-      background-color: var(--stadli-gray-700);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      overflow: hidden;
       flex-shrink: 0;
-      color: var(--stadli-gray-400);
+      background-color: var(--stadli-gray-700);
     }
-    .mockup-commerce .cart-thumb svg {
-      width: 34px;
-      height: 34px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+    .mockup-commerce .cart-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
     .mockup-commerce .cart-details {
       flex: 1;
@@ -1220,7 +1183,7 @@
                 </div>
               </div>
 
-              <div class="mockup-frame mockup-frame-hero">
+              <div class="mockup-frame">
                 <div class="mockup-content">
                   <div class="mockup-hero">
                     <svg class="hero-lines" viewBox="0 0 1200 600" preserveAspectRatio="none">
@@ -1237,7 +1200,9 @@
                       <rect x="300" y="170" width="600" height="260" rx="8" class="hero-pulse-glow" filter="url(#mockup-hero-glow)"/>
                       <rect x="300" y="170" width="600" height="260" rx="8" class="hero-pulse-core"/>
                     </svg>
-                    <div class="hero-logo-center">stadli</div>
+                    <div class="hero-logo-center">
+                      <img src="https://placehold.co/250x100/transparent/ffffff?text=stadli&font=inter" alt="Stadli Logo">
+                    </div>
                     <div class="hero-feature-card hero-top-left"><h3>Ticketing</h3></div>
                     <div class="hero-feature-card hero-top-right"><h3>Analytics</h3></div>
                     <div class="hero-feature-card hero-bottom-left"><h3>Marketing<br>campaigns</h3></div>
@@ -1331,7 +1296,7 @@
                     <div class="mkt-email">
                       <div class="mkt-email-heading">Support Our<br>Team</div>
                       <div class="mkt-email-image">
-                        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                        <img src="https://placehold.co/480x220/1a1a1a/929292?text=Hero+Image" alt="Hero image placeholder">
                       </div>
                       <p class="mkt-email-body">Get your tickets now!</p>
                       <a href="#" class="mkt-email-cta">Buy Tickets</a>
@@ -1386,7 +1351,7 @@
                     <!-- Left Card (blurred) -->
                     <div class="crm-card card-left">
                       <div class="crm-side">
-                        <div class="crm-side-avatar">JB</div>
+                        <img src="https://placehold.co/72x72/303030/929292?text=JB" alt="Jenn B." class="crm-side-avatar">
                         <div class="crm-side-name">Jenn Bennett</div>
                         <div class="crm-side-role">Tour Pass Holder</div>
                       </div>
@@ -1397,7 +1362,7 @@
                       <div class="crm-title">360 Fan Profile</div>
 
                       <div class="crm-header">
-                        <div class="crm-avatar">MG</div>
+                        <img src="https://placehold.co/76x76/303030/929292?text=MG" alt="Marcus Grant" class="crm-avatar">
                         <div class="crm-info">
                           <div class="crm-name">Marcus Grant</div>
                           <div class="crm-role-row">
@@ -1418,7 +1383,7 @@
                     <!-- Right Card (blurred) -->
                     <div class="crm-card card-right">
                       <div class="crm-side">
-                        <div class="crm-side-avatar">SB</div>
+                        <img src="https://placehold.co/72x72/303030/929292?text=SB" alt="S. Bonhamm" class="crm-side-avatar">
                         <div class="crm-side-name">S. Bonhamm</div>
                         <div class="crm-side-role">Pass Holder</div>
                       </div>
@@ -1687,30 +1652,7 @@
 
                   <!-- Left: Seat Map -->
                   <div class="cart-seatmap">
-                    <svg viewBox="0 0 520 440" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <!-- Outer seating rings -->
-                      <path d="M 30 380 A 230 230 0 0 1 490 380 L 450 380 A 190 190 0 0 0 70 380 Z" fill="#1a1a1a" stroke="#303030" stroke-width="1.5"/>
-                      <path d="M 70 380 A 190 190 0 0 1 450 380 L 410 380 A 150 150 0 0 0 110 380 Z" fill="#1a1a1a" stroke="#303030" stroke-width="1.5"/>
-                      <path d="M 110 380 A 150 150 0 0 1 410 380 L 370 380 A 110 110 0 0 0 150 380 Z" fill="#1a1a1a" stroke="#303030" stroke-width="1.5"/>
-
-                      <!-- Highlighted (selected) section -->
-                      <path d="M 150 380 A 110 110 0 0 1 370 380 L 330 380 A 70 70 0 0 0 190 380 Z" fill="rgba(126, 199, 163, 0.18)" stroke="#7ec7a3" stroke-width="1.75"/>
-
-                      <!-- Row divider lines -->
-                      <g stroke="#303030" stroke-width="1" opacity="0.6">
-                        <line x1="260" y1="150" x2="260" y2="380"/>
-                        <line x1="150" y1="295" x2="370" y2="295"/>
-                        <line x1="110" y1="265" x2="410" y2="265"/>
-                        <line x1="70" y1="235" x2="450" y2="235"/>
-                      </g>
-
-                      <!-- Field -->
-                      <ellipse cx="260" cy="380" rx="110" ry="28" fill="#050505" stroke="#484848" stroke-width="1.5"/>
-                      <text x="260" y="385" text-anchor="middle" fill="#6a6a6a" font-family="Inter, Helvetica Neue, sans-serif" font-size="13" font-weight="700" letter-spacing="2">FIELD</text>
-
-                      <!-- Section labels -->
-                      <text x="260" y="195" text-anchor="middle" fill="#929292" font-family="Inter, Helvetica Neue, sans-serif" font-size="10" font-weight="600" letter-spacing="1">SEC A10</text>
-                    </svg>
+                    <img src="https://placehold.co/520x520/111111/484848?text=Stadium+Seatmap" alt="Stadium seat map">
                   </div>
 
                   <!-- Right: Cart -->
@@ -1722,7 +1664,7 @@
                         <!-- Merch Jersey -->
                         <div class="cart-item">
                           <div class="cart-thumb">
-                            <svg viewBox="0 0 24 24"><path d="M4 7l4-3h2a2 2 0 0 0 4 0h2l4 3-2 4-2-1v10H8V10L6 11 4 7z"/></svg>
+                            <img src="https://placehold.co/72x72/303030/929292?text=Jersey" alt="Merch Jersey">
                           </div>
                           <div class="cart-details">
                             <span class="cart-name">Merch Jersey</span>
@@ -1734,7 +1676,7 @@
                         <!-- Ticket -->
                         <div class="cart-item">
                           <div class="cart-thumb">
-                            <svg viewBox="0 0 24 24"><path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V9z"/><line x1="13" y1="7" x2="13" y2="17" stroke-dasharray="2 2"/></svg>
+                            <img src="https://placehold.co/72x72/303030/929292?text=Ticket+A10" alt="Ticket A10">
                           </div>
                           <div class="cart-details">
                             <span class="cart-name">Ticket</span>
@@ -1746,7 +1688,7 @@
                         <!-- Digital Gift Card -->
                         <div class="cart-item">
                           <div class="cart-thumb">
-                            <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M12 8v11"/><path d="M12 8c-1.5-2.5-5-2-5 0s3.5 2 5 0z"/><path d="M12 8c1.5-2.5 5-2 5 0s-3.5 2-5 0z"/></svg>
+                            <img src="https://placehold.co/72x72/303030/929292?text=Gift+Card" alt="Digital Gift Card">
                           </div>
                           <div class="cart-details">
                             <span class="cart-name">Digital Gift Card</span>
