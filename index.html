@@ -644,175 +644,186 @@
       text-decoration: none;
     }
 
-    /* ── CRM — 360 Fan Profile Dashboard ── */
+    /* ── CRM — 360 Fan Profile Card Stack ── */
     .mockup-crm {
       width: 100%;
       height: 100%;
       background-color: var(--bs-body-bg);
       display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
       overflow: hidden;
     }
-    .mockup-crm .crm-sidebar {
-      width: 320px;
-      min-width: 320px;
-      padding: 28px 24px;
-      border-right: 1px solid var(--stadli-gray-700);
+
+    /* Ghost cards behind the focused card */
+    .mockup-crm .crm-ghost-card {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 340px;
+      min-height: 85%;
+      padding: 32px 30px;
+      background-color: var(--stadli-gray-900);
+      border: 1px solid var(--stadli-gray-800);
+      border-radius: 1.25rem;
+      opacity: 0.55;
+      filter: blur(2px);
+      z-index: 1;
       display: flex;
       flex-direction: column;
       gap: 18px;
     }
-    .mockup-crm .crm-sidebar-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--stadli-gray-500);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-    .mockup-crm .crm-sidebar-search {
-      padding: 10px 14px;
-      background-color: var(--stadli-gray-900);
-      border: 1px solid var(--stadli-gray-800);
-      border-radius: 0.5rem;
-      color: var(--stadli-gray-500);
-      font-size: 13px;
-    }
-    .mockup-crm .crm-fan-list {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .mockup-crm .crm-fan-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 12px;
-      border-radius: 0.5rem;
-      border: 1px solid transparent;
-    }
-    .mockup-crm .crm-fan-row.is-active {
-      background-color: var(--stadli-gray-800);
-      border-color: var(--stadli-gray-700);
-    }
-    .mockup-crm .crm-fan-avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: 1px solid var(--stadli-gray-700);
-      object-fit: cover;
-      flex-shrink: 0;
-    }
-    .mockup-crm .crm-fan-meta-group {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      min-width: 0;
-    }
-    .mockup-crm .crm-fan-name {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--stadli-gray-100);
-      line-height: 1.2;
-    }
-    .mockup-crm .crm-fan-meta {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--stadli-gray-500);
-      line-height: 1.2;
-    }
-    .mockup-crm .crm-detail {
-      flex: 1;
-      min-width: 0;
-      padding: 32px 40px;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-    .mockup-crm .crm-section-label {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--stadli-gray-500);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-    .mockup-crm .crm-profile-top {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      padding-bottom: 24px;
-      border-bottom: 1px solid var(--stadli-gray-800);
-    }
-    .mockup-crm .crm-main-avatar {
+    .mockup-crm .crm-ghost-card.is-left  { left: calc(50% - 430px); }
+    .mockup-crm .crm-ghost-card.is-right { left: calc(50% + 90px); }
+    .mockup-crm .crm-ghost-avatar {
       width: 72px;
       height: 72px;
       border-radius: 50%;
-      border: 2px solid var(--stadli-gray-700);
-      object-fit: cover;
+      overflow: hidden;
       flex-shrink: 0;
+      background-color: var(--stadli-gray-800);
     }
-    .mockup-crm .crm-main-name {
-      font-size: 28px;
+    .mockup-crm .crm-ghost-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .mockup-crm .crm-ghost-name {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--stadli-gray-400);
+      letter-spacing: -0.01em;
+      line-height: 1.15;
+    }
+    .mockup-crm .crm-ghost-role {
+      font-size: 13px;
       font-weight: 500;
+      color: var(--stadli-gray-600);
+      letter-spacing: 0.02em;
+      margin-top: 4px;
+    }
+
+    /* Focused card */
+    .mockup-crm .crm-card {
+      position: relative;
+      z-index: 3;
+      width: 500px;
+      min-height: 88%;
+      padding: 26px 28px;
+      background-color: var(--stadli-gray-900);
+      border: 1px solid var(--stadli-gray-800);
+      border-radius: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .mockup-crm .crm-card-title {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--stadli-white);
+      letter-spacing: -0.01em;
+      padding: 4px 4px 0;
+      margin: 0;
+    }
+
+    /* Inner panel */
+    .mockup-crm .crm-panel {
+      flex: 1;
+      background-color: var(--stadli-gray-800);
+      border: 1px solid var(--stadli-gray-700);
+      border-radius: 1rem;
+      padding: 22px 26px;
+      display: flex;
+      flex-direction: column;
+    }
+    .mockup-crm .crm-panel-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--stadli-gray-700);
+    }
+    .mockup-crm .crm-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      background-color: var(--stadli-gray-700);
+    }
+    .mockup-crm .crm-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .mockup-crm .crm-panel-info {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+    .mockup-crm .crm-panel-name {
+      font-size: 28px;
+      font-weight: 600;
       color: var(--stadli-white);
       letter-spacing: -0.02em;
-      line-height: 1.1;
-      margin-bottom: 10px;
+      line-height: 1.05;
     }
-    .mockup-crm .crm-status {
-      display: inline-flex;
+    .mockup-crm .crm-panel-role-row {
+      display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 4px 10px;
-      border: 1px solid var(--stadli-gray-700);
-      border-radius: 50rem;
-      font-size: 12px;
+      gap: 10px;
+    }
+    .mockup-crm .crm-panel-role {
+      font-size: 14px;
       font-weight: 500;
-      color: var(--stadli-gray-200);
-      white-space: nowrap;
+      color: var(--stadli-gray-500);
     }
     .mockup-crm .crm-dot {
-      width: 0.5rem;
-      height: 0.5rem;
+      width: 0.625rem;
+      height: 0.625rem;
       border-radius: 50%;
       background-color: var(--bs-success);
       flex-shrink: 0;
     }
-    .mockup-crm .crm-stats-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-      flex: 1;
-      min-height: 0;
-    }
-    .mockup-crm .crm-stat-card {
-      background-color: var(--stadli-gray-900);
-      border: 1px solid var(--stadli-gray-800);
-      border-radius: 0.75rem;
-      padding: 20px 24px;
+
+    /* Stat rows */
+    .mockup-crm .crm-stat-row {
       display: flex;
-      flex-direction: column;
+      align-items: baseline;
       justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--stadli-gray-700);
+    }
+    .mockup-crm .crm-stat-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
     }
     .mockup-crm .crm-stat-label {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       color: var(--stadli-gray-500);
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 12px;
+      letter-spacing: 0.12em;
     }
     .mockup-crm .crm-stat-value {
-      font-size: 32px;
+      font-size: 20px;
       font-weight: 500;
       color: var(--stadli-white);
-      letter-spacing: -0.02em;
+      letter-spacing: -0.01em;
       font-variant-numeric: tabular-nums;
       line-height: 1;
     }
     .mockup-crm .crm-stat-value .unit {
-      font-size: 18px;
+      font-size: 15px;
       font-weight: 500;
       color: var(--stadli-gray-400);
-      margin-left: 2px;
+      margin-left: 3px;
+    }
+    .mockup-crm .crm-stat-row.is-positive .crm-stat-value,
+    .mockup-crm .crm-stat-row.is-positive .crm-stat-value .unit {
+      color: var(--bs-success);
     }
 
     /* ── Analytics — Stat Cards with Trend Charts ── */
@@ -1399,80 +1410,61 @@
               <div class="mockup-content">
                 <div class="mockup-crm">
 
-                  <!-- Left: Fan list sidebar -->
-                  <div class="crm-sidebar">
-                    <div class="crm-sidebar-title">Fan profiles</div>
-                    <div class="crm-sidebar-search">Search fans&hellip;</div>
-                    <div class="crm-fan-list">
-                      <div class="crm-fan-row">
-                        <img src="https://placehold.co/36x36/303030/929292?text=JB" alt="Jenn Bennett" class="crm-fan-avatar">
-                        <div class="crm-fan-meta-group">
-                          <span class="crm-fan-name">Jenn Bennett</span>
-                          <span class="crm-fan-meta">Tour pass holder</span>
-                        </div>
-                      </div>
-                      <div class="crm-fan-row is-active">
-                        <img src="https://placehold.co/36x36/303030/929292?text=MG" alt="Marcus Grant" class="crm-fan-avatar">
-                        <div class="crm-fan-meta-group">
-                          <span class="crm-fan-name">Marcus Grant</span>
-                          <span class="crm-fan-meta">Tour pass holder</span>
-                        </div>
-                      </div>
-                      <div class="crm-fan-row">
-                        <img src="https://placehold.co/36x36/303030/929292?text=SB" alt="S. Bonhamm" class="crm-fan-avatar">
-                        <div class="crm-fan-meta-group">
-                          <span class="crm-fan-name">S. Bonhamm</span>
-                          <span class="crm-fan-meta">Pass holder</span>
-                        </div>
-                      </div>
-                      <div class="crm-fan-row">
-                        <img src="https://placehold.co/36x36/303030/929292?text=AR" alt="Ava Reyes" class="crm-fan-avatar">
-                        <div class="crm-fan-meta-group">
-                          <span class="crm-fan-name">Ava Reyes</span>
-                          <span class="crm-fan-meta">Season ticket</span>
-                        </div>
-                      </div>
-                      <div class="crm-fan-row">
-                        <img src="https://placehold.co/36x36/303030/929292?text=DC" alt="Diego Cho" class="crm-fan-avatar">
-                        <div class="crm-fan-meta-group">
-                          <span class="crm-fan-name">Diego Cho</span>
-                          <span class="crm-fan-meta">Single game</span>
-                        </div>
-                      </div>
+                  <!-- Ghost card behind to the left -->
+                  <div class="crm-ghost-card is-left" aria-hidden="true">
+                    <div class="crm-ghost-avatar">
+                      <img src="https://placehold.co/72x72/303030/929292?text=JB" alt="">
+                    </div>
+                    <div>
+                      <div class="crm-ghost-name">Jenn Bennett</div>
+                      <div class="crm-ghost-role">Tour pass holder</div>
                     </div>
                   </div>
 
-                  <!-- Right: Profile detail -->
-                  <div class="crm-detail">
-                    <div class="crm-section-label">360 fan profile</div>
+                  <!-- Ghost card behind to the right -->
+                  <div class="crm-ghost-card is-right" aria-hidden="true">
+                    <div class="crm-ghost-avatar">
+                      <img src="https://placehold.co/72x72/303030/929292?text=SB" alt="">
+                    </div>
+                    <div>
+                      <div class="crm-ghost-name">S. Bonhamm</div>
+                      <div class="crm-ghost-role">Pass holder</div>
+                    </div>
+                  </div>
 
-                    <div class="crm-profile-top">
-                      <img src="https://placehold.co/72x72/303030/929292?text=MG" alt="Marcus Grant" class="crm-main-avatar">
-                      <div>
-                        <div class="crm-main-name">Marcus Grant</div>
-                        <div class="crm-status">
-                          <span class="crm-dot"></span>
-                          Tour pass holder &middot; Active
+                  <!-- Focused card -->
+                  <div class="crm-card">
+                    <h3 class="crm-card-title">360 fan profile</h3>
+
+                    <div class="crm-panel">
+                      <div class="crm-panel-header">
+                        <div class="crm-avatar">
+                          <img src="https://placehold.co/80x80/303030/929292?text=MG" alt="Marcus Grant">
+                        </div>
+                        <div class="crm-panel-info">
+                          <div class="crm-panel-name">Marcus Grant</div>
+                          <div class="crm-panel-role-row">
+                            <span class="crm-panel-role">Tour pass holder</span>
+                            <span class="crm-dot"></span>
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div class="crm-stats-grid">
-                      <div class="crm-stat-card">
-                        <div class="crm-stat-label">Purchases</div>
-                        <div class="crm-stat-value">5</div>
+                      <div class="crm-stat-row">
+                        <span class="crm-stat-label">Purchases</span>
+                        <span class="crm-stat-value">5</span>
                       </div>
-                      <div class="crm-stat-card">
-                        <div class="crm-stat-label">Engagement score</div>
-                        <div class="crm-stat-value">87</div>
+                      <div class="crm-stat-row">
+                        <span class="crm-stat-label">Engagement score</span>
+                        <span class="crm-stat-value">87</span>
                       </div>
-                      <div class="crm-stat-card">
-                        <div class="crm-stat-label">Attendance rate</div>
-                        <div class="crm-stat-value">75<span class="unit">%</span></div>
+                      <div class="crm-stat-row is-positive">
+                        <span class="crm-stat-label">Attendance rate</span>
+                        <span class="crm-stat-value">75<span class="unit">%</span></span>
                       </div>
-                      <div class="crm-stat-card">
-                        <div class="crm-stat-label">Lifetime value</div>
-                        <div class="crm-stat-value">$1,250</div>
+                      <div class="crm-stat-row">
+                        <span class="crm-stat-label">Lifetime value</span>
+                        <span class="crm-stat-value">$1,250</span>
                       </div>
                     </div>
                   </div>
