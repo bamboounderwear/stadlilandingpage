@@ -650,10 +650,19 @@
       height: 100%;
       background-color: var(--bs-body-bg);
       display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-direction: column;
       position: relative;
       overflow: hidden;
+    }
+
+    /* Stage — the area above the timeline strip where the card stack lives */
+    .mockup-crm .crm-stage {
+      flex: 1;
+      min-height: 0;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     /* Ghost cards behind the focused card */
@@ -717,7 +726,7 @@
       position: relative;
       z-index: 3;
       width: 620px;
-      height: 96%;
+      height: 98%;
       padding: 30px 34px;
       background-color: var(--stadli-gray-900);
       border: 1px solid var(--stadli-gray-800);
@@ -843,12 +852,11 @@
       color: var(--bs-success);
     }
 
-    /* Engagement timeline — horizontal strip at bottom of panel */
+    /* Engagement timeline — viewport-width strip below the card stage */
     .mockup-crm .crm-timeline {
       flex-shrink: 0;
-      margin-top: 18px;
-      padding-top: 18px;
-      border-top: 1px solid var(--stadli-gray-700);
+      padding: 18px 56px 22px;
+      border-top: 1px solid var(--stadli-gray-800);
     }
     .mockup-crm .crm-timeline-head {
       display: flex;
@@ -880,11 +888,11 @@
       position: absolute;
       top: 50%;
       transform: translate(-50%, -50%);
-      width: 12px;
-      height: 12px;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
       background-color: var(--stadli-gray-400);
-      border: 3px solid var(--stadli-gray-800);
+      border: 3px solid var(--bs-body-bg);
       box-sizing: content-box;
     }
     .mockup-crm .crm-timeline-event.is-positive {
@@ -893,8 +901,8 @@
     .mockup-crm .crm-timeline-dates {
       display: flex;
       justify-content: space-between;
-      margin-top: 16px;
-      padding: 0 4px;
+      margin-top: 14px;
+      padding: 0 6px;
     }
     .mockup-crm .crm-timeline-date {
       font-size: 11px;
@@ -1488,85 +1496,91 @@
               <div class="mockup-content">
                 <div class="mockup-crm">
 
-                  <!-- Ghost card behind to the left -->
-                  <div class="crm-ghost-card is-left" aria-hidden="true">
-                    <div class="crm-ghost-avatar">
-                      <img src="https://placehold.co/88x88/303030/929292?text=JB" alt="">
-                    </div>
-                    <div class="crm-ghost-meta">
-                      <div class="crm-ghost-name">Jenn Bennett</div>
-                      <div class="crm-ghost-role">Tour Pass Holder</div>
-                    </div>
-                  </div>
+                  <!-- Stage — card stack lives here, on top of timeline -->
+                  <div class="crm-stage">
 
-                  <!-- Ghost card behind to the right -->
-                  <div class="crm-ghost-card is-right" aria-hidden="true">
-                    <div class="crm-ghost-avatar">
-                      <img src="https://placehold.co/88x88/303030/929292?text=SB" alt="">
+                    <!-- Ghost card behind to the left -->
+                    <div class="crm-ghost-card is-left" aria-hidden="true">
+                      <div class="crm-ghost-avatar">
+                        <img src="https://placehold.co/88x88/303030/929292?text=JB" alt="">
+                      </div>
+                      <div class="crm-ghost-meta">
+                        <div class="crm-ghost-name">Jenn Bennett</div>
+                        <div class="crm-ghost-role">Tour Pass Holder</div>
+                      </div>
                     </div>
-                    <div class="crm-ghost-meta">
-                      <div class="crm-ghost-name">S. Bonhamm</div>
-                      <div class="crm-ghost-role">Pass Holder</div>
+
+                    <!-- Ghost card behind to the right -->
+                    <div class="crm-ghost-card is-right" aria-hidden="true">
+                      <div class="crm-ghost-avatar">
+                        <img src="https://placehold.co/88x88/303030/929292?text=SB" alt="">
+                      </div>
+                      <div class="crm-ghost-meta">
+                        <div class="crm-ghost-name">S. Bonhamm</div>
+                        <div class="crm-ghost-role">Pass Holder</div>
+                      </div>
                     </div>
-                  </div>
 
-                  <!-- Focused card -->
-                  <div class="crm-card">
-                    <h3 class="crm-card-title">360 Fan Profile</h3>
+                    <!-- Focused card -->
+                    <div class="crm-card">
+                      <h3 class="crm-card-title">360 Fan Profile</h3>
 
-                    <div class="crm-panel">
-                      <div class="crm-panel-header">
-                        <div class="crm-avatar">
-                          <img src="https://placehold.co/110x110/303030/929292?text=MG" alt="Marcus Grant">
+                      <div class="crm-panel">
+                        <div class="crm-panel-header">
+                          <div class="crm-avatar">
+                            <img src="https://placehold.co/110x110/303030/929292?text=MG" alt="Marcus Grant">
+                          </div>
+                          <div class="crm-panel-info">
+                            <div class="crm-panel-name">Marcus Grant</div>
+                            <div class="crm-panel-role-row">
+                              <span class="crm-panel-role">Tour Pass Holder</span>
+                              <span class="crm-dot"></span>
+                            </div>
+                          </div>
                         </div>
-                        <div class="crm-panel-info">
-                          <div class="crm-panel-name">Marcus Grant</div>
-                          <div class="crm-panel-role-row">
-                            <span class="crm-panel-role">Tour Pass Holder</span>
-                            <span class="crm-dot"></span>
+
+                        <div class="crm-stats">
+                          <div class="crm-stat-row">
+                            <span class="crm-stat-label">Purchases</span>
+                            <span class="crm-stat-value">5</span>
+                          </div>
+                          <div class="crm-stat-row">
+                            <span class="crm-stat-label">Engagement score</span>
+                            <span class="crm-stat-value">87</span>
+                          </div>
+                          <div class="crm-stat-row is-positive">
+                            <span class="crm-stat-label">Attendance rate</span>
+                            <span class="crm-stat-value">75<span class="unit">%</span></span>
+                          </div>
+                          <div class="crm-stat-row">
+                            <span class="crm-stat-label">Lifetime value</span>
+                            <span class="crm-stat-value">$1,250</span>
                           </div>
                         </div>
                       </div>
+                    </div>
 
-                      <div class="crm-stats">
-                        <div class="crm-stat-row">
-                          <span class="crm-stat-label">Purchases</span>
-                          <span class="crm-stat-value">5</span>
-                        </div>
-                        <div class="crm-stat-row">
-                          <span class="crm-stat-label">Engagement score</span>
-                          <span class="crm-stat-value">87</span>
-                        </div>
-                        <div class="crm-stat-row is-positive">
-                          <span class="crm-stat-label">Attendance rate</span>
-                          <span class="crm-stat-value">75<span class="unit">%</span></span>
-                        </div>
-                        <div class="crm-stat-row">
-                          <span class="crm-stat-label">Lifetime value</span>
-                          <span class="crm-stat-value">$1,250</span>
-                        </div>
-                      </div>
+                  </div>
 
-                      <div class="crm-timeline">
-                        <div class="crm-timeline-head">
-                          <span class="crm-timeline-label">Engagement timeline</span>
-                          <span class="crm-timeline-meta">Last 30 days</span>
-                        </div>
-                        <div class="crm-timeline-track" role="img" aria-label="Seven fan engagement events across the last 30 days">
-                          <span class="crm-timeline-event is-positive" style="left: 6%;" title="Ticket purchased · Mar 3"></span>
-                          <span class="crm-timeline-event" style="left: 19%;" title="Email opened · Mar 8"></span>
-                          <span class="crm-timeline-event is-positive" style="left: 34%;" title="Merch purchased · Mar 13"></span>
-                          <span class="crm-timeline-event" style="left: 48%;" title="App login · Mar 18"></span>
-                          <span class="crm-timeline-event is-positive" style="left: 63%;" title="Game attended · Mar 22"></span>
-                          <span class="crm-timeline-event" style="left: 78%;" title="Survey completed · Mar 26"></span>
-                          <span class="crm-timeline-event is-positive" style="left: 93%;" title="Season renewal · Mar 30"></span>
-                        </div>
-                        <div class="crm-timeline-dates">
-                          <span class="crm-timeline-date">Mar 1</span>
-                          <span class="crm-timeline-date">Mar 15</span>
-                          <span class="crm-timeline-date">Mar 30</span>
-                        </div>
-                      </div>
+                  <!-- Engagement timeline — viewport-width widget below the stage -->
+                  <div class="crm-timeline">
+                    <div class="crm-timeline-head">
+                      <span class="crm-timeline-label">Engagement timeline</span>
+                      <span class="crm-timeline-meta">Last 30 days</span>
+                    </div>
+                    <div class="crm-timeline-track" role="img" aria-label="Seven fan engagement events across the last 30 days">
+                      <span class="crm-timeline-event is-positive" style="left: 5%;" title="Ticket purchased · Mar 3"></span>
+                      <span class="crm-timeline-event" style="left: 18%;" title="Email opened · Mar 8"></span>
+                      <span class="crm-timeline-event is-positive" style="left: 32%;" title="Merch purchased · Mar 13"></span>
+                      <span class="crm-timeline-event" style="left: 47%;" title="App login · Mar 18"></span>
+                      <span class="crm-timeline-event is-positive" style="left: 63%;" title="Game attended · Mar 22"></span>
+                      <span class="crm-timeline-event" style="left: 79%;" title="Survey completed · Mar 26"></span>
+                      <span class="crm-timeline-event is-positive" style="left: 95%;" title="Season renewal · Mar 30"></span>
+                    </div>
+                    <div class="crm-timeline-dates">
+                      <span class="crm-timeline-date">Mar 1</span>
+                      <span class="crm-timeline-date">Mar 15</span>
+                      <span class="crm-timeline-date">Mar 30</span>
                     </div>
                   </div>
 
