@@ -387,23 +387,28 @@
 
     /* ============================================
        MOCKUP FRAMES — Fluid UI previews
-       Each frame enforces a 2:1 aspect ratio and is
-       registered as an inline-size container so inner
-       mockups can use cqi units for truly fluid layouts
-       that fill whatever window they're placed in.
+       The frame wraps the inner .mockup-content with a
+       dark gutter on all sides so content never touches
+       the fake browser window edges. The aspect ratio
+       and max-height live on .mockup-content (inside the
+       padding) so the inner 2:1 canvas stays undistorted
+       regardless of the frame's outer padding.
        ============================================ */
     .mockup-frame {
       container-type: inline-size;
       width: 100%;
-      aspect-ratio: 2 / 1;
+      padding: 2rem;
       position: relative;
       overflow: hidden;
     }
     .mockup-frame > .mockup-content {
       width: 100%;
-      height: 100%;
+      aspect-ratio: 2 / 1;
+      max-height: 680px;
       font-family: var(--bs-font-sans-serif);
       color: var(--stadli-gray-100);
+      position: relative;
+      overflow: hidden;
     }
 
     /* ── Hero Mockup — Feature Hub ── */
@@ -725,18 +730,18 @@
     .mockup-crm .crm-card {
       position: relative;
       z-index: 3;
-      width: 620px;
+      width: 600px;
       height: 98%;
-      padding: 30px 34px;
+      padding: 26px 30px;
       background-color: var(--stadli-gray-900);
       border: 1px solid var(--stadli-gray-800);
       border-radius: 1.5rem;
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 16px;
     }
     .mockup-crm .crm-card-title {
-      font-size: 30px;
+      font-size: 26px;
       font-weight: 700;
       color: var(--stadli-white);
       letter-spacing: -0.02em;
@@ -752,21 +757,21 @@
       background-color: var(--stadli-gray-800);
       border: 1px solid var(--stadli-gray-700);
       border-radius: 1.25rem;
-      padding: 26px 30px;
+      padding: 22px 26px;
       display: flex;
       flex-direction: column;
     }
     .mockup-crm .crm-panel-header {
       display: flex;
       align-items: center;
-      gap: 22px;
-      padding-bottom: 22px;
+      gap: 20px;
+      padding-bottom: 20px;
       border-bottom: 1px solid var(--stadli-gray-700);
       flex-shrink: 0;
     }
     .mockup-crm .crm-avatar {
-      width: 100px;
-      height: 100px;
+      width: 90px;
+      height: 90px;
       border-radius: 50%;
       overflow: hidden;
       flex-shrink: 0;
@@ -780,11 +785,11 @@
     .mockup-crm .crm-panel-info {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
       min-width: 0;
     }
     .mockup-crm .crm-panel-name {
-      font-size: 36px;
+      font-size: 32px;
       font-weight: 700;
       color: var(--stadli-white);
       letter-spacing: -0.02em;
@@ -796,7 +801,7 @@
       gap: 12px;
     }
     .mockup-crm .crm-panel-role {
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 500;
       color: var(--stadli-gray-400);
     }
