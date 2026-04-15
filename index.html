@@ -65,11 +65,19 @@
       /* Custom Token for Primary Button Text */
       --stadli-btn-primary-color: #ffffff;
 
-      /* Spectrum Palette for Marketing (Cards/Fills) */
-      --spec-blue: #0140f0;
-      --spec-lime: #ecfc3b;
-      --spec-rose: #f6166e;
-      --spec-cyan: #00b0d8;
+      /* Spectrum Palette — data viz, narrative tags, and marketing surfaces only.
+         Never on admin chrome, buttons, form controls, icons, or hover states. */
+      --spec-red:     #fe0000;
+      --spec-orange:  #fe5619;
+      --spec-lime:    #ecfc3b;
+      --spec-green:   #44d62b;
+      --spec-teal:    #00d4a8;
+      --spec-cyan:    #00b0d8;
+      --spec-blue:    #0140f0;
+      --spec-violet:  #7b2ff7;
+      --spec-magenta: #d633ff;
+      --spec-rose:    #f6166e;
+      --spec-silver:  #eeeeee;
     }
 
     /* Dark Mode Overrides */
@@ -406,9 +414,9 @@
       background-color: var(--bs-body-bg);
     }
     .mockup-hero .hero-feature-card {
-      background-color: #080a0e;
-      border: 1px solid var(--stadli-gray-800);
-      border-radius: 12px;
+      background-color: var(--stadli-gray-800);
+      border: 1px solid var(--stadli-gray-700);
+      border-radius: 0.75rem;
       width: 20cqi;
       height: 7.5cqi;
       position: absolute;
@@ -417,7 +425,6 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
       transform: translate(-50%, -50%);
     }
     .mockup-hero .hero-feature-card h3 {
@@ -458,15 +465,16 @@
       fill: none;
     }
     .mockup-hero .hero-pulse-glow {
-      stroke: #3b6f8d;
+      stroke: var(--spec-cyan);
       stroke-width: 6;
       fill: none;
       stroke-dasharray: 150 280;
       stroke-linecap: round;
+      opacity: 0.55;
       animation: mockup-hero-flow 12s linear infinite, mockup-hero-shimmer 2s ease-in-out infinite alternate;
     }
     .mockup-hero .hero-pulse-core {
-      stroke: #a8cde3;
+      stroke: var(--stadli-white);
       stroke-width: 2;
       fill: none;
       stroke-dasharray: 150 280;
@@ -539,9 +547,8 @@
     }
     .mockup-marketing .mkt-block.is-dragging {
       transform: translate(60px, 0);
-      border-color: var(--stadli-gray-400);
-      background-color: rgba(255, 255, 255, 0.05);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      border-color: var(--stadli-gray-300);
+      background-color: var(--stadli-gray-800);
       z-index: 2;
       position: relative;
     }
@@ -572,7 +579,6 @@
       right: -44px;
       z-index: 3;
       pointer-events: none;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
     }
     .mockup-marketing .mkt-cursor svg { width: 32px; height: 32px; }
     .mockup-marketing .mkt-preview {
@@ -586,7 +592,7 @@
       width: 100%;
       max-width: 480px;
       border: 1px solid var(--stadli-gray-600);
-      border-radius: 10px;
+      border-radius: 0.75rem;
       padding: 36px 32px;
       display: flex;
       flex-direction: column;
@@ -681,7 +687,8 @@
       z-index: 3;
       left: 50%;
       transform: translate(-50%, -50%);
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+      background-color: var(--stadli-gray-800);
+      border-color: var(--stadli-gray-400);
     }
     .mockup-crm .crm-side {
       display: flex;
@@ -735,11 +742,10 @@
     .mockup-crm .crm-role-row { display: flex; align-items: center; gap: 8px; }
     .mockup-crm .crm-role { font-size: 13px; font-weight: 500; color: var(--stadli-gray-400); }
     .mockup-crm .crm-dot {
-      width: 10px;
-      height: 10px;
+      width: 0.5rem;
+      height: 0.5rem;
       border-radius: 50%;
-      background-color: #7ec7a3;
-      box-shadow: 0 0 8px rgba(126, 199, 163, 0.6);
+      background-color: var(--bs-success);
       flex-shrink: 0;
     }
     .mockup-crm .crm-stats { display: flex; flex-direction: column; }
@@ -790,7 +796,7 @@
     .mockup-analytics .ana-card {
       background-color: var(--stadli-gray-900);
       border: 1px solid var(--stadli-gray-800);
-      border-radius: 24px;
+      border-radius: 0.75rem;
       padding: 40px 32px 32px 32px;
       display: flex;
       flex-direction: column;
@@ -822,10 +828,10 @@
       height: 100%;
       overflow: visible;
     }
-    .mockup-analytics .ana-up      { stroke: #4ade80; filter: drop-shadow(0 0 8px rgba(74, 222, 128, 0.3)); }
-    .mockup-analytics .ana-neutral { stroke: #fbbf24; filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.3)); }
-    .mockup-analytics .ana-down    { stroke: #f87171; filter: drop-shadow(0 0 8px rgba(248, 113, 113, 0.3)); }
-    .mockup-analytics .ana-gradient-fill { opacity: 0.1; }
+    .mockup-analytics .ana-up      { stroke: var(--spec-green); }
+    .mockup-analytics .ana-neutral { stroke: var(--spec-orange); }
+    .mockup-analytics .ana-down    { stroke: var(--spec-red); }
+    .mockup-analytics .ana-gradient-fill { opacity: 0.12; }
 
     /* ── AI — Insight Query Dashboard ── */
     .mockup-ai {
@@ -868,19 +874,20 @@
     .mockup-ai .ai-avatar {
       width: 32px;
       height: 32px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, #6366f1, #a855f7);
+      border-radius: 0.5rem;
+      background: linear-gradient(135deg, var(--spec-blue), var(--spec-violet));
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 500;
-      font-size: 12px;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.08em;
       color: var(--stadli-white);
       flex-shrink: 0;
     }
     .mockup-ai .ai-bubble {
       padding: 12px 16px;
-      border-radius: 16px;
+      border-radius: 0.75rem;
       font-size: 14px;
       line-height: 1.5;
       max-width: 90%;
@@ -938,7 +945,7 @@
     }
     .mockup-ai .ai-card-trend {
       font-size: 14px;
-      color: #7ec7a3;
+      color: var(--bs-success);
       display: flex;
       align-items: center;
       gap: 4px;
@@ -956,8 +963,8 @@
       min-height: 0;
     }
     .mockup-ai .ai-generating {
-      background: radial-gradient(circle at center, rgba(168, 85, 247, 0.2), transparent 70%);
-      border: 1px solid rgba(168, 85, 247, 0.3);
+      background: radial-gradient(circle at center, rgba(123, 47, 247, 0.18), transparent 70%);
+      border: 1px solid var(--stadli-gray-800);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -965,7 +972,7 @@
       text-align: center;
     }
     .mockup-ai .ai-generating-text {
-      background: linear-gradient(to right, #6366f1, #ec4899);
+      background: linear-gradient(to right, var(--spec-blue), var(--spec-rose));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -977,7 +984,7 @@
     .mockup-ai .ai-leaders-item { margin-bottom: 12px; }
     .mockup-ai .ai-leaders-item:last-child { margin-bottom: 0; }
     .mockup-ai .ai-leaders-name { font-size: 15px; font-weight: 500; color: var(--stadli-white); }
-    .mockup-ai .ai-leaders-trend { font-size: 12px; color: #7ec7a3; }
+    .mockup-ai .ai-leaders-trend { font-size: 12px; color: var(--bs-success); }
 
     /* ── Commerce — Stadium Cart ── */
     .mockup-commerce {
@@ -1009,7 +1016,7 @@
     }
     .mockup-commerce .cart-wrapper {
       border: 1px solid var(--stadli-gray-600);
-      border-radius: 10px;
+      border-radius: 0.75rem;
       margin: 24px 28px;
       display: flex;
       flex-direction: column;
@@ -1157,7 +1164,7 @@
           </div>
           <div class="col-12 col-lg-5 text-lg-end mt-4 mt-lg-0 reveal delay-400">
             <a href="#demo" class="text-decoration-none small d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill bg-black bg-opacity-50 border border-secondary border-opacity-25 backdrop-blur-md card-hover">
-              <span class="rounded-circle" style="width: 8px; height: 8px; background-color: #7b2ff7;"></span>
+              <span class="rounded-circle" style="width: 8px; height: 8px; background-color: var(--spec-violet);"></span>
               <span class="text-white fw-medium">Voyez Stadli en action</span>
               <span class="text-white text-opacity-50 ms-1">stadli.com/demo &rarr;</span>
             </a>
@@ -1251,7 +1258,7 @@
                 <div class="mockup-marketing">
                   <!-- Left Sidebar -->
                   <div class="mkt-sidebar">
-                    <div class="mkt-title">Email Marketing</div>
+                    <div class="mkt-title">Email marketing</div>
 
                     <div class="mkt-block">
                       <div class="mkt-block-icon">
@@ -1291,12 +1298,12 @@
                   <!-- Right Preview -->
                   <div class="mkt-preview">
                     <div class="mkt-email">
-                      <div class="mkt-email-heading">Support Our<br>Team</div>
+                      <div class="mkt-email-heading">Support our<br>team</div>
                       <div class="mkt-email-image">
                         <img src="https://placehold.co/480x220/1a1a1a/929292?text=Hero+Image" alt="Hero image placeholder">
                       </div>
                       <p class="mkt-email-body">Get your tickets now!</p>
-                      <a href="#" class="mkt-email-cta">Buy Tickets</a>
+                      <a href="#" class="mkt-email-cta">Buy tickets</a>
                     </div>
                   </div>
                 </div>
@@ -1350,20 +1357,20 @@
                       <div class="crm-side">
                         <img src="https://placehold.co/72x72/303030/929292?text=JB" alt="Jenn B." class="crm-side-avatar">
                         <div class="crm-side-name">Jenn Bennett</div>
-                        <div class="crm-side-role">Tour Pass Holder</div>
+                        <div class="crm-side-role">Tour pass holder</div>
                       </div>
                     </div>
 
                     <!-- Center Card (focused) -->
                     <div class="crm-card card-center">
-                      <div class="crm-title">360 Fan Profile</div>
+                      <div class="crm-title">360 fan profile</div>
 
                       <div class="crm-header">
                         <img src="https://placehold.co/76x76/303030/929292?text=MG" alt="Marcus Grant" class="crm-avatar">
                         <div class="crm-info">
                           <div class="crm-name">Marcus Grant</div>
                           <div class="crm-role-row">
-                            <span class="crm-role">Tour Pass Holder</span>
+                            <span class="crm-role">Tour pass holder</span>
                             <span class="crm-dot"></span>
                           </div>
                         </div>
@@ -1371,9 +1378,9 @@
 
                       <div class="crm-stats">
                         <div class="crm-stat-row"><span class="crm-stat-label">Purchases</span><span class="crm-stat-value">5</span></div>
-                        <div class="crm-stat-row"><span class="crm-stat-label">Engagement Score</span><span class="crm-stat-value">87</span></div>
-                        <div class="crm-stat-row"><span class="crm-stat-label">Attendance Rate</span><span class="crm-stat-value">75 <span class="unit">%</span></span></div>
-                        <div class="crm-stat-row"><span class="crm-stat-label">Lifetime Value</span><span class="crm-stat-value">$1,250</span></div>
+                        <div class="crm-stat-row"><span class="crm-stat-label">Engagement score</span><span class="crm-stat-value">87</span></div>
+                        <div class="crm-stat-row"><span class="crm-stat-label">Attendance rate</span><span class="crm-stat-value">75 <span class="unit">%</span></span></div>
+                        <div class="crm-stat-row"><span class="crm-stat-label">Lifetime value</span><span class="crm-stat-value">$1,250</span></div>
                       </div>
                     </div>
 
@@ -1382,7 +1389,7 @@
                       <div class="crm-side">
                         <img src="https://placehold.co/72x72/303030/929292?text=SB" alt="S. Bonhamm" class="crm-side-avatar">
                         <div class="crm-side-name">S. Bonhamm</div>
-                        <div class="crm-side-role">Pass Holder</div>
+                        <div class="crm-side-role">Pass holder</div>
                       </div>
                     </div>
 
@@ -1439,8 +1446,8 @@
                         <svg viewBox="0 0 200 60" preserveAspectRatio="none">
                           <defs>
                             <linearGradient id="mockup-ana-grad-1" x1="0%" y1="0%" x2="0%" y2="100%">
-                              <stop offset="0%" stop-color="#4ade80" stop-opacity="0.2"/>
-                              <stop offset="100%" stop-color="#4ade80" stop-opacity="0"/>
+                              <stop offset="0%" style="stop-color: var(--spec-green); stop-opacity: 0.2;"/>
+                              <stop offset="100%" style="stop-color: var(--spec-green); stop-opacity: 0;"/>
                             </linearGradient>
                           </defs>
                           <path d="M0,50 Q20,45 40,48 T80,42 T120,35 T160,25 T200,10" fill="transparent" stroke-width="3" stroke-linecap="round" class="ana-up"/>
@@ -1451,14 +1458,14 @@
 
                     <!-- Conversion Rate Card -->
                     <div class="ana-card">
-                      <div class="ana-label">Conversion Rate</div>
+                      <div class="ana-label">Conversion rate</div>
                       <div class="ana-value">3.9%</div>
                       <div class="ana-trend">
                         <svg viewBox="0 0 200 60" preserveAspectRatio="none">
                           <defs>
                             <linearGradient id="mockup-ana-grad-2" x1="0%" y1="0%" x2="0%" y2="100%">
-                              <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.2"/>
-                              <stop offset="100%" stop-color="#fbbf24" stop-opacity="0"/>
+                              <stop offset="0%" style="stop-color: var(--spec-orange); stop-opacity: 0.2;"/>
+                              <stop offset="100%" style="stop-color: var(--spec-orange); stop-opacity: 0;"/>
                             </linearGradient>
                           </defs>
                           <path d="M0,45 Q15,55 30,45 T60,35 T90,50 T120,40 T150,30 T180,45 T200,45" fill="transparent" stroke-width="3" stroke-linecap="round" class="ana-neutral"/>
@@ -1475,8 +1482,8 @@
                         <svg viewBox="0 0 200 60" preserveAspectRatio="none">
                           <defs>
                             <linearGradient id="mockup-ana-grad-3" x1="0%" y1="0%" x2="0%" y2="100%">
-                              <stop offset="0%" stop-color="#4ade80" stop-opacity="0.2"/>
-                              <stop offset="100%" stop-color="#4ade80" stop-opacity="0"/>
+                              <stop offset="0%" style="stop-color: var(--spec-green); stop-opacity: 0.2;"/>
+                              <stop offset="100%" style="stop-color: var(--spec-green); stop-opacity: 0;"/>
                             </linearGradient>
                           </defs>
                           <path d="M0,55 Q30,50 60,42 T100,35 T140,25 T180,15 T200,5" fill="transparent" stroke-width="3" stroke-linecap="round" class="ana-up"/>
@@ -1556,51 +1563,51 @@
                     <!-- Middle Column: Main Stats -->
                     <div class="ai-mid-grid">
                       <div class="ai-stats-card">
-                        <div class="ai-card-label">Season Ticket Revenue</div>
+                        <div class="ai-card-label">Season ticket revenue</div>
                         <div class="ai-card-value">$842,000</div>
-                        <div class="ai-card-trend">+ 12.4 %</div>
+                        <div class="ai-card-trend">+12.4%</div>
                       </div>
 
                       <div class="ai-stats-card">
-                        <div class="ai-card-label">Roster Leaders</div>
+                        <div class="ai-card-label">Roster leaders</div>
                         <div class="ai-leaders-item">
                           <div class="ai-leaders-name">Batting AVG</div>
-                          <div class="ai-leaders-trend">.312 (Team High)</div>
+                          <div class="ai-leaders-trend">.312 (team high)</div>
                         </div>
                         <div class="ai-leaders-item">
-                          <div class="ai-leaders-name">Home Runs</div>
-                          <div class="ai-leaders-trend">42 (League Leader)</div>
+                          <div class="ai-leaders-name">Home runs</div>
+                          <div class="ai-leaders-trend">42 (league leader)</div>
                         </div>
                         <div class="ai-leaders-item">
-                          <div class="ai-leaders-name">Stolen Bases</div>
-                          <div class="ai-leaders-trend">18 (Last 30 Days)</div>
+                          <div class="ai-leaders-name">Stolen bases</div>
+                          <div class="ai-leaders-trend">18 (last 30 days)</div>
                         </div>
                         <div class="ai-leaders-item">
-                          <div class="ai-leaders-name">ERA (Starters)</div>
-                          <div class="ai-leaders-trend">2.45 (League Low)</div>
+                          <div class="ai-leaders-name">ERA (starters)</div>
+                          <div class="ai-leaders-trend">2.45 (league low)</div>
                         </div>
                       </div>
 
                       <div class="ai-stats-card">
-                        <div class="ai-card-label" style="margin-bottom: 4px;">Upcoming Series</div>
-                        <div style="color: var(--stadli-white); font-size: 13px;">Home vs. Dodgers (3 Games)</div>
+                        <div class="ai-card-label" style="margin-bottom: 4px;">Upcoming series</div>
+                        <div style="color: var(--stadli-white); font-size: 13px;">Home vs. Dodgers (3 games)</div>
                       </div>
                     </div>
 
                     <!-- Right Column: Secondary Stats & Loading -->
                     <div class="ai-right-grid">
                       <div class="ai-stats-card ai-generating">
-                        <div class="ai-generating-text">Simulating<br>matchups...</div>
+                        <div class="ai-generating-text">Simulating<br>matchups&hellip;</div>
                       </div>
                       <div class="ai-stats-card">
-                        <div class="ai-card-label">Win Percentage</div>
+                        <div class="ai-card-label">Win percentage</div>
                         <div class="ai-card-value">.640</div>
-                        <div class="ai-card-trend">+ 0.05 %</div>
+                        <div class="ai-card-trend">+0.05%</div>
                       </div>
                       <div class="ai-stats-card">
-                        <div class="ai-card-label">Avg. Attendance</div>
+                        <div class="ai-card-label">Avg. attendance</div>
                         <div class="ai-card-value">42,150</div>
-                        <div class="ai-card-trend">+ 15.2 %</div>
+                        <div class="ai-card-trend">+15.2%</div>
                       </div>
                     </div>
 
@@ -1658,13 +1665,13 @@
                       <div class="cart-title">Cart</div>
 
                       <div class="cart-items">
-                        <!-- Merch Jersey -->
+                        <!-- Merch jersey -->
                         <div class="cart-item">
                           <div class="cart-thumb">
-                            <img src="https://placehold.co/72x72/303030/929292?text=Jersey" alt="Merch Jersey">
+                            <img src="https://placehold.co/72x72/303030/929292?text=Jersey" alt="Merch jersey">
                           </div>
                           <div class="cart-details">
-                            <span class="cart-name">Merch Jersey</span>
+                            <span class="cart-name">Merch jersey</span>
                             <span class="cart-unit-price">$50.00</span>
                           </div>
                           <span class="cart-total">$50.00</span>
@@ -1682,13 +1689,13 @@
                           <span class="cart-total">$75.00</span>
                         </div>
 
-                        <!-- Digital Gift Card -->
+                        <!-- Digital gift card -->
                         <div class="cart-item">
                           <div class="cart-thumb">
-                            <img src="https://placehold.co/72x72/303030/929292?text=Gift+Card" alt="Digital Gift Card">
+                            <img src="https://placehold.co/72x72/303030/929292?text=Gift+Card" alt="Digital gift card">
                           </div>
                           <div class="cart-details">
-                            <span class="cart-name">Digital Gift Card</span>
+                            <span class="cart-name">Digital gift card</span>
                             <span class="cart-unit-price">$25.00</span>
                           </div>
                           <span class="cart-total">$25.00</span>
@@ -1725,16 +1732,16 @@
           
           <form class="text-start border p-4 p-md-5 rounded-4 bg-glass backdrop-blur-md reveal delay-200">
             <div class="mb-4">
-              <label class="form-label text-label text-body-secondary mb-2">Work Email</label>
+              <label class="form-label text-label text-body-secondary mb-2">Work email</label>
               <input type="email" class="form-control bg-body border-secondary text-body-color px-3 py-2" placeholder="name@organization.com">
             </div>
             <div class="row g-3 mb-4">
               <div class="col-12 col-sm-6">
-                <label class="form-label text-label text-body-secondary mb-2">First Name</label>
+                <label class="form-label text-label text-body-secondary mb-2">First name</label>
                 <input type="text" class="form-control bg-body border-secondary px-3 py-2">
               </div>
               <div class="col-12 col-sm-6">
-                <label class="form-label text-label text-body-secondary mb-2">Last Name</label>
+                <label class="form-label text-label text-body-secondary mb-2">Last name</label>
                 <input type="text" class="form-control bg-body border-secondary px-3 py-2">
               </div>
             </div>
@@ -1742,7 +1749,7 @@
               <label class="form-label text-label text-body-secondary mb-2">Organization</label>
               <input type="text" class="form-control bg-body border-secondary px-3 py-2">
             </div>
-            <button type="submit" class="btn btn-primary w-100 py-3 mt-2">Request Demo</button>
+            <button type="submit" class="btn btn-primary w-100 py-3 mt-2">Request demo</button>
           </form>
         </div>
       </div>
