@@ -376,6 +376,741 @@
         transform: translateY(0) !important;
       }
     }
+
+    /* ============================================
+       MOCKUP FRAMES — Fluid UI previews
+       Each frame enforces a 2:1 aspect ratio and is
+       registered as an inline-size container so inner
+       mockups can use cqi units for truly fluid layouts
+       that fill whatever window they're placed in.
+       ============================================ */
+    .mockup-frame {
+      container-type: inline-size;
+      width: 100%;
+      aspect-ratio: 2 / 1;
+      position: relative;
+      overflow: hidden;
+    }
+    .mockup-frame > .mockup-content {
+      width: 100%;
+      height: 100%;
+      font-family: var(--bs-font-sans-serif);
+      color: var(--stadli-gray-100);
+    }
+
+    /* ── Hero Mockup — Feature Hub ── */
+    .mockup-hero {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      background-color: var(--bs-body-bg);
+    }
+    .mockup-hero .hero-feature-card {
+      background-color: #080a0e;
+      border: 1px solid var(--stadli-gray-800);
+      border-radius: 12px;
+      width: 20cqi;
+      height: 7.5cqi;
+      position: absolute;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      transform: translate(-50%, -50%);
+    }
+    .mockup-hero .hero-feature-card h3 {
+      font-size: clamp(0.9rem, 1.45cqi, 1.5rem);
+      font-weight: 500;
+      margin: 0;
+      color: var(--stadli-gray-100);
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+    .mockup-hero .hero-top-left     { top: 28.333%; left: 25%; }
+    .mockup-hero .hero-top-right    { top: 28.333%; left: 75%; }
+    .mockup-hero .hero-bottom-left  { top: 71.667%; left: 25%; }
+    .mockup-hero .hero-bottom-right { top: 71.667%; left: 75%; }
+    .mockup-hero .hero-logo-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 15;
+    }
+    .mockup-hero .hero-logo-center img {
+      display: block;
+      width: 22cqi;
+      height: auto;
+    }
+    .mockup-hero .hero-lines {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .mockup-hero .hero-base-line {
+      stroke: var(--stadli-gray-800);
+      stroke-width: 1.5;
+      fill: none;
+    }
+    .mockup-hero .hero-pulse-glow {
+      stroke: #3b6f8d;
+      stroke-width: 6;
+      fill: none;
+      stroke-dasharray: 150 280;
+      stroke-linecap: round;
+      animation: mockup-hero-flow 12s linear infinite, mockup-hero-shimmer 2s ease-in-out infinite alternate;
+    }
+    .mockup-hero .hero-pulse-core {
+      stroke: #a8cde3;
+      stroke-width: 2;
+      fill: none;
+      stroke-dasharray: 150 280;
+      stroke-linecap: round;
+      animation: mockup-hero-flow 12s linear infinite;
+    }
+    @keyframes mockup-hero-flow {
+      from { stroke-dashoffset: 1720; }
+      to   { stroke-dashoffset: 0; }
+    }
+    @keyframes mockup-hero-shimmer {
+      0%   { opacity: 0.3; filter: brightness(0.8); }
+      100% { opacity: 1;   filter: brightness(1.4); }
+    }
+
+    /* ── Marketing — Email Builder ── */
+    .mockup-marketing {
+      width: 100%;
+      height: 100%;
+      background-color: var(--bs-body-bg);
+      display: flex;
+    }
+    .mockup-marketing .mkt-sidebar {
+      width: 340px;
+      min-width: 340px;
+      padding: 28px 24px;
+      border-right: 1px solid var(--stadli-gray-700);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .mockup-marketing .mkt-title {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--stadli-gray-200);
+      margin-bottom: 4px;
+    }
+    .mockup-marketing .mkt-block {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 18px;
+      border: 1px solid var(--stadli-gray-600);
+      border-radius: 8px;
+    }
+    .mockup-marketing .mkt-block-icon {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .mockup-marketing .mkt-block-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--stadli-gray-400);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .mockup-marketing .mkt-block-label {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--stadli-gray-300);
+    }
+    .mockup-marketing .mkt-block-wrapper {
+      position: relative;
+    }
+    .mockup-marketing .mkt-block.is-dragging {
+      transform: translate(60px, 0);
+      border-color: var(--stadli-gray-400);
+      background-color: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      z-index: 2;
+      position: relative;
+    }
+    .mockup-marketing .mkt-motion-lines {
+      position: absolute;
+      top: 50%;
+      right: calc(100% - 56px);
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .mockup-marketing .mkt-motion-lines span {
+      display: block;
+      height: 2px;
+      border-radius: 1px;
+      background-color: var(--stadli-gray-500);
+    }
+    .mockup-marketing .mkt-motion-lines span:nth-child(1) { width: 32px; opacity: 0.5; }
+    .mockup-marketing .mkt-motion-lines span:nth-child(2) { width: 48px; opacity: 0.7; }
+    .mockup-marketing .mkt-motion-lines span:nth-child(3) { width: 56px; opacity: 0.9; }
+    .mockup-marketing .mkt-motion-lines span:nth-child(4) { width: 40px; opacity: 0.6; }
+    .mockup-marketing .mkt-cursor {
+      position: absolute;
+      bottom: -8px;
+      right: -44px;
+      z-index: 3;
+      pointer-events: none;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    }
+    .mockup-marketing .mkt-cursor svg { width: 32px; height: 32px; }
+    .mockup-marketing .mkt-preview {
+      flex: 1;
+      padding: 32px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mockup-marketing .mkt-email {
+      width: 100%;
+      max-width: 480px;
+      border: 1px solid var(--stadli-gray-600);
+      border-radius: 10px;
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+    .mockup-marketing .mkt-email-heading {
+      font-size: 32px;
+      font-weight: 500;
+      color: var(--stadli-gray-300);
+      text-align: center;
+      letter-spacing: 1px;
+      line-height: 1.15;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    .mockup-marketing .mkt-email-image {
+      width: 100%;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .mockup-marketing .mkt-email-image img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+    .mockup-marketing .mkt-email-body {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--stadli-gray-300);
+      text-align: center;
+      margin: 0;
+    }
+    .mockup-marketing .mkt-email-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 48px;
+      background-color: var(--stadli-gray-200);
+      color: var(--stadli-gray-900);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+
+    /* ── CRM — 360 Fan Profile Carousel ── */
+    .mockup-crm {
+      width: 100%;
+      height: 100%;
+      background-color: var(--bs-body-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .mockup-crm .crm-carousel {
+      position: relative;
+      width: 700px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mockup-crm .crm-card {
+      background-color: var(--stadli-gray-800);
+      border: 1px solid var(--stadli-gray-600);
+      border-radius: 12px;
+      padding: 28px 32px 32px;
+      width: 380px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .mockup-crm .crm-card.card-left,
+    .mockup-crm .crm-card.card-right {
+      filter: blur(3px);
+      opacity: 0.45;
+      z-index: 1;
+      width: 340px;
+      padding: 24px 28px 28px;
+    }
+    .mockup-crm .crm-card.card-left  { left: -200px; }
+    .mockup-crm .crm-card.card-right { right: -200px; }
+    .mockup-crm .crm-card.card-center {
+      z-index: 3;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+    }
+    .mockup-crm .crm-side {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding-top: 12px;
+    }
+    .mockup-crm .crm-side-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 2px solid var(--stadli-gray-600);
+      object-fit: cover;
+    }
+    .mockup-crm .crm-side-name {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--stadli-gray-200);
+      text-align: center;
+    }
+    .mockup-crm .crm-side-role {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--stadli-gray-400);
+      letter-spacing: 0.5px;
+    }
+    .mockup-crm .crm-title {
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--stadli-gray-100);
+      margin-bottom: 20px;
+    }
+    .mockup-crm .crm-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--stadli-gray-700);
+    }
+    .mockup-crm .crm-avatar {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      border: 3px solid var(--stadli-gray-600);
+      flex-shrink: 0;
+      object-fit: cover;
+    }
+    .mockup-crm .crm-info { display: flex; flex-direction: column; gap: 4px; }
+    .mockup-crm .crm-name { font-size: 20px; font-weight: 500; color: var(--stadli-gray-100); }
+    .mockup-crm .crm-role-row { display: flex; align-items: center; gap: 8px; }
+    .mockup-crm .crm-role { font-size: 13px; font-weight: 500; color: var(--stadli-gray-400); }
+    .mockup-crm .crm-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #7ec7a3;
+      box-shadow: 0 0 8px rgba(126, 199, 163, 0.6);
+      flex-shrink: 0;
+    }
+    .mockup-crm .crm-stats { display: flex; flex-direction: column; }
+    .mockup-crm .crm-stat-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--stadli-gray-700);
+    }
+    .mockup-crm .crm-stat-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .mockup-crm .crm-stat-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--stadli-gray-400);
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+    .mockup-crm .crm-stat-value { font-size: 18px; font-weight: 500; color: var(--stadli-gray-100); }
+    .mockup-crm .crm-stat-value .unit { font-size: 14px; font-weight: 500; color: var(--stadli-gray-400); }
+
+    /* ── Analytics — Stat Cards with Trend Charts ── */
+    .mockup-analytics {
+      width: 100%;
+      height: 100%;
+      background-color: var(--bs-body-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .mockup-analytics .ana-vignette {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.4) 100%);
+    }
+    .mockup-analytics .ana-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      width: 90%;
+      max-width: 1000px;
+      position: relative;
+      z-index: 1;
+    }
+    .mockup-analytics .ana-card {
+      background-color: var(--stadli-gray-900);
+      border: 1px solid var(--stadli-gray-800);
+      border-radius: 24px;
+      padding: 40px 32px 32px 32px;
+      display: flex;
+      flex-direction: column;
+    }
+    .mockup-analytics .ana-label {
+      color: var(--stadli-gray-500);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .mockup-analytics .ana-value {
+      font-size: 48px;
+      font-weight: 500;
+      margin-bottom: 24px;
+      color: var(--stadli-white);
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+    }
+    .mockup-analytics .ana-trend {
+      height: 60px;
+      width: 100%;
+      margin-top: auto;
+      position: relative;
+    }
+    .mockup-analytics .ana-trend svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+    .mockup-analytics .ana-up      { stroke: #4ade80; filter: drop-shadow(0 0 8px rgba(74, 222, 128, 0.3)); }
+    .mockup-analytics .ana-neutral { stroke: #fbbf24; filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.3)); }
+    .mockup-analytics .ana-down    { stroke: #f87171; filter: drop-shadow(0 0 8px rgba(248, 113, 113, 0.3)); }
+    .mockup-analytics .ana-gradient-fill { opacity: 0.1; }
+
+    /* ── AI — Insight Query Dashboard ── */
+    .mockup-ai {
+      width: 100%;
+      height: 100%;
+      background-color: var(--bs-body-bg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .mockup-ai .ai-content {
+      flex: 1;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 350px 1fr 300px;
+      gap: 20px;
+      min-height: 0;
+    }
+    .mockup-ai .ai-chat-column {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 0;
+    }
+    .mockup-ai .ai-chat-bubbles {
+      flex: 1;
+      margin-bottom: 20px;
+      min-height: 0;
+    }
+    .mockup-ai .ai-chat-message {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .mockup-ai .ai-chat-message.is-user {
+      flex-direction: row-reverse;
+      margin-left: auto;
+      max-width: 85%;
+    }
+    .mockup-ai .ai-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+      font-size: 12px;
+      color: var(--stadli-white);
+      flex-shrink: 0;
+    }
+    .mockup-ai .ai-bubble {
+      padding: 12px 16px;
+      border-radius: 16px;
+      font-size: 14px;
+      line-height: 1.5;
+      max-width: 90%;
+    }
+    .mockup-ai .ai-bubble-user {
+      background-color: var(--stadli-gray-800);
+      color: var(--stadli-gray-100);
+    }
+    .mockup-ai .ai-bubble-ai {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: var(--stadli-gray-300);
+    }
+    .mockup-ai .ai-chat-input-wrap { position: relative; }
+    .mockup-ai .ai-chat-input {
+      width: 100%;
+      background-color: var(--stadli-gray-900);
+      border: 1px solid var(--stadli-gray-700);
+      border-radius: 12px;
+      padding: 12px 40px 12px 16px;
+      color: var(--stadli-white);
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+    }
+    .mockup-ai .ai-chat-input::placeholder { color: var(--stadli-gray-500); }
+    .mockup-ai .ai-send-btn {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--stadli-gray-500);
+      background: none;
+      border: none;
+      padding: 0;
+      display: flex;
+    }
+    .mockup-ai .ai-stats-card {
+      background-color: var(--stadli-gray-900);
+      border: 1px solid var(--stadli-gray-800);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .mockup-ai .ai-card-label {
+      font-size: 13px;
+      color: var(--stadli-gray-500);
+      margin-bottom: 8px;
+    }
+    .mockup-ai .ai-card-value {
+      font-size: 32px;
+      font-weight: 500;
+      color: var(--stadli-white);
+      margin-bottom: 4px;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+    }
+    .mockup-ai .ai-card-trend {
+      font-size: 14px;
+      color: #7ec7a3;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .mockup-ai .ai-mid-grid {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 20px;
+      min-height: 0;
+    }
+    .mockup-ai .ai-right-grid {
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 20px;
+      min-height: 0;
+    }
+    .mockup-ai .ai-generating {
+      background: radial-gradient(circle at center, rgba(168, 85, 247, 0.2), transparent 70%);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .mockup-ai .ai-generating-text {
+      background: linear-gradient(to right, #6366f1, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+    .mockup-ai .ai-leaders-item { margin-bottom: 12px; }
+    .mockup-ai .ai-leaders-item:last-child { margin-bottom: 0; }
+    .mockup-ai .ai-leaders-name { font-size: 15px; font-weight: 500; color: var(--stadli-white); }
+    .mockup-ai .ai-leaders-trend { font-size: 12px; color: #7ec7a3; }
+
+    /* ── Commerce — Stadium Cart ── */
+    .mockup-commerce {
+      width: 100%;
+      height: 100%;
+      background-color: var(--bs-body-bg);
+      display: flex;
+    }
+    .mockup-commerce .cart-seatmap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      min-width: 0;
+    }
+    .mockup-commerce .cart-seatmap img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+    .mockup-commerce .cart-panel {
+      width: 480px;
+      min-width: 480px;
+      border-left: 1px solid var(--stadli-gray-700);
+      display: flex;
+      flex-direction: column;
+    }
+    .mockup-commerce .cart-wrapper {
+      border: 1px solid var(--stadli-gray-600);
+      border-radius: 10px;
+      margin: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      overflow: hidden;
+    }
+    .mockup-commerce .cart-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--stadli-gray-300);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 20px 24px 16px;
+    }
+    .mockup-commerce .cart-items {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 0 24px;
+    }
+    .mockup-commerce .cart-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--stadli-gray-700);
+    }
+    .mockup-commerce .cart-item:last-child { border-bottom: none; }
+    .mockup-commerce .cart-thumb {
+      width: 72px;
+      height: 72px;
+      border-radius: 8px;
+      border: 1px solid var(--stadli-gray-600);
+      overflow: hidden;
+      flex-shrink: 0;
+      background-color: var(--stadli-gray-700);
+    }
+    .mockup-commerce .cart-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .mockup-commerce .cart-details {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .mockup-commerce .cart-name {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--stadli-gray-100);
+    }
+    .mockup-commerce .cart-unit-price {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--stadli-gray-400);
+    }
+    .mockup-commerce .cart-total {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--stadli-gray-300);
+      white-space: nowrap;
+    }
+    .mockup-commerce .cart-footer {
+      padding: 16px 24px 20px;
+      border-top: 1px solid var(--stadli-gray-600);
+    }
+    .mockup-commerce .cart-subtotal {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .mockup-commerce .cart-subtotal-label {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--stadli-gray-200);
+    }
+    .mockup-commerce .cart-subtotal-value {
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--stadli-gray-100);
+    }
+    .mockup-commerce .cart-checkout {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 14px;
+      background-color: var(--stadli-gray-200);
+      color: var(--stadli-gray-900);
+      font-size: 15px;
+      font-weight: 500;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+    }
   </style>
 </head>
 <body>
@@ -386,7 +1121,7 @@
       <div class="d-flex justify-content-between align-items-center py-3">
         <div class="reveal">
           <a href="#" class="navbar-brand-logo text-decoration-none d-flex align-items-center">
-            <img src="https://placehold.co/100x32/222222/aaaaaa?text=LOGO" alt="Logo" height="32" class="rounded">
+            <img src="logo.svg" alt="Stadli" height="28">
           </a>
         </div>
         <nav class="d-none d-md-flex gap-4">
@@ -432,8 +1167,8 @@
         <!-- Full-Width Dashboard Mockup fading at the bottom -->
         <div class="row flex-grow-1 position-relative z-1 reveal delay-400">
           <div class="col-12">
-            <div class="card rounded-top-4 border border-bottom-0 border-secondary border-opacity-50 bg-black bg-opacity-50 backdrop-blur-md w-100 overflow-hidden d-flex flex-column" style="mask-image: linear-gradient(to bottom, black 65%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%); height: 700px; margin-bottom: -150px;">
-              
+            <div class="card rounded-top-4 border border-bottom-0 border-secondary border-opacity-50 bg-black bg-opacity-50 backdrop-blur-md w-100 overflow-hidden" style="mask-image: linear-gradient(to bottom, black 65%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%); margin-bottom: -150px;">
+
               <!-- Mockup Header -->
               <div class="card-header bg-transparent border-bottom border-secondary border-opacity-25 px-4 py-3 d-flex align-items-center gap-3">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white text-opacity-50"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
@@ -444,10 +1179,33 @@
                   <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
                 </div>
               </div>
-              
-              <div class="flex-grow-1 position-relative w-100">
-                <!-- Placeholder Mockup Image -->
-                <img src="https://placehold.co/1440x800/111111/aaaaaa?text=Main+Dashboard+Mockup" alt="Dashboard Mockup" class="w-100 h-100 position-absolute top-0 start-0" style="object-fit: cover;">
+
+              <div class="mockup-frame">
+                <div class="mockup-content">
+                  <div class="mockup-hero">
+                    <svg class="hero-lines" viewBox="0 0 1200 600" preserveAspectRatio="none">
+                      <defs>
+                        <filter id="mockup-hero-glow" x="-20%" y="-20%" width="140%" height="140%">
+                          <feGaussianBlur stdDeviation="8" result="blur"/>
+                          <feMerge>
+                            <feMergeNode in="blur"/>
+                            <feMergeNode in="blur"/>
+                          </feMerge>
+                        </filter>
+                      </defs>
+                      <rect x="300" y="170" width="600" height="260" rx="8" class="hero-base-line"/>
+                      <rect x="300" y="170" width="600" height="260" rx="8" class="hero-pulse-glow" filter="url(#mockup-hero-glow)"/>
+                      <rect x="300" y="170" width="600" height="260" rx="8" class="hero-pulse-core"/>
+                    </svg>
+                    <div class="hero-logo-center">
+                      <img src="logo.svg" alt="Stadli">
+                    </div>
+                    <div class="hero-feature-card hero-top-left"><h3>Ticketing</h3></div>
+                    <div class="hero-feature-card hero-top-right"><h3>Analytics</h3></div>
+                    <div class="hero-feature-card hero-bottom-left"><h3>Marketing<br>campaigns</h3></div>
+                    <div class="hero-feature-card hero-bottom-right"><h3>CRM</h3></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -487,9 +1245,63 @@
               <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
             </div>
           </div>
-          <div class="card-body p-0 bg-black bg-opacity-10 d-flex justify-content-center">
-            <!-- Placeholder Mockup Image -->
-            <img src="https://placehold.co/1200x600/111111/aaaaaa?text=Marketing+Builder+Mockup" alt="Marketing Campaign Builder" class="w-100 h-auto">
+          <div class="card-body p-0 bg-black bg-opacity-10">
+            <div class="mockup-frame">
+              <div class="mockup-content">
+                <div class="mockup-marketing">
+                  <!-- Left Sidebar -->
+                  <div class="mkt-sidebar">
+                    <div class="mkt-title">Email Marketing</div>
+
+                    <div class="mkt-block">
+                      <div class="mkt-block-icon">
+                        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><line x1="7" y1="10" x2="17" y2="10"/><line x1="7" y1="14" x2="13" y2="14"/></svg>
+                      </div>
+                      <span class="mkt-block-label">Text</span>
+                    </div>
+
+                    <div class="mkt-block-wrapper">
+                      <div class="mkt-motion-lines"><span></span><span></span><span></span><span></span></div>
+                      <div class="mkt-block is-dragging">
+                        <div class="mkt-block-icon">
+                          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                        </div>
+                        <span class="mkt-block-label">Image</span>
+                        <div class="mkt-cursor">
+                          <svg viewBox="0 0 24 24" fill="#ffffff" stroke="none"><path d="M5 3l14 10.5H12l-1.5 7.5z"/></svg>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="mkt-block">
+                      <div class="mkt-block-icon">
+                        <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="3"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                      </div>
+                      <span class="mkt-block-label">Button</span>
+                    </div>
+
+                    <div class="mkt-block">
+                      <div class="mkt-block-icon">
+                        <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/></svg>
+                      </div>
+                      <span class="mkt-block-label">Divider</span>
+                    </div>
+                  </div>
+
+                  <!-- Right Preview -->
+                  <div class="mkt-preview">
+                    <div class="mkt-email">
+                      <div class="mkt-email-heading">Support Our<br>Team</div>
+                      <div class="mkt-email-image">
+                        <img src="https://placehold.co/480x220/1a1a1a/929292?text=Hero+Image" alt="Hero image placeholder">
+                      </div>
+                      <p class="mkt-email-body">Get your tickets now!</p>
+                      <a href="#" class="mkt-email-cta">Buy Tickets</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -527,9 +1339,57 @@
               <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
             </div>
           </div>
-          <div class="card-body p-0 bg-black bg-opacity-10 d-flex justify-content-center">
-            <!-- Placeholder Mockup Image -->
-            <img src="https://placehold.co/1200x600/111111/aaaaaa?text=Fan+Profile+Mockup" alt="CRM Fan Profile Mockup" class="w-100 h-auto">
+          <div class="card-body p-0 bg-black bg-opacity-10">
+            <div class="mockup-frame">
+              <div class="mockup-content">
+                <div class="mockup-crm">
+                  <div class="crm-carousel">
+
+                    <!-- Left Card (blurred) -->
+                    <div class="crm-card card-left">
+                      <div class="crm-side">
+                        <img src="https://placehold.co/72x72/303030/929292?text=JB" alt="Jenn B." class="crm-side-avatar">
+                        <div class="crm-side-name">Jenn Bennett</div>
+                        <div class="crm-side-role">Tour Pass Holder</div>
+                      </div>
+                    </div>
+
+                    <!-- Center Card (focused) -->
+                    <div class="crm-card card-center">
+                      <div class="crm-title">360 Fan Profile</div>
+
+                      <div class="crm-header">
+                        <img src="https://placehold.co/76x76/303030/929292?text=MG" alt="Marcus Grant" class="crm-avatar">
+                        <div class="crm-info">
+                          <div class="crm-name">Marcus Grant</div>
+                          <div class="crm-role-row">
+                            <span class="crm-role">Tour Pass Holder</span>
+                            <span class="crm-dot"></span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="crm-stats">
+                        <div class="crm-stat-row"><span class="crm-stat-label">Purchases</span><span class="crm-stat-value">5</span></div>
+                        <div class="crm-stat-row"><span class="crm-stat-label">Engagement Score</span><span class="crm-stat-value">87</span></div>
+                        <div class="crm-stat-row"><span class="crm-stat-label">Attendance Rate</span><span class="crm-stat-value">75 <span class="unit">%</span></span></div>
+                        <div class="crm-stat-row"><span class="crm-stat-label">Lifetime Value</span><span class="crm-stat-value">$1,250</span></div>
+                      </div>
+                    </div>
+
+                    <!-- Right Card (blurred) -->
+                    <div class="crm-card card-right">
+                      <div class="crm-side">
+                        <img src="https://placehold.co/72x72/303030/929292?text=SB" alt="S. Bonhamm" class="crm-side-avatar">
+                        <div class="crm-side-name">S. Bonhamm</div>
+                        <div class="crm-side-role">Pass Holder</div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -565,8 +1425,70 @@
             </div>
           </div>
           <div class="card-body p-0 bg-black bg-opacity-10">
-            <!-- Placeholder Mockup Image -->
-            <img src="https://placehold.co/1200x600/111111/aaaaaa?text=Analytics+Dashboard+Mockup" alt="Analytics Dashboard Mockup" class="w-100 h-auto">
+            <div class="mockup-frame">
+              <div class="mockup-content">
+                <div class="mockup-analytics">
+                  <div class="ana-vignette"></div>
+                  <div class="ana-grid">
+
+                    <!-- Revenue Card -->
+                    <div class="ana-card">
+                      <div class="ana-label">Revenue</div>
+                      <div class="ana-value">$45,732</div>
+                      <div class="ana-trend">
+                        <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+                          <defs>
+                            <linearGradient id="mockup-ana-grad-1" x1="0%" y1="0%" x2="0%" y2="100%">
+                              <stop offset="0%" stop-color="#4ade80" stop-opacity="0.2"/>
+                              <stop offset="100%" stop-color="#4ade80" stop-opacity="0"/>
+                            </linearGradient>
+                          </defs>
+                          <path d="M0,50 Q20,45 40,48 T80,42 T120,35 T160,25 T200,10" fill="transparent" stroke-width="3" stroke-linecap="round" class="ana-up"/>
+                          <path d="M0,50 Q20,45 40,48 T80,42 T120,35 T160,25 T200,10 L200,60 L0,60 Z" fill="url(#mockup-ana-grad-1)" stroke="none" class="ana-gradient-fill"/>
+                        </svg>
+                      </div>
+                    </div>
+
+                    <!-- Conversion Rate Card -->
+                    <div class="ana-card">
+                      <div class="ana-label">Conversion Rate</div>
+                      <div class="ana-value">3.9%</div>
+                      <div class="ana-trend">
+                        <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+                          <defs>
+                            <linearGradient id="mockup-ana-grad-2" x1="0%" y1="0%" x2="0%" y2="100%">
+                              <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.2"/>
+                              <stop offset="100%" stop-color="#fbbf24" stop-opacity="0"/>
+                            </linearGradient>
+                          </defs>
+                          <path d="M0,45 Q15,55 30,45 T60,35 T90,50 T120,40 T150,30 T180,45 T200,45" fill="transparent" stroke-width="3" stroke-linecap="round" class="ana-neutral"/>
+                          <path d="M0,45 Q15,55 30,45 T60,35 T90,50 T120,40 T150,30 T180,45 T200,45 L200,60 L0,60 Z" fill="url(#mockup-ana-grad-2)" stroke="none" class="ana-gradient-fill"/>
+                        </svg>
+                      </div>
+                    </div>
+
+                    <!-- Per Cap Card -->
+                    <div class="ana-card">
+                      <div class="ana-label">Per Cap $</div>
+                      <div class="ana-value">$18.27</div>
+                      <div class="ana-trend">
+                        <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+                          <defs>
+                            <linearGradient id="mockup-ana-grad-3" x1="0%" y1="0%" x2="0%" y2="100%">
+                              <stop offset="0%" stop-color="#4ade80" stop-opacity="0.2"/>
+                              <stop offset="100%" stop-color="#4ade80" stop-opacity="0"/>
+                            </linearGradient>
+                          </defs>
+                          <path d="M0,55 Q30,50 60,42 T100,35 T140,25 T180,15 T200,5" fill="transparent" stroke-width="3" stroke-linecap="round" class="ana-up"/>
+                          <path d="M0,55 Q30,50 60,42 T100,35 T140,25 T180,15 T200,5 L200,60 L0,60 Z" fill="url(#mockup-ana-grad-3)" stroke="none" class="ana-gradient-fill"/>
+                        </svg>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -601,9 +1523,91 @@
               <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
             </div>
           </div>
-          <div class="card-body p-0 bg-black bg-opacity-10 d-flex justify-content-center">
-            <!-- Placeholder Mockup Image -->
-            <img src="https://placehold.co/1200x600/111111/aaaaaa?text=AI+Query+Interface+Mockup" alt="AI Interface Mockup" class="w-100 h-auto">
+          <div class="card-body p-0 bg-black bg-opacity-10">
+            <div class="mockup-frame">
+              <div class="mockup-content">
+                <div class="mockup-ai">
+                  <div class="ai-content">
+
+                    <!-- Left Column: Chat -->
+                    <div class="ai-chat-column">
+                      <div class="ai-chat-bubbles">
+                        <div class="ai-chat-message is-user">
+                          <div class="ai-bubble ai-bubble-user">
+                            Who led the team in RBIs during the last road series?
+                          </div>
+                        </div>
+                        <div class="ai-chat-message">
+                          <div class="ai-avatar">AI</div>
+                          <div class="ai-bubble ai-bubble-ai">
+                            The middle of the order stepped up. Freeman and Ohtani led the pack, accounting for 12 and 9 runs batted in, respectively.
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="ai-chat-input-wrap">
+                        <input type="text" class="ai-chat-input" placeholder="Ask about team stats..." readonly>
+                        <button class="ai-send-btn" type="button" tabindex="-1">
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- Middle Column: Main Stats -->
+                    <div class="ai-mid-grid">
+                      <div class="ai-stats-card">
+                        <div class="ai-card-label">Season Ticket Revenue</div>
+                        <div class="ai-card-value">$842,000</div>
+                        <div class="ai-card-trend">+ 12.4 %</div>
+                      </div>
+
+                      <div class="ai-stats-card">
+                        <div class="ai-card-label">Roster Leaders</div>
+                        <div class="ai-leaders-item">
+                          <div class="ai-leaders-name">Batting AVG</div>
+                          <div class="ai-leaders-trend">.312 (Team High)</div>
+                        </div>
+                        <div class="ai-leaders-item">
+                          <div class="ai-leaders-name">Home Runs</div>
+                          <div class="ai-leaders-trend">42 (League Leader)</div>
+                        </div>
+                        <div class="ai-leaders-item">
+                          <div class="ai-leaders-name">Stolen Bases</div>
+                          <div class="ai-leaders-trend">18 (Last 30 Days)</div>
+                        </div>
+                        <div class="ai-leaders-item">
+                          <div class="ai-leaders-name">ERA (Starters)</div>
+                          <div class="ai-leaders-trend">2.45 (League Low)</div>
+                        </div>
+                      </div>
+
+                      <div class="ai-stats-card">
+                        <div class="ai-card-label" style="margin-bottom: 4px;">Upcoming Series</div>
+                        <div style="color: var(--stadli-white); font-size: 13px;">Home vs. Dodgers (3 Games)</div>
+                      </div>
+                    </div>
+
+                    <!-- Right Column: Secondary Stats & Loading -->
+                    <div class="ai-right-grid">
+                      <div class="ai-stats-card ai-generating">
+                        <div class="ai-generating-text">Simulating<br>matchups...</div>
+                      </div>
+                      <div class="ai-stats-card">
+                        <div class="ai-card-label">Win Percentage</div>
+                        <div class="ai-card-value">.640</div>
+                        <div class="ai-card-trend">+ 0.05 %</div>
+                      </div>
+                      <div class="ai-stats-card">
+                        <div class="ai-card-label">Avg. Attendance</div>
+                        <div class="ai-card-value">42,150</div>
+                        <div class="ai-card-trend">+ 15.2 %</div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -639,8 +1643,72 @@
             </div>
           </div>
           <div class="card-body p-0 position-relative bg-black bg-opacity-10">
-            <!-- Placeholder Mockup Image -->
-            <img src="https://placehold.co/1200x600/111111/aaaaaa?text=Interactive+Seatmap+Mockup" alt="Ticketing Seatmap Mockup" class="w-100 h-auto">
+            <div class="mockup-frame">
+              <div class="mockup-content">
+                <div class="mockup-commerce">
+
+                  <!-- Left: Seat Map -->
+                  <div class="cart-seatmap">
+                    <img src="https://placehold.co/520x520/111111/484848?text=Stadium+Seatmap" alt="Stadium seat map">
+                  </div>
+
+                  <!-- Right: Cart -->
+                  <div class="cart-panel">
+                    <div class="cart-wrapper">
+                      <div class="cart-title">Cart</div>
+
+                      <div class="cart-items">
+                        <!-- Merch Jersey -->
+                        <div class="cart-item">
+                          <div class="cart-thumb">
+                            <img src="https://placehold.co/72x72/303030/929292?text=Jersey" alt="Merch Jersey">
+                          </div>
+                          <div class="cart-details">
+                            <span class="cart-name">Merch Jersey</span>
+                            <span class="cart-unit-price">$50.00</span>
+                          </div>
+                          <span class="cart-total">$50.00</span>
+                        </div>
+
+                        <!-- Ticket -->
+                        <div class="cart-item">
+                          <div class="cart-thumb">
+                            <img src="https://placehold.co/72x72/303030/929292?text=Ticket+A10" alt="Ticket A10">
+                          </div>
+                          <div class="cart-details">
+                            <span class="cart-name">Ticket</span>
+                            <span class="cart-unit-price">$75.00</span>
+                          </div>
+                          <span class="cart-total">$75.00</span>
+                        </div>
+
+                        <!-- Digital Gift Card -->
+                        <div class="cart-item">
+                          <div class="cart-thumb">
+                            <img src="https://placehold.co/72x72/303030/929292?text=Gift+Card" alt="Digital Gift Card">
+                          </div>
+                          <div class="cart-details">
+                            <span class="cart-name">Digital Gift Card</span>
+                            <span class="cart-unit-price">$25.00</span>
+                          </div>
+                          <span class="cart-total">$25.00</span>
+                        </div>
+                      </div>
+
+                      <!-- Footer -->
+                      <div class="cart-footer">
+                        <div class="cart-subtotal">
+                          <span class="cart-subtotal-label">Subtotal</span>
+                          <span class="cart-subtotal-value">$150.00</span>
+                        </div>
+                        <a href="#" class="cart-checkout">Checkout</a>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -687,7 +1755,7 @@
       <div class="row g-4">
         <div class="col-12 col-md-4 reveal">
           <div class="mb-3">
-            <img src="https://placehold.co/100x32/222222/aaaaaa?text=LOGO" alt="Logo" height="32" class="rounded">
+            <img src="logo.svg" alt="Stadli" height="28">
           </div>
           <p class="small mb-0">The ticketing engine for high-velocity sports franchises.</p>
         </div>
