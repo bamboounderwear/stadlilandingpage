@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>360 Fan Profile Mockup</title>
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --white: #ffffff;
+            --black: #020202;
+            --gray-100: #e8e8e8;
+            --gray-200: #d6d6d6;
+            --gray-300: #c0c0c0;
+            --gray-400: #929292;
+            --gray-500: #6a6a6a;
+            --gray-600: #484848;
+            --gray-700: #303030;
+            --gray-800: #1a1a1a;
+            --gray-900: #010101;
+            
+            --primary: var(--gray-900);
+            --secondary: var(--gray-600);
+            --accent-green: #4ade80; /* Status dot and percentage color */
+        }
+
+        body {
+            background-color: var(--black);
+            font-family: 'Inter', sans-serif;
+            color: var(--white);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* Fixed 1200x600 Container */
+        .mockup-container {
+            width: 1200px;
+            height: 600px;
+            position: relative;
+            background-color: var(--black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Stacked Cards Background Effect */
+        .bg-card {
+            position: absolute;
+            width: 380px;
+            height: 520px;
+            background-color: var(--gray-900);
+            border: 1px solid var(--gray-700);
+            border-radius: 24px;
+            opacity: 0.35; /* Increased visibility */
+            z-index: 1;
+        }
+
+        .bg-card-left {
+            transform: translateX(-180px) scale(0.9);
+            filter: blur(1px); /* Slightly reduced blur */
+        }
+
+        .bg-card-right {
+            transform: translateX(180px) scale(0.9);
+            filter: blur(1px); /* Slightly reduced blur */
+        }
+
+        /* Content for background cards (simplified) */
+        .bg-card-content {
+            padding: 40px 30px;
+        }
+        .bg-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--gray-800);
+            margin-bottom: 20px;
+        }
+
+        /* Main Profile Card */
+        .profile-card {
+            width: 420px;
+            background-color: var(--gray-900);
+            border: 1px solid var(--gray-700);
+            border-radius: 24px;
+            padding: 32px;
+            z-index: 10;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .profile-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--white);
+        }
+
+        /* Inner Profile Info Box */
+        .profile-info-box {
+            background-color: rgba(26, 26, 26, 0.4);
+            border: 1px solid var(--gray-700);
+            border-radius: 18px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .avatar-container {
+            width: 84px;
+            height: 84px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--gray-700);
+        }
+
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .name-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 0;
+            color: var(--white);
+        }
+
+        .status-text {
+            color: var(--gray-400);
+            font-size: 0.95rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-green);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px var(--accent-green);
+        }
+
+        /* Data Rows */
+        .data-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .data-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+            border-top: 1px solid var(--gray-800);
+        }
+
+        .data-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .label {
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            font-weight: 500;
+            color: var(--gray-400);
+            text-transform: uppercase;
+        }
+
+        .value {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--white);
+        }
+
+        .percentage-symbol {
+            color: var(--accent-green);
+            font-size: 0.9em;
+            margin-left: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mockup-container">
+        
+        <!-- Background Cards for Depth -->
+        <div class="bg-card bg-card-left">
+            <div class="bg-card-content">
+                <img src="https://placehold.co/80x80/1a1a1a/484848?text=JB" alt="Avatar" class="bg-avatar">
+                <div class="h4 text-secondary mb-1">Jenn Ber</div>
+                <div class="small text-secondary">Tour Pass H</div>
+            </div>
+        </div>
+        
+        <div class="bg-card bg-card-right">
+            <div class="bg-card-content">
+                <img src="https://placehold.co/80x80/1a1a1a/484848?text=BB" alt="Avatar" class="bg-avatar">
+                <div class="h4 text-secondary mb-1">Bo Bonham</div>
+                <div class="small text-secondary">Pass Holder</div>
+            </div>
+        </div>
+
+        <!-- Main Profile Card -->
+        <div class="profile-card">
+            <h1 class="profile-title">360 Fan Profile</h1>
+            
+            <div class="profile-info-box">
+                <div class="avatar-container">
+                    <!-- Placeholder for Marcus Grant -->
+                    <img src="https://placehold.co/100x100/303030/ffffff?text=MG" alt="Marcus Grant" class="avatar-img">
+                </div>
+                <div>
+                    <h2 class="name-title">Marcus Grant</h2>
+                    <p class="status-text">
+                        Tour Pass Holder 
+                        <span class="status-dot"></span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="data-list">
+                <div class="data-item">
+                    <span class="label">Purchases</span>
+                    <span class="value">5</span>
+                </div>
+                <div class="data-item">
+                    <span class="label">Engagement Score</span>
+                    <span class="value">87</span>
+                </div>
+                <div class="data-item">
+                    <span class="label">Attendance Rate</span>
+                    <span class="value">75<span class="percentage-symbol">%</span></span>
+                </div>
+                <div class="data-item">
+                    <span class="label">Lifetime Value</span>
+                    <span class="value">$1,250</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap JS Bundle (optional but good to have) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

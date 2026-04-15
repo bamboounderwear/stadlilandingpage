@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stadli | High-performance ticketing engine</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* * Stadli Design System - CSS Overrides 
+     * Mapped from SCSS tokens & philosophy rules.
+     */
+    
+    :root {
+      /* Typography System */
+      --bs-font-sans-serif: "Helvetica Neue", "Helvetica Now", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --bs-body-font-family: var(--bs-font-sans-serif);
+      
+      /* Neutrals */
+      --stadli-black: #000000;
+      --stadli-white: #ffffff;
+      --stadli-gray-100: #e8e8e8;
+      --stadli-gray-200: #d6d6d6;
+      --stadli-gray-300: #c0c0c0;
+      --stadli-gray-400: #929292;
+      --stadli-gray-500: #6a6a6a;
+      --stadli-gray-600: #484848;
+      --stadli-gray-700: #303030;
+      --stadli-gray-800: #1a1a1a;
+      --stadli-gray-900: #010101;
+
+      /* UI Semantics (Muted) + RGB mappings to override BS5 internal utilities */
+      --bs-primary: #010101;
+      --bs-primary-rgb: 1, 1, 1;
+      --bs-secondary: #6a6a6a;
+      --bs-secondary-rgb: 106, 106, 106;
+      --bs-success: #3f7f5f;
+      --bs-success-rgb: 63, 127, 95;
+      --bs-warning: #a0712c;
+      --bs-warning-rgb: 160, 113, 44;
+      --bs-danger: #954947;
+      --bs-danger-rgb: 149, 73, 71;
+      --bs-info: #3b6f8d;
+      --bs-info-rgb: 59, 111, 141;
+
+      /* Base Theme (Light) */
+      --bs-body-bg: #e8e8e8;
+      --bs-body-bg-rgb: 232, 232, 232;
+      --bs-body-color: #010101;
+      --bs-body-color-rgb: 1, 1, 1;
+      --bs-secondary-color: #303030;
+      --bs-tertiary-color: #484848;
+      --bs-emphasis-color: #010101;
+      --bs-emphasis-color-rgb: 1, 1, 1;
+      --bs-border-color: #d6d6d6;
+      --bs-tertiary-bg: #ffffff;
+      --bs-tertiary-bg-rgb: 255, 255, 255;
+      --bs-secondary-bg: #d6d6d6;
+      --bs-secondary-bg-rgb: 214, 214, 214;
+
+      /* Link Overrides */
+      --bs-link-color: var(--bs-body-color);
+      --bs-link-hover-color: var(--bs-secondary-color);
+      --bs-link-decoration: none;
+
+      /* Custom Token for Primary Button Text */
+      --stadli-btn-primary-color: #ffffff;
+
+      /* Spectrum Palette for Marketing (Cards/Fills) */
+      --spec-blue: #0140f0;
+      --spec-lime: #ecfc3b;
+      --spec-rose: #f6166e;
+      --spec-cyan: #00b0d8;
+    }
+
+    /* Dark Mode Overrides */
+    [data-bs-theme="dark"] {
+      --bs-primary: #e8e8e8;
+      --bs-primary-rgb: 232, 232, 232;
+      --bs-secondary: #929292;
+      --bs-secondary-rgb: 146, 146, 146;
+      --bs-success: #7ec7a3;
+      --bs-success-rgb: 126, 199, 163;
+      --bs-warning: #d7b06b;
+      --bs-warning-rgb: 215, 176, 107;
+      --bs-danger: #d28b86;
+      --bs-danger-rgb: 210, 139, 134;
+      --bs-info: #7cb0ce;
+      --bs-info-rgb: 124, 176, 206;
+
+      --bs-body-bg: #010101;
+      --bs-body-bg-rgb: 1, 1, 1;
+      --bs-body-color: #e8e8e8;
+      --bs-body-color-rgb: 232, 232, 232;
+      --bs-secondary-color: #929292;
+      --bs-tertiary-color: #6a6a6a;
+      --bs-emphasis-color: #ffffff;
+      --bs-emphasis-color-rgb: 255, 255, 255;
+      --bs-border-color: #161616;
+      --bs-tertiary-bg: #080808;
+      --bs-tertiary-bg-rgb: 8, 8, 8;
+      --bs-secondary-bg: #1a1a1a;
+      --bs-secondary-bg-rgb: 26, 26, 26;
+
+      --stadli-btn-primary-color: #000000;
+    }
+
+    body {
+      background-color: var(--bs-body-bg);
+      color: var(--bs-body-color);
+      -webkit-font-smoothing: antialiased;
+      font-size: 1.078rem; /* Increased base font size by 15% */
+      overflow-x: hidden;
+    }
+
+    /* Global link transitions */
+    a {
+      transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+    }
+
+    /* Typography Overrides */
+    h1, .h1 { font-size: clamp(2.875rem, 5.75vw, 5.75rem); font-weight: 500; line-height: 1.05; letter-spacing: -0.03em; }
+    h2, .h2 { font-size: clamp(2.01rem, 4.02vw, 3.16rem); font-weight: 500; line-height: 1.1; letter-spacing: -0.02em; }
+    h3, .h3 { font-size: 1.32rem; font-weight: 600; letter-spacing: -0.01em; }
+    
+    .text-label {
+      display: block;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+
+    /* Metric Emphasis (Oversized, tabular nums) */
+    .metric-hero {
+      font-size: clamp(4.025rem, 8.05vw, 7.475rem);
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Section Spacing Overrides */
+    section[id] {
+      padding-top: 6rem !important;
+      padding-bottom: 6rem !important;
+    }
+    @media (min-width: 992px) {
+      section[id] {
+        padding-top: 9.5rem !important;
+        padding-bottom: 9.5rem !important;
+      }
+    }
+
+    /* Components - Buttons (Monochrome strictly enforced via component variables) */
+    .btn {
+      --bs-btn-focus-box-shadow: 0 0 0 0.2rem rgba(var(--bs-emphasis-color-rgb), 0.12);
+      font-weight: 500;
+      border-radius: 0.375rem;
+      padding: 0.5rem 1rem;
+      transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+    }
+    .btn-primary {
+      --bs-btn-color: var(--stadli-btn-primary-color);
+      --bs-btn-bg: var(--bs-primary);
+      --bs-btn-border-color: var(--bs-primary);
+      --bs-btn-hover-color: var(--stadli-btn-primary-color);
+      --bs-btn-hover-bg: var(--bs-secondary-color);
+      --bs-btn-hover-border-color: var(--bs-secondary-color);
+      --bs-btn-active-color: var(--stadli-btn-primary-color);
+      --bs-btn-active-bg: var(--bs-secondary-color);
+      --bs-btn-active-border-color: var(--bs-secondary-color);
+    }
+    .btn-outline-secondary {
+      --bs-btn-color: var(--bs-body-color);
+      --bs-btn-bg: transparent;
+      --bs-btn-border-color: var(--bs-border-color);
+      --bs-btn-hover-color: var(--bs-body-color);
+      --bs-btn-hover-bg: var(--bs-secondary-bg);
+      --bs-btn-hover-border-color: var(--bs-border-color);
+      --bs-btn-active-color: var(--bs-body-color);
+      --bs-btn-active-bg: var(--bs-secondary-bg);
+      --bs-btn-active-border-color: var(--bs-border-color);
+    }
+    .btn-ghost {
+      --bs-btn-color: var(--bs-body-color);
+      --bs-btn-bg: transparent;
+      --bs-btn-border-color: transparent;
+      --bs-btn-hover-color: var(--bs-body-color);
+      --bs-btn-hover-bg: var(--bs-secondary-bg);
+      --bs-btn-hover-border-color: transparent;
+      --bs-btn-active-color: var(--bs-body-color);
+      --bs-btn-active-bg: var(--bs-secondary-bg);
+      --bs-btn-active-border-color: transparent;
+    }
+
+    /* Components - Cards (Flat, no shadows) */
+    .card {
+      --bs-card-bg: var(--bs-tertiary-bg);
+      --bs-card-border-color: var(--bs-border-color);
+      --bs-card-border-radius: 0.5rem;
+      --bs-card-box-shadow: none;
+      transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+    }
+    .card-hover {
+      transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-2px);
+    }
+    
+    /* Rounded Overrides */
+    .rounded-4 { border-radius: 0.75rem !important; }
+    
+    /* Patterns & Motifs */
+    .bg-dot-grid {
+      background-image: radial-gradient(var(--bs-border-color) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .slash-pattern {
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(0,0,0,0.03) 10px,
+        rgba(0,0,0,0.03) 12px
+      );
+    }
+
+    /* AI Badge Pattern */
+    .badge-ai {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--bs-body-color);
+      background: transparent;
+      border: 1px solid var(--bs-border-color);
+      border-radius: 50rem;
+      overflow: hidden;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    .badge-ai::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%; width: 200%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(var(--bs-emphasis-color-rgb), 0.15), transparent);
+      animation: badge-shimmer 2.4s ease-in-out infinite;
+    }
+    @keyframes badge-shimmer {
+      0% { transform: translateX(-50%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* AI Builder Zone Motif */
+    .ai-builder-zone {
+      position: relative;
+      border: 1px solid var(--bs-border-color);
+      border-radius: 0.75rem;
+      background-color: var(--bs-body-bg);
+      overflow: hidden;
+    }
+    .ai-builder-zone::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 2px;
+      background: linear-gradient(90deg, var(--spec-cyan), var(--spec-rose));
+      opacity: 0.7;
+    }
+
+    /* Spectrum Classes for Marketing ONLY */
+    .bg-spec-lime { background-color: var(--spec-lime); color: var(--stadli-black); border-color: var(--spec-lime); }
+    .bg-spec-blue { background-color: var(--spec-blue); color: var(--stadli-white); border-color: var(--spec-blue); }
+    
+    /* Utilities */
+    .container-fluid {
+      max-width: 1440px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .min-vh-80 { min-height: 80vh; }
+    
+    .backdrop-blur-md {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    
+    .bg-glass {
+      background-color: rgba(var(--bs-tertiary-bg-rgb), 0.6) !important;
+    }
+
+    .bg-glass-transparent {
+      background-color: rgba(255, 255, 255, 0.05) !important;
+      border-color: rgba(255, 255, 255, 0.15) !important;
+    }
+
+    /* Navbar Transitions */
+    #navbar {
+      transition: background-color 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease;
+    }
+    .navbar-transparent {
+      background-color: transparent !important;
+      border-color: transparent !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+    .navbar-scrolled {
+      background-color: rgba(var(--bs-body-bg-rgb), 0.75) !important;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--bs-border-color) !important;
+    }
+
+    /* Navbar Contextual Colors */
+    .navbar-brand-logo {
+      color: var(--bs-emphasis-color);
+      transition: color 0.3s ease;
+    }
+    .navbar-link {
+      color: var(--bs-secondary-color);
+      transition: color 0.3s ease;
+    }
+    .navbar-link:hover {
+      color: var(--bs-emphasis-color);
+    }
+    .navbar-transparent .navbar-brand-logo {
+      color: #ffffff !important;
+    }
+    .navbar-transparent .navbar-link {
+      color: rgba(255, 255, 255, 0.8) !important;
+    }
+    .navbar-transparent .navbar-link:hover {
+      color: #ffffff !important;
+    }
+    .navbar-transparent .navbar-ghost-btn {
+      --bs-btn-color: #ffffff;
+      --bs-btn-hover-color: #ffffff;
+      --bs-btn-hover-bg: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Scroll Reveal Animations */
+    .reveal {
+      opacity: 0;
+      filter: blur(15px);
+      transform: translateY(30px);
+      transition: opacity 0.8s ease-out, filter 0.8s ease-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, filter, transform;
+    }
+    .reveal-slow {
+      opacity: 0;
+      filter: blur(20px);
+      transition: opacity 2.5s ease-out, filter 2.5s ease-out;
+      will-change: opacity, filter;
+    }
+    .reveal.active, .reveal-slow.active {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
+    }
+    .delay-100 { transition-delay: 100ms; }
+    .delay-200 { transition-delay: 200ms; }
+    .delay-300 { transition-delay: 300ms; }
+    .delay-400 { transition-delay: 400ms; }
+    .delay-500 { transition-delay: 500ms; }
+    .delay-600 { transition-delay: 600ms; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .reveal-slow {
+        transition: none !important;
+        opacity: 1 !important;
+        filter: blur(0) !important;
+        transform: translateY(0) !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header id="navbar" class="position-fixed top-0 w-100 z-3 navbar-transparent">
+    <div class="container-fluid px-4 px-md-5">
+      <div class="d-flex justify-content-between align-items-center py-3">
+        <div class="reveal">
+          <a href="#" class="navbar-brand-logo text-decoration-none d-flex align-items-center">
+            <img src="https://placehold.co/100x32/222222/aaaaaa?text=LOGO" alt="Logo" height="32" class="rounded">
+          </a>
+        </div>
+        <nav class="d-none d-md-flex gap-4">
+          <div class="reveal delay-100"><a href="#marketing" class="navbar-link text-decoration-none small fw-medium">Marketing</a></div>
+          <div class="reveal delay-200"><a href="#crm" class="navbar-link text-decoration-none small fw-medium">CRM</a></div>
+          <div class="reveal delay-300"><a href="#bi" class="navbar-link text-decoration-none small fw-medium">Analytics</a></div>
+          <div class="reveal delay-400"><a href="#commerce" class="navbar-link text-decoration-none small fw-medium">Ticketing</a></div>
+        </nav>
+        <div class="d-flex gap-2">
+          <div class="reveal delay-500 d-none d-md-block"><button class="btn btn-ghost btn-sm navbar-ghost-btn">Sign in</button></div>
+          <div class="reveal delay-600"><button class="btn btn-primary btn-sm">Book demo</button></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section with Linear-inspired Layout -->
+    <section class="d-flex flex-column align-items-center w-100 position-relative pt-5 pb-0" style="overflow: hidden;">
+      
+      <!-- Independent Background Layer with placehold.co -->
+      <div class="position-absolute top-0 start-0 w-100 h-100 reveal-slow" style="background: linear-gradient(to bottom, rgba(1, 1, 1, 0.5) 0%, rgba(1, 1, 1, 0.85) 60%, var(--bs-body-bg) 100%), url('https://placehold.co/1920x1080/000000/333333?text=Stadium+Background') center top/cover no-repeat; z-index: 0;"></div>
+
+      <div class="container-fluid px-4 px-md-5 pt-5 mt-lg-4 d-flex flex-column flex-grow-1 position-relative z-1">
+        
+        <!-- Text and Link Row with increased top spacing -->
+        <div class="row align-items-center mb-5 pb-lg-4 mt-4 pt-5" style="padding-top: 8rem !important;">
+          <div class="col-12 col-lg-7 pe-lg-5">
+            <h1 class="mb-4 text-white fw-medium reveal delay-200" style="font-size: clamp(2.875rem, 8.05vw, 5.175rem); letter-spacing: -0.04em;">Bonjour, Stadli.</h1>
+            <p class="fs-4 text-white text-opacity-75 mb-0 reveal delay-300" style="max-width: 600px;">
+              Une seule plateforme pour vendre, engager et comprendre vos fans.
+            </p>
+          </div>
+          <div class="col-12 col-lg-5 text-lg-end mt-4 mt-lg-0 reveal delay-400">
+            <a href="#demo" class="text-decoration-none small d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill bg-black bg-opacity-50 border border-secondary border-opacity-25 backdrop-blur-md card-hover">
+              <span class="rounded-circle" style="width: 8px; height: 8px; background-color: #7b2ff7;"></span>
+              <span class="text-white fw-medium">Voyez Stadli en action</span>
+              <span class="text-white text-opacity-50 ms-1">stadli.com/demo &rarr;</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Full-Width Dashboard Mockup fading at the bottom -->
+        <div class="row flex-grow-1 position-relative z-1 reveal delay-400">
+          <div class="col-12">
+            <div class="card rounded-top-4 border border-bottom-0 border-secondary border-opacity-50 bg-black bg-opacity-50 backdrop-blur-md w-100 overflow-hidden d-flex flex-column" style="mask-image: linear-gradient(to bottom, black 65%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%); height: 700px; margin-bottom: -150px;">
+              
+              <!-- Mockup Header -->
+              <div class="card-header bg-transparent border-bottom border-secondary border-opacity-25 px-4 py-3 d-flex align-items-center gap-3">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white text-opacity-50"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                <span class="font-monospace text-white text-opacity-50" style="font-size: 0.86rem;">stadli/app/dashboard/main.tsx</span>
+                <div class="d-flex gap-2 ms-auto">
+                  <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
+                  <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
+                  <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
+                </div>
+              </div>
+              
+              <div class="flex-grow-1 position-relative w-100">
+                <!-- Placeholder Mockup Image -->
+                <img src="https://placehold.co/1440x800/111111/aaaaaa?text=Main+Dashboard+Mockup" alt="Dashboard Mockup" class="w-100 h-100 position-absolute top-0 start-0" style="object-fit: cover;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Marketing Tools -->
+    <section id="marketing" class="border-top pb-5 pb-lg-6 bg-body position-relative z-2">
+      <div class="container-fluid px-4 px-md-5">
+        <!-- 50/50 Split Header -->
+        <div class="row mb-5 pb-lg-4">
+          <div class="col-12 col-lg-6 mb-4 mb-lg-0 pe-lg-5 reveal">
+            <h2 class="mb-0 fw-medium text-body-emphasis" style="letter-spacing: -0.03em;">Des campagnes qui connaissent vos fans.</h2>
+          </div>
+          <div class="col-12 col-lg-5 offset-lg-1 reveal delay-100">
+            <p class="fs-5 text-body-secondary mb-3">
+              From inbox to ticket sold. Marketing that proves its ROI.
+            </p>
+            <p class="text-body-secondary mb-4">
+              Drag-and-drop emails, SMS, promo codes, and full revenue tracking. Design, send, and measure campaigns — without leaving the platform.
+            </p>
+            <a href="#marketing" class="text-decoration-none text-body-secondary small d-inline-flex align-items-center gap-2">
+              <span class="text-label mb-0 text-body-secondary" style="color: inherit;">Explore marketing tools</span> <span>&rarr;</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Full-Width Mockup Window -->
+        <div class="card bg-glass-transparent backdrop-blur-md border border-secondary border-opacity-25 rounded-4 overflow-hidden w-100 reveal delay-200">
+          <div class="card-header bg-black bg-opacity-50 border-bottom border-secondary border-opacity-25 px-4 py-3 d-flex align-items-center gap-3">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white text-opacity-50"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+            <span class="font-monospace text-white text-opacity-50" style="font-size: 0.86rem;">stadli/app/marketing/campaign_builder.tsx</span>
+            <div class="d-flex gap-2 ms-auto">
+              <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
+              <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
+              <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
+            </div>
+          </div>
+          <div class="card-body p-0 bg-black bg-opacity-10 d-flex justify-content-center">
+            <!-- Placeholder Mockup Image -->
+            <img src="https://placehold.co/1200x600/111111/aaaaaa?text=Marketing+Builder+Mockup" alt="Marketing Campaign Builder" class="w-100 h-auto">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CRM / Fan Profile -->
+    <section id="crm" class="border-top pb-5 pb-lg-6 bg-dot-grid">
+      <div class="container-fluid px-4 px-md-5">
+        <!-- 50/50 Split Header -->
+        <div class="row mb-5 pb-lg-4">
+          <div class="col-12 col-lg-6 mb-4 mb-lg-0 pe-lg-5 reveal">
+            <h2 class="mb-0 fw-medium text-body-emphasis" style="letter-spacing: -0.03em;">Connaissez vos fans comme jamais.</h2>
+          </div>
+          <div class="col-12 col-lg-5 offset-lg-1 reveal delay-100">
+            <p class="fs-5 text-body-secondary mb-3">
+              Know your fans like never before. Every fan, one source of truth.
+            </p>
+            <p class="text-body-secondary mb-4">
+              Your fan data, finally unified. Bring purchases, attendance, merchandising, and marketing engagement under a single pane of glass.
+            </p>
+            <a href="#crm" class="text-decoration-none text-body-secondary small d-inline-flex align-items-center gap-2">
+              <span class="text-label mb-0 text-body-secondary" style="color: inherit;">Explore fan profiles</span> <span>&rarr;</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Full-Width Mockup Window -->
+        <div class="card bg-glass-transparent backdrop-blur-md border border-secondary border-opacity-25 rounded-4 overflow-hidden w-100 reveal delay-200">
+          <div class="card-header bg-black bg-opacity-50 border-bottom border-secondary border-opacity-25 px-4 py-3 d-flex align-items-center gap-3">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white text-opacity-50"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+            <span class="font-monospace text-white text-opacity-50" style="font-size: 0.86rem;">stadli/app/crm/fan_profile.tsx</span>
+            <div class="d-flex gap-2 ms-auto">
+              <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
+              <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
+              <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
+            </div>
+          </div>
+          <div class="card-body p-0 bg-black bg-opacity-10 d-flex justify-content-center">
+            <!-- Placeholder Mockup Image -->
+            <img src="https://placehold.co/1200x600/111111/aaaaaa?text=Fan+Profile+Mockup" alt="CRM Fan Profile Mockup" class="w-100 h-auto">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Business Intelligence & Analytics -->
+    <section id="bi" class="border-top pb-5 pb-lg-6 bg-body">
+      <div class="container-fluid px-4 px-md-5">
+        <!-- 50/50 Split Header -->
+        <div class="row mb-5 pb-lg-4">
+          <div class="col-12 col-lg-6 mb-4 mb-lg-0 pe-lg-5 reveal">
+            <h2 class="mb-0 fw-medium text-body-emphasis" style="letter-spacing: -0.03em;">L'analytique qui éclaire vos décisions.</h2>
+          </div>
+          <div class="col-12 col-lg-5 offset-lg-1 reveal delay-100">
+            <p class="fs-5 text-body-secondary mb-4">
+              From gut feeling to game plan. The full picture, not just the score. Analytics built for game day.
+            </p>
+            <a href="#bi" class="text-decoration-none text-body-secondary small d-inline-flex align-items-center gap-2">
+              <span class="text-label mb-0 text-body-secondary" style="color: inherit;">Explore analytics</span> <span>&rarr;</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Full-Width Mockup Window -->
+        <div class="card bg-glass-transparent backdrop-blur-md border border-secondary border-opacity-25 rounded-4 overflow-hidden w-100 reveal delay-200">
+          <div class="card-header bg-black bg-opacity-50 border-bottom border-secondary border-opacity-25 px-4 py-3 d-flex align-items-center gap-3">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white text-opacity-50"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+            <span class="font-monospace text-white text-opacity-50" style="font-size: 0.86rem;">stadli/app/analytics/matchday_dashboard.tsx</span>
+            <div class="d-flex gap-2 ms-auto">
+              <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
+              <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
+              <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
+            </div>
+          </div>
+          <div class="card-body p-0 bg-black bg-opacity-10">
+            <!-- Placeholder Mockup Image -->
+            <img src="https://placehold.co/1200x600/111111/aaaaaa?text=Analytics+Dashboard+Mockup" alt="Analytics Dashboard Mockup" class="w-100 h-auto">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Artificial Intelligence -->
+    <section id="ai" class="border-top pb-5 pb-lg-6 bg-dot-grid">
+      <div class="container-fluid px-4 px-md-5">
+        <!-- 50/50 Split Header -->
+        <div class="row mb-5 pb-lg-4">
+          <div class="col-12 col-lg-6 mb-4 mb-lg-0 pe-lg-5 reveal">
+            <h2 class="mb-0 fw-medium text-body-emphasis" style="letter-spacing: -0.03em;">Transformez vos questions en actions.</h2>
+          </div>
+          <div class="col-12 col-lg-5 offset-lg-1 reveal delay-100">
+            <p class="fs-5 text-body-secondary mb-4">
+              Let AI handle the heavy lifting. Turn complex queries into immediate insights without writing code.
+            </p>
+            <a href="#ai" class="text-decoration-none text-body-secondary small d-inline-flex align-items-center gap-2">
+              <span class="text-label mb-0 text-body-secondary" style="color: inherit;">Explore AI features</span> <span>&rarr;</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Full-Width Mockup Window -->
+        <div class="card bg-glass-transparent backdrop-blur-md border border-secondary border-opacity-25 rounded-4 overflow-hidden w-100 reveal delay-200">
+          <div class="card-header bg-black bg-opacity-50 border-bottom border-secondary border-opacity-25 px-4 py-3 d-flex align-items-center gap-3">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white text-opacity-50"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+            <span class="font-monospace text-white text-opacity-50" style="font-size: 0.86rem;">stadli/app/ai/insight_query.tsx</span>
+            <div class="d-flex gap-2 ms-auto">
+              <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
+              <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
+              <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
+            </div>
+          </div>
+          <div class="card-body p-0 bg-black bg-opacity-10 d-flex justify-content-center">
+            <!-- Placeholder Mockup Image -->
+            <img src="https://placehold.co/1200x600/111111/aaaaaa?text=AI+Query+Interface+Mockup" alt="AI Interface Mockup" class="w-100 h-auto">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Commerce & Ticketing -->
+    <section id="commerce" class="border-top pb-5 pb-lg-6 bg-body">
+      <div class="container-fluid px-4 px-md-5">
+        <!-- 50/50 Split Header -->
+        <div class="row mb-5 pb-lg-4">
+          <div class="col-12 col-lg-6 mb-4 mb-lg-0 pe-lg-5 reveal">
+            <h2 class="mb-0 fw-medium text-body-emphasis" style="letter-spacing: -0.03em;">Vendez plus que des billets.</h2>
+          </div>
+          <div class="col-12 col-lg-5 offset-lg-1 reveal delay-100">
+            <p class="fs-5 text-body-secondary mb-4">
+              Commerce built for live events. Sell more than tickets. Manage complex venue topographies natively.
+            </p>
+            <a href="#commerce" class="text-decoration-none text-body-secondary small d-inline-flex align-items-center gap-2">
+              <span class="text-label mb-0 text-body-secondary" style="color: inherit;">Explore ticketing</span> <span>&rarr;</span>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Full-Width Mockup Window -->
+        <div class="card bg-glass-transparent backdrop-blur-md border border-secondary border-opacity-25 rounded-4 overflow-hidden w-100 reveal delay-200">
+          <div class="card-header bg-black bg-opacity-50 border-bottom border-secondary border-opacity-25 px-4 py-3 d-flex align-items-center gap-3">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white text-opacity-50"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+            <span class="font-monospace text-white text-opacity-50" style="font-size: 0.86rem;">stadli/app/ticketing/seatmap_renderer.tsx</span>
+            <div class="d-flex gap-2 ms-auto">
+              <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
+              <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
+              <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
+            </div>
+          </div>
+          <div class="card-body p-0 position-relative bg-black bg-opacity-10">
+            <!-- Placeholder Mockup Image -->
+            <img src="https://placehold.co/1200x600/111111/aaaaaa?text=Interactive+Seatmap+Mockup" alt="Ticketing Seatmap Mockup" class="w-100 h-auto">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Demo Form -->
+    <section id="demo" class="border-top pb-5 pb-lg-6" style="background: linear-gradient(rgba(1, 1, 1, 0.85), rgba(1, 1, 1, 0.85)), url('https://placehold.co/1920x1080/000000/333333?text=Crowd+Background') center/cover no-repeat;">
+      <div class="container-fluid px-4 px-md-5 text-center">
+        <div style="max-width: 500px; margin: 0 auto;">
+          <h2 class="mb-3 reveal">Voyez Stadli en action.</h2>
+          <p class="text-body-secondary fs-5 mb-5 reveal delay-100">
+            Let's talk about your game plan.
+          </p>
+          
+          <form class="text-start border p-4 p-md-5 rounded-4 bg-glass backdrop-blur-md reveal delay-200">
+            <div class="mb-4">
+              <label class="form-label text-label text-body-secondary mb-2">Work Email</label>
+              <input type="email" class="form-control bg-body border-secondary text-body-color px-3 py-2" placeholder="name@organization.com">
+            </div>
+            <div class="row g-3 mb-4">
+              <div class="col-12 col-sm-6">
+                <label class="form-label text-label text-body-secondary mb-2">First Name</label>
+                <input type="text" class="form-control bg-body border-secondary px-3 py-2">
+              </div>
+              <div class="col-12 col-sm-6">
+                <label class="form-label text-label text-body-secondary mb-2">Last Name</label>
+                <input type="text" class="form-control bg-body border-secondary px-3 py-2">
+              </div>
+            </div>
+            <div class="mb-4">
+              <label class="form-label text-label text-body-secondary mb-2">Organization</label>
+              <input type="text" class="form-control bg-body border-secondary px-3 py-2">
+            </div>
+            <button type="submit" class="btn btn-primary w-100 py-3 mt-2">Request Demo</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-top py-5 bg-body text-body-secondary">
+    <div class="container-fluid px-4 px-md-5">
+      <div class="row g-4">
+        <div class="col-12 col-md-4 reveal">
+          <div class="mb-3">
+            <img src="https://placehold.co/100x32/222222/aaaaaa?text=LOGO" alt="Logo" height="32" class="rounded">
+          </div>
+          <p class="small mb-0">The ticketing engine for high-velocity sports franchises.</p>
+        </div>
+        <div class="col-6 col-md-2 offset-md-2 reveal delay-100">
+          <span class="text-label mb-3">Product</span>
+          <div class="d-flex flex-column gap-2 small">
+            <a href="#commerce" class="text-decoration-none text-body-secondary">Ticketing</a>
+            <a href="#marketing" class="text-decoration-none text-body-secondary">Marketing</a>
+            <a href="#bi" class="text-decoration-none text-body-secondary">AI Insights</a>
+            <a href="#crm" class="text-decoration-none text-body-secondary">Fan Profiles</a>
+          </div>
+        </div>
+        <div class="col-6 col-md-2 reveal delay-200">
+          <span class="text-label mb-3">Company</span>
+          <div class="d-flex flex-column gap-2 small">
+            <a href="#" class="text-decoration-none text-body-secondary">About</a>
+            <a href="#" class="text-decoration-none text-body-secondary">Customers</a>
+            <a href="#" class="text-decoration-none text-body-secondary">Careers</a>
+          </div>
+        </div>
+        <div class="col-6 col-md-2 reveal delay-300">
+          <span class="text-label mb-3">Legal</span>
+          <div class="d-flex flex-column gap-2 small">
+            <a href="#" class="text-decoration-none text-body-secondary">Privacy</a>
+            <a href="#" class="text-decoration-none text-body-secondary">Terms</a>
+          </div>
+        </div>
+      </div>
+      <div class="mt-5 pt-4 border-top d-flex justify-content-between align-items-center reveal delay-400">
+        <span class="small">&copy; 2026 Stadli Systems Inc.</span>
+        <span class="d-inline-flex align-items-center gap-2 border rounded-pill px-2 py-1 small">
+          <span class="rounded-circle bg-success flex-shrink-0" style="width:.5rem;height:.5rem;"></span>
+          All systems operational
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Navbar Scroll Logic
+      const navbar = document.getElementById('navbar');
+      
+      const handleScroll = () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add('navbar-scrolled');
+          navbar.classList.remove('navbar-transparent');
+        } else {
+          navbar.classList.add('navbar-transparent');
+          navbar.classList.remove('navbar-scrolled');
+        }
+      };
+
+      // Listen for scroll events
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      
+      // Call once on load to set initial state
+      handleScroll();
+
+      // Scroll Reveal Animation Logic
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.15
+      };
+
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.reveal, .reveal-slow').forEach(element => {
+        revealObserver.observe(element);
+      });
+    });
+  </script>
+</body>
+</html>

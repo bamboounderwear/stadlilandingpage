@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Email Marketing Builder</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --white: #ffffff;
+    --black: #020202;
+    --gray-100: #e8e8e8;
+    --gray-200: #d6d6d6;
+    --gray-300: #c0c0c0;
+    --gray-400: #929292;
+    --gray-500: #6a6a6a;
+    --gray-600: #484848;
+    --gray-700: #303030;
+    --gray-800: #1a1a1a;
+    --gray-900: #010101;
+    --primary: var(--gray-100);
+    --secondary: var(--gray-400);
+    --success: #7ec7a3;
+    --info: #7cb0ce;
+    --warning: #d7b06b;
+    --danger: #d28b86;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--gray-900);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .builder-container {
+    width: 1200px;
+    height: 600px;
+    background-color: var(--gray-800);
+    border-radius: 12px;
+    display: flex;
+    overflow: hidden;
+    border: 1px solid var(--gray-700);
+  }
+
+  /* ── Left Sidebar ── */
+  .sidebar {
+    width: 340px;
+    min-width: 340px;
+    padding: 28px 24px;
+    border-right: 1px solid var(--gray-700);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow: visible;
+  }
+
+  .sidebar-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--gray-200);
+    margin-bottom: 4px;
+  }
+
+  .block-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    border: 1px solid var(--gray-600);
+    border-radius: 8px;
+    cursor: grab;
+    transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.15s ease;
+    user-select: none;
+  }
+
+  .block-item:hover {
+    border-color: var(--gray-400);
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+
+  .block-item:active {
+    transform: scale(0.98);
+    cursor: grabbing;
+  }
+
+  .block-icon {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .block-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--gray-400);
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .block-label {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--gray-300);
+  }
+
+  /* ── Dragging State ── */
+  .block-item-wrapper {
+    position: relative;
+  }
+
+  .block-item.is-dragging {
+    transform: translate(60px, 0);
+    border-color: var(--gray-400);
+    background-color: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    z-index: 2;
+    position: relative;
+  }
+
+  .motion-lines {
+    position: absolute;
+    top: 50%;
+    right: calc(100% - 56px);
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .motion-lines span {
+    display: block;
+    height: 2px;
+    border-radius: 1px;
+    background-color: var(--gray-500);
+  }
+
+  .motion-lines span:nth-child(1) {
+    width: 32px;
+    opacity: 0.5;
+  }
+  .motion-lines span:nth-child(2) {
+    width: 48px;
+    opacity: 0.7;
+  }
+  .motion-lines span:nth-child(3) {
+    width: 56px;
+    opacity: 0.9;
+  }
+  .motion-lines span:nth-child(4) {
+    width: 40px;
+    opacity: 0.6;
+  }
+
+  .cursor-icon {
+    position: absolute;
+    bottom: -8px;
+    right: -44px;
+    z-index: 3;
+    pointer-events: none;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+  }
+
+  .cursor-icon svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  /* ── Right Preview Panel ── */
+  .preview-panel {
+    flex: 1;
+    padding: 32px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+  }
+
+  .email-preview {
+    width: 100%;
+    max-width: 480px;
+    border: 1px solid var(--gray-600);
+    border-radius: 10px;
+    padding: 36px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    background-color: rgba(255, 255, 255, 0.02);
+  }
+
+  .email-heading {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--gray-300);
+    text-align: center;
+    letter-spacing: 1px;
+    line-height: 1.15;
+    text-transform: uppercase;
+  }
+
+  .email-image {
+    width: 100%;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .email-image img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .email-body-text {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--gray-300);
+    text-align: center;
+  }
+
+  .email-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 48px;
+    background-color: var(--gray-200);
+    color: var(--gray-900);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+  }
+
+  .email-cta:hover {
+    background-color: var(--white);
+  }
+</style>
+</head>
+<body>
+
+<div class="builder-container">
+  <!-- Left Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-title">Email Marketing</div>
+
+    <!-- Text Block -->
+    <div class="block-item">
+      <div class="block-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><line x1="7" y1="10" x2="17" y2="10"/><line x1="7" y1="14" x2="13" y2="14"/></svg>
+      </div>
+      <span class="block-label">Text</span>
+    </div>
+
+    <!-- Image Block (Dragging State) -->
+    <div class="block-item-wrapper">
+      <div class="motion-lines">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="block-item is-dragging">
+        <div class="block-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        </div>
+        <span class="block-label">Image</span>
+        <!-- Cursor -->
+        <div class="cursor-icon">
+          <svg viewBox="0 0 24 24" fill="var(--white)" stroke="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 3l14 10.5H12l-1.5 7.5z"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Button Block -->
+    <div class="block-item">
+      <div class="block-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="3"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      </div>
+      <span class="block-label">Button</span>
+    </div>
+
+    <!-- Divider Block -->
+    <div class="block-item">
+      <div class="block-icon">
+        <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/></svg>
+      </div>
+      <span class="block-label">Divider</span>
+    </div>
+  </div>
+
+  <!-- Right Preview -->
+  <div class="preview-panel">
+    <div class="email-preview">
+      <div class="email-heading">Support Our<br>Team</div>
+      <div class="email-image">
+        <img src="https://placehold.co/480x220/1a1a1a/929292?text=Hero+Image" alt="Hero image placeholder">
+      </div>
+      <p class="email-body-text">Get your tickets now!</p>
+      <a href="#" class="email-cta">Buy Tickets</a>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
