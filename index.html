@@ -739,6 +739,7 @@
       display: flex;
       flex-direction: column;
       gap: 16px;
+      overflow: hidden;
     }
     .mockup-crm .crm-card-title {
       font-size: 26px;
@@ -857,12 +858,12 @@
       color: var(--bs-success);
     }
 
-    /* Engagement timeline — activity feed below the card stage */
+    /* Engagement timeline — compact activity feed below the card stage */
     .mockup-crm .crm-timeline {
       flex-shrink: 0;
-      padding: 18px 0 8px;
+      padding: 12px 0 4px;
       border-top: 1px solid var(--stadli-gray-800);
-      max-width: 420px;
+      max-width: 380px;
       margin: 0 auto;
       width: 100%;
     }
@@ -870,17 +871,17 @@
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      margin-bottom: 14px;
+      margin-bottom: 8px;
     }
     .mockup-crm .crm-timeline-label {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       color: var(--stadli-gray-500);
       text-transform: uppercase;
       letter-spacing: 0.14em;
     }
     .mockup-crm .crm-timeline-meta {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 500;
       color: var(--stadli-gray-500);
       font-variant-numeric: tabular-nums;
@@ -889,14 +890,14 @@
       display: flex;
       flex-direction: column;
       position: relative;
-      padding-left: 22px;
+      padding-left: 18px;
     }
     .mockup-crm .crm-timeline-feed::before {
       content: '';
       position: absolute;
-      left: 5px;
-      top: 5px;
-      bottom: 5px;
+      left: 4px;
+      top: 4px;
+      bottom: 4px;
       width: 2px;
       background-color: var(--stadli-gray-700);
       border-radius: 50rem;
@@ -904,17 +905,16 @@
     .mockup-crm .crm-tl-item {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 5px 0;
+      padding: 3px 0;
       position: relative;
     }
     .mockup-crm .crm-tl-dot {
       position: absolute;
-      left: -22px;
+      left: -18px;
       top: 50%;
       transform: translateY(-50%);
-      width: 10px;
-      height: 10px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background-color: var(--stadli-gray-600);
       border: 2px solid var(--bs-body-bg);
@@ -933,19 +933,15 @@
       min-width: 0;
     }
     .mockup-crm .crm-tl-event-name {
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 500;
       color: var(--stadli-gray-300);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
     .mockup-crm .crm-tl-event-date {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 500;
       color: var(--stadli-gray-500);
       font-variant-numeric: tabular-nums;
-      white-space: nowrap;
       flex-shrink: 0;
       margin-left: 12px;
     }
@@ -1698,13 +1694,13 @@
 
                   </div>
 
-                  <!-- Engagement timeline — activity feed below the stage -->
+                  <!-- Engagement timeline — compact activity feed below the stage -->
                   <div class="crm-timeline">
                     <div class="crm-timeline-head">
                       <span class="crm-timeline-label">Recent activity</span>
                       <span class="crm-timeline-meta">Last 30 days</span>
                     </div>
-                    <div class="crm-timeline-feed" role="list" aria-label="Seven fan engagement events across the last 30 days">
+                    <div class="crm-timeline-feed" role="list" aria-label="Recent fan engagement events">
                       <div class="crm-tl-item" role="listitem">
                         <span class="crm-tl-dot is-positive"></span>
                         <div class="crm-tl-content">
@@ -1715,22 +1711,8 @@
                       <div class="crm-tl-item" role="listitem">
                         <span class="crm-tl-dot"></span>
                         <div class="crm-tl-content">
-                          <span class="crm-tl-event-name">Survey completed</span>
-                          <span class="crm-tl-event-date">Mar 26</span>
-                        </div>
-                      </div>
-                      <div class="crm-tl-item" role="listitem">
-                        <span class="crm-tl-dot is-positive"></span>
-                        <div class="crm-tl-content">
                           <span class="crm-tl-event-name">Game attended</span>
                           <span class="crm-tl-event-date">Mar 22</span>
-                        </div>
-                      </div>
-                      <div class="crm-tl-item" role="listitem">
-                        <span class="crm-tl-dot"></span>
-                        <div class="crm-tl-content">
-                          <span class="crm-tl-event-name">App login</span>
-                          <span class="crm-tl-event-date">Mar 18</span>
                         </div>
                       </div>
                       <div class="crm-tl-item" role="listitem">
@@ -1738,13 +1720,6 @@
                         <div class="crm-tl-content">
                           <span class="crm-tl-event-name">Merch purchased</span>
                           <span class="crm-tl-event-date">Mar 13</span>
-                        </div>
-                      </div>
-                      <div class="crm-tl-item" role="listitem">
-                        <span class="crm-tl-dot"></span>
-                        <div class="crm-tl-content">
-                          <span class="crm-tl-event-name">Email opened</span>
-                          <span class="crm-tl-event-date">Mar 8</span>
                         </div>
                       </div>
                       <div class="crm-tl-item" role="listitem">
