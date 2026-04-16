@@ -763,6 +763,28 @@
     .mockup-fan-card .mfc-ghost-right {
       transform: translate(calc(-50% + 13cqi), -50%) scale(0.85);
     }
+    /* Tier 2 — further out, smaller, more blurred */
+    .mockup-fan-card .mfc-ghost-far-left {
+      transform: translate(calc(-50% - 26cqi), -50%) scale(0.72);
+      opacity: 0.25;
+      filter: blur(8px) brightness(0.5);
+    }
+    .mockup-fan-card .mfc-ghost-far-right {
+      transform: translate(calc(-50% + 26cqi), -50%) scale(0.72);
+      opacity: 0.25;
+      filter: blur(8px) brightness(0.5);
+    }
+    /* Tier 3 — edge of frame, extends under the mockup border */
+    .mockup-fan-card .mfc-ghost-deep-left {
+      transform: translate(calc(-50% - 40cqi), -50%) scale(0.6);
+      opacity: 0.12;
+      filter: blur(11px) brightness(0.4);
+    }
+    .mockup-fan-card .mfc-ghost-deep-right {
+      transform: translate(calc(-50% + 40cqi), -50%) scale(0.6);
+      opacity: 0.12;
+      filter: blur(11px) brightness(0.4);
+    }
 
     /* Avatar group */
     .mockup-fan-card .mfc-avatar-wrapper {
@@ -1587,6 +1609,238 @@
               <div class="mockup-content">
                 <div class="mockup-fan-card">
                   <div class="mfc-stage">
+
+                    <!-- Deep Left Ghost (tier 3) -->
+                    <div class="mfc-card mfc-ghost-card mfc-ghost-deep-left" aria-hidden="true">
+                      <div class="mfc-avatar-wrapper">
+                        <div class="mfc-avatar">
+                          <img src="https://placehold.co/400x400/2a2a2a/777777?text=EL" alt="">
+                        </div>
+                        <div class="mfc-status-dot"></div>
+                      </div>
+                      <h2 class="mfc-name">Ethan Lee</h2>
+                      <span class="mfc-role">Fan</span>
+                      <div class="mfc-stats-grid">
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">MATCHES ATTENDED</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">22</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 10%</div>
+                          </div>
+                        </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">GAMES WATCHED</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">47</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 7%</div>
+                          </div>
+                        </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">TICKETS PURCHASED</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">52</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 20%</div>
+                          </div>
+                        </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">GAME DAY TRIPS</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">14</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 6%</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mfc-extended-grid">
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">LOCATION</span>
+                          <div class="mfc-location-row">
+                            <span class="mfc-location-text">Seattle, WA</span>
+                          </div>
+                        </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">INTERESTS</span>
+                          <div class="mfc-badges-bento">
+                            <span class="mfc-badge">⚽ Soccer</span>
+                            <span class="mfc-badge">🎟️ Season</span>
+                            <span class="mfc-badge">🏆 Signed</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Deep Right Ghost (tier 3) -->
+                    <div class="mfc-card mfc-ghost-card mfc-ghost-deep-right" aria-hidden="true">
+                      <div class="mfc-avatar-wrapper">
+                        <div class="mfc-avatar">
+                          <img src="https://placehold.co/400x400/2a2a2a/777777?text=BC" alt="">
+                        </div>
+                        <div class="mfc-status-dot"></div>
+                      </div>
+                      <h2 class="mfc-name">Ben Carter</h2>
+                      <span class="mfc-role">Fan</span>
+                      <div class="mfc-stats-grid">
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">MATCHES ATTENDED</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">19</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 9%</div>
+                          </div>
+                        </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">GAMES WATCHED</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">35</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 13%</div>
+                          </div>
+                        </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">TICKETS PURCHASED</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">41</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 15%</div>
+                          </div>
+                        </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">GAME DAY TRIPS</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">9</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 4%</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mfc-extended-grid">
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">LOCATION</span>
+                          <div class="mfc-location-row">
+                            <span class="mfc-location-text">Denver, CO</span>
+                          </div>
+                        </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">INTERESTS</span>
+                          <div class="mfc-badges-bento">
+                            <span class="mfc-badge">🏒 Hockey</span>
+                            <span class="mfc-badge">🎫 Member</span>
+                            <span class="mfc-badge">🍿 Food</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Far Left Ghost (tier 2) -->
+                    <div class="mfc-card mfc-ghost-card mfc-ghost-far-left" aria-hidden="true">
+                      <div class="mfc-avatar-wrapper">
+                        <div class="mfc-avatar">
+                          <img src="https://placehold.co/400x400/2a2a2a/777777?text=SK" alt="">
+                        </div>
+                        <div class="mfc-status-dot"></div>
+                      </div>
+                      <h2 class="mfc-name">Sarah Kim</h2>
+                      <span class="mfc-role">Fan</span>
+                      <div class="mfc-stats-grid">
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">MATCHES ATTENDED</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">15</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 6%</div>
+                          </div>
+                        </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">GAMES WATCHED</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">28</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 10%</div>
+                          </div>
+                        </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">TICKETS PURCHASED</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">33</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 12%</div>
+                          </div>
+                        </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">GAME DAY TRIPS</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">6</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 3%</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mfc-extended-grid">
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">LOCATION</span>
+                          <div class="mfc-location-row">
+                            <span class="mfc-location-text">Austin, TX</span>
+                          </div>
+                        </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">INTERESTS</span>
+                          <div class="mfc-badges-bento">
+                            <span class="mfc-badge">🏃 Running</span>
+                            <span class="mfc-badge">🍺 Craft Beer</span>
+                            <span class="mfc-badge">👕 Jerseys</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Far Right Ghost (tier 2) -->
+                    <div class="mfc-card mfc-ghost-card mfc-ghost-far-right" aria-hidden="true">
+                      <div class="mfc-avatar-wrapper">
+                        <div class="mfc-avatar">
+                          <img src="https://placehold.co/400x400/2a2a2a/777777?text=KJ" alt="">
+                        </div>
+                        <div class="mfc-status-dot"></div>
+                      </div>
+                      <h2 class="mfc-name">Kyra Jones</h2>
+                      <span class="mfc-role">Fan</span>
+                      <div class="mfc-stats-grid">
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">MATCHES ATTENDED</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">29</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 14%</div>
+                          </div>
+                        </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">GAMES WATCHED</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">53</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 19%</div>
+                          </div>
+                        </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">TICKETS PURCHASED</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">64</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 22%</div>
+                          </div>
+                        </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">GAME DAY TRIPS</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">17</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 7%</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mfc-extended-grid">
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">LOCATION</span>
+                          <div class="mfc-location-row">
+                            <span class="mfc-location-text">Miami, FL</span>
+                          </div>
+                        </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">INTERESTS</span>
+                          <div class="mfc-badges-bento">
+                            <span class="mfc-badge">🎾 Tennis</span>
+                            <span class="mfc-badge">🥂 VIP Lounge</span>
+                            <span class="mfc-badge">🧢 Merch</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
                     <!-- Left Blurred Card -->
                     <div class="mfc-card mfc-ghost-card mfc-ghost-left" aria-hidden="true">
