@@ -489,6 +489,16 @@
       100% { opacity: 1;   filter: brightness(1.4); }
     }
 
+    /* Mockup card-header file path — truncate on narrow viewports so the
+       long ".tsx" path doesn't push the traffic-light dots off-screen. */
+    .mockup-file-path {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
     /* Hero dashboard card — responsive mask + overlap with next section.
        On small screens, the mockup-hero is short (aspect-ratio 2/1), so a
        large negative margin and aggressive mask would hide nearly all of it.
@@ -643,11 +653,20 @@
       object-fit: cover;
       display: block;
     }
+    .mockup-marketing .mkt-email-subheading {
+      font-size: clamp(15px, 2cqi, 24px);
+      font-weight: 700;
+      color: var(--stadli-gray-200);
+      text-align: center;
+      line-height: 1.2;
+      margin: 0;
+    }
     .mockup-marketing .mkt-email-body {
       font-size: clamp(11px, 1.3cqi, 16px);
       font-weight: 400;
       color: var(--stadli-gray-300);
       text-align: center;
+      line-height: 1.4;
       margin: 0;
     }
     .mockup-marketing .mkt-email-cta {
@@ -907,7 +926,7 @@
       display: flex;
       flex-direction: column;
       position: relative;
-      padding-left: 1.5cqi;
+      padding-left: 18px;
     }
     .mockup-crm .crm-timeline-feed::before {
       content: '';
@@ -927,7 +946,7 @@
     }
     .mockup-crm .crm-tl-dot {
       position: absolute;
-      left: -1.5cqi;
+      left: -18px;
       top: 50%;
       transform: translateY(-50%);
       width: 8px;
@@ -953,6 +972,10 @@
       font-size: clamp(9px, 1cqi, 12px);
       font-weight: 500;
       color: var(--stadli-gray-300);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      min-width: 0;
     }
     .mockup-crm .crm-tl-event-date {
       font-size: clamp(8px, 0.8cqi, 10px);
@@ -1475,7 +1498,7 @@
               <!-- Mockup Header -->
               <div class="card-header bg-transparent border-bottom border-secondary border-opacity-25 px-4 py-3 d-flex align-items-center gap-3">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white text-opacity-50"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                <span class="font-monospace text-white text-opacity-50" style="font-size: 0.86rem;">stadli/app/dashboard/main.tsx</span>
+                <span class="font-monospace text-white text-opacity-50 mockup-file-path" style="font-size: 0.86rem;">stadli/app/dashboard/main.tsx</span>
                 <div class="d-flex gap-2 ms-auto">
                   <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
                   <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
@@ -1541,7 +1564,7 @@
         <div class="card bg-glass-transparent backdrop-blur-md border border-secondary border-opacity-25 rounded-4 overflow-hidden w-100 reveal delay-200">
           <div class="card-header bg-black bg-opacity-50 border-bottom border-secondary border-opacity-25 px-4 py-3 d-flex align-items-center gap-3">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white text-opacity-50"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-            <span class="font-monospace text-white text-opacity-50" style="font-size: 0.86rem;">stadli/app/marketing/campaign_builder.tsx</span>
+            <span class="font-monospace text-white text-opacity-50 mockup-file-path" style="font-size: 0.86rem;">stadli/app/marketing/campaign_builder.tsx</span>
             <div class="d-flex gap-2 ms-auto">
               <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
               <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
@@ -1594,12 +1617,13 @@
                   <!-- Right Preview -->
                   <div class="mkt-preview">
                     <div class="mkt-email">
-                      <div class="mkt-email-heading" style="font-size: 21px; font-weight: 900; letter-spacing: 0px; line-height: 24px;">demo team</div>
+                      <div class="mkt-email-heading">demo team</div>
                       <div class="mkt-email-image">
                         <img src="https://placehold.co/480x220/1a1a1a/929292?text=Hero+Image" alt="Hero image placeholder">
                       </div>
-                      <p class="mkt-email-body" style="font-size: 24px; font-weight: 700; line-height: 32px; height: 24px;">Get your tickets today!</p><p class="mkt-email-body" style="line-height: 20px; font-size: 16px; font-weight: 400;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu tellus non lorem lobortis placerat.</p>
-                      <a href="#" class="mkt-email-cta" style="letter-spacing: 0px; font-weight: 600; border-radius: 24px;">Buy tickets</a>
+                      <p class="mkt-email-subheading">Get your tickets today!</p>
+                      <p class="mkt-email-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu tellus non lorem lobortis placerat.</p>
+                      <a href="#" class="mkt-email-cta">Buy tickets</a>
                     </div>
                   </div>
                 </div>
@@ -1635,7 +1659,7 @@
         <div class="card bg-glass-transparent backdrop-blur-md border border-secondary border-opacity-25 rounded-4 overflow-hidden w-100 reveal delay-200">
           <div class="card-header bg-black bg-opacity-50 border-bottom border-secondary border-opacity-25 px-4 py-3 d-flex align-items-center gap-3">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white text-opacity-50"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-            <span class="font-monospace text-white text-opacity-50" style="font-size: 0.86rem;">stadli/app/crm/fan_profile.tsx</span>
+            <span class="font-monospace text-white text-opacity-50 mockup-file-path" style="font-size: 0.86rem;">stadli/app/crm/fan_profile.tsx</span>
             <div class="d-flex gap-2 ms-auto">
               <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
               <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
@@ -1779,7 +1803,7 @@
         <div class="card bg-glass-transparent backdrop-blur-md border border-secondary border-opacity-25 rounded-4 overflow-hidden w-100 reveal delay-200">
           <div class="card-header bg-black bg-opacity-50 border-bottom border-secondary border-opacity-25 px-4 py-3 d-flex align-items-center gap-3">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white text-opacity-50"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-            <span class="font-monospace text-white text-opacity-50" style="font-size: 0.86rem;">stadli/app/analytics/matchday_dashboard.tsx</span>
+            <span class="font-monospace text-white text-opacity-50 mockup-file-path" style="font-size: 0.86rem;">stadli/app/analytics/matchday_dashboard.tsx</span>
             <div class="d-flex gap-2 ms-auto">
               <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
               <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
@@ -1937,7 +1961,7 @@
         <div class="card bg-glass-transparent backdrop-blur-md border border-secondary border-opacity-25 rounded-4 overflow-hidden w-100 reveal delay-200">
           <div class="card-header bg-black bg-opacity-50 border-bottom border-secondary border-opacity-25 px-4 py-3 d-flex align-items-center gap-3">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white text-opacity-50"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-            <span class="font-monospace text-white text-opacity-50" style="font-size: 0.86rem;">stadli/app/ai/insight_query.tsx</span>
+            <span class="font-monospace text-white text-opacity-50 mockup-file-path" style="font-size: 0.86rem;">stadli/app/ai/insight_query.tsx</span>
             <div class="d-flex gap-2 ms-auto">
               <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
               <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
@@ -2076,7 +2100,7 @@
         <div class="card bg-glass-transparent backdrop-blur-md border border-secondary border-opacity-25 rounded-4 overflow-hidden w-100 reveal delay-200">
           <div class="card-header bg-black bg-opacity-50 border-bottom border-secondary border-opacity-25 px-4 py-3 d-flex align-items-center gap-3">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white text-opacity-50"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-            <span class="font-monospace text-white text-opacity-50" style="font-size: 0.86rem;">stadli/app/ticketing/seatmap_renderer.tsx</span>
+            <span class="font-monospace text-white text-opacity-50 mockup-file-path" style="font-size: 0.86rem;">stadli/app/ticketing/seatmap_renderer.tsx</span>
             <div class="d-flex gap-2 ms-auto">
               <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
               <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
