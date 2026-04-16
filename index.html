@@ -155,16 +155,34 @@
       background-clip: text;
       -webkit-text-fill-color: transparent;
       color: transparent;
-      transition: opacity 350ms ease, transform 350ms ease;
-      will-change: opacity, transform;
+      transition: opacity 500ms cubic-bezier(0.2, 0.8, 0.2, 1),
+                  transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1),
+                  filter 500ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      will-change: opacity, transform, filter;
     }
-    .rotating-word.is-swapping {
+    /* Outgoing: fade up + blur out */
+    .rotating-word.is-exiting {
       opacity: 0;
-      transform: translateY(-0.15em);
+      transform: translateY(-0.45em);
+      filter: blur(12px);
+    }
+    /* Incoming start state: below, blurred, invisible — no transition so it
+       snaps into place before being removed to reveal with animation. */
+    .rotating-word.is-entering {
+      opacity: 0;
+      transform: translateY(0.45em);
+      filter: blur(12px);
+      transition: none;
     }
     @media (prefers-reduced-motion: reduce) {
-      .rotating-word {
+      .rotating-word,
+      .rotating-word.is-entering {
         transition: none;
+      }
+      .rotating-word.is-exiting {
+        opacity: 0;
+        transform: none;
+        filter: none;
       }
     }
 
@@ -2897,15 +2915,21 @@
           'mesurer'
         ];
         let idx = 0;
-        const swapDelay = 350; // must match CSS transition duration
+        const animDuration = 500; // must match CSS transition duration
         setInterval(() => {
-          rotatingWordEl.classList.add('is-swapping');
+          // Animate outgoing: float up + blur out
+          rotatingWordEl.classList.add('is-exiting');
           setTimeout(() => {
             idx = (idx + 1) % words.length;
             rotatingWordEl.textContent = words[idx];
-            rotatingWordEl.classList.remove('is-swapping');
-          }, swapDelay);
-        }, 1500);
+            // Snap incoming into start state (below, blurred, hidden) — no transition
+            rotatingWordEl.classList.remove('is-exiting');
+            rotatingWordEl.classList.add('is-entering');
+            // Force reflow so the transition runs when is-entering is removed
+            void rotatingWordEl.offsetWidth;
+            rotatingWordEl.classList.remove('is-entering');
+          }, animDuration);
+        }, 3000);
       }
 
       // Live Revenue Counter Logic
