@@ -387,28 +387,27 @@
 
     /* ============================================
        MOCKUP FRAMES — Fluid UI previews
-       The frame wraps the inner .mockup-content with a
-       dark gutter on all sides so content never touches
-       the fake browser window edges. The aspect ratio
-       and max-height live on .mockup-content (inside the
-       padding) so the inner 2:1 canvas stays undistorted
-       regardless of the frame's outer padding.
+       Each frame enforces a 2:1 aspect ratio capped at
+       680px tall, and is registered as an inline-size
+       container so inner mockups can use cqi units.
+       Internal gutter padding lives on each individual
+       mockup (.mockup-crm, etc.) so each mockup's own
+       background extends edge-to-edge inside the fake
+       browser window.
        ============================================ */
     .mockup-frame {
       container-type: inline-size;
       width: 100%;
-      padding: 2rem;
+      aspect-ratio: 2 / 1;
+      max-height: 680px;
       position: relative;
       overflow: hidden;
     }
     .mockup-frame > .mockup-content {
       width: 100%;
-      aspect-ratio: 2 / 1;
-      max-height: 680px;
+      height: 100%;
       font-family: var(--bs-font-sans-serif);
       color: var(--stadli-gray-100);
-      position: relative;
-      overflow: hidden;
     }
 
     /* ── Hero Mockup — Feature Hub ── */
@@ -653,6 +652,7 @@
     .mockup-crm {
       width: 100%;
       height: 100%;
+      padding: 2rem;
       background-color: var(--bs-body-bg);
       display: flex;
       flex-direction: column;
@@ -731,7 +731,7 @@
       position: relative;
       z-index: 3;
       width: 600px;
-      height: 98%;
+      height: 100%;
       padding: 26px 30px;
       background-color: var(--stadli-gray-900);
       border: 1px solid var(--stadli-gray-800);
@@ -825,7 +825,7 @@
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      padding: 11px 0;
+      padding: 10px 0;
       border-bottom: 1px solid var(--stadli-gray-700);
     }
     .mockup-crm .crm-stat-row:last-child {
@@ -857,17 +857,22 @@
       color: var(--bs-success);
     }
 
-    /* Engagement timeline — viewport-width strip below the card stage */
+    /* Engagement timeline — viewport-width strip below the card stage.
+       Negative horizontal margin pulls the strip back to the mockup-crm
+       border-box edges (canceling the mockup-crm padding) so the top
+       divider spans the full viewport width. The timeline's own 2rem
+       padding then realigns its content with the stage content above. */
     .mockup-crm .crm-timeline {
       flex-shrink: 0;
-      padding: 18px 56px 22px;
+      margin: 0 -2rem;
+      padding: 14px 2rem 16px;
       border-top: 1px solid var(--stadli-gray-800);
     }
     .mockup-crm .crm-timeline-head {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
     .mockup-crm .crm-timeline-label {
       font-size: 13px;
@@ -887,7 +892,7 @@
       height: 2px;
       background-color: var(--stadli-gray-700);
       border-radius: 50rem;
-      margin: 12px 8px 0;
+      margin: 10px 8px 0;
     }
     .mockup-crm .crm-timeline-event {
       position: absolute;
@@ -906,7 +911,7 @@
     .mockup-crm .crm-timeline-dates {
       display: flex;
       justify-content: space-between;
-      margin-top: 14px;
+      margin-top: 12px;
       padding: 0 6px;
     }
     .mockup-crm .crm-timeline-date {
