@@ -150,14 +150,10 @@
     /* Rotating Hero Word */
     .rotating-word {
       display: inline-block;
-      background: linear-gradient(90deg, var(--spec-violet, #8b5cf6), #c084fc);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      color: transparent;
-      transition: opacity 500ms cubic-bezier(0.2, 0.8, 0.2, 1),
-                  transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1),
-                  filter 500ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      color: var(--rotating-color, #8b5cf6);
+      transition: opacity 750ms cubic-bezier(0.2, 0.8, 0.2, 1),
+                  transform 750ms cubic-bezier(0.2, 0.8, 0.2, 1),
+                  filter 750ms cubic-bezier(0.2, 0.8, 0.2, 1);
       will-change: opacity, transform, filter;
     }
     /* Outgoing: fade up + blur out */
@@ -1612,7 +1608,7 @@
         <!-- Text and Link Row with increased top spacing -->
         <div class="row align-items-center mb-5 pb-lg-4 mt-4 pt-5" style="padding-top: 8rem !important;">
           <div class="col-12 col-lg-9 pe-lg-5">
-            <h1 class="mb-4 text-white fw-medium reveal delay-200" style="font-size: clamp(3.31rem, 8.05vw, 5.175rem); letter-spacing: -0.04em;">La platforme pensée pour <span id="rotating-word" class="rotating-word">vendre</span></h1>
+            <h1 class="mb-4 text-white fw-medium reveal delay-200" style="font-size: clamp(3.31rem, 8.05vw, 5.175rem); letter-spacing: -0.04em;">La platforme pensée pour <span id="rotating-word" class="rotating-word" style="--rotating-color: #44d62b;">vendre</span></h1>
             <p class="fs-4 text-white text-opacity-75 mb-0 reveal delay-300" style="max-width: 600px;">
               Billetterie, engagement, données et marketing réunis dans un système conçu pour le sport.
             </p>
@@ -2903,25 +2899,27 @@
       const rotatingWordEl = document.getElementById('rotating-word');
       if (rotatingWordEl) {
         const words = [
-          'vendre',
-          'vos fans',
-          'convertir',
-          'comprendre',
-          'fidéliser',
-          'votre équipe',
-          'chaque match',
-          'fidéliser',
-          'grandir',
-          'mesurer'
+          { text: 'vendre',       color: '#44d62b' },
+          { text: 'vos fans',     color: '#f6166e' },
+          { text: 'convertir',    color: '#fe5619' },
+          { text: 'comprendre',   color: '#00b0d8' },
+          { text: 'fidéliser',    color: '#00d4a8' },
+          { text: 'votre équipe', color: '#0140f0' },
+          { text: 'chaque match', color: '#ecfc3b' },
+          { text: 'fidéliser',    color: '#00d4a8' },
+          { text: 'grandir',      color: '#7b2ff7' },
+          { text: 'mesurer',      color: '#d633ff' }
         ];
         let idx = 0;
-        const animDuration = 500; // must match CSS transition duration
+        const animDuration = 750; // must match CSS transition duration
         setInterval(() => {
           // Animate outgoing: float up + blur out
           rotatingWordEl.classList.add('is-exiting');
           setTimeout(() => {
             idx = (idx + 1) % words.length;
-            rotatingWordEl.textContent = words[idx];
+            const next = words[idx];
+            rotatingWordEl.textContent = next.text;
+            rotatingWordEl.style.setProperty('--rotating-color', next.color);
             // Snap incoming into start state (below, blurred, hidden) — no transition
             rotatingWordEl.classList.remove('is-exiting');
             rotatingWordEl.classList.add('is-entering');
@@ -2929,7 +2927,7 @@
             void rotatingWordEl.offsetWidth;
             rotatingWordEl.classList.remove('is-entering');
           }, animDuration);
-        }, 3000);
+        }, 5000);
       }
 
       // Live Revenue Counter Logic
