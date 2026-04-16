@@ -455,6 +455,46 @@
     .delay-500 { transition-delay: 500ms; }
     .delay-600 { transition-delay: 600ms; }
 
+    /* Per-word stagger for the hero headline. The h1 keeps `.reveal` so the
+       IntersectionObserver still toggles `.active`, but `.reveal-passthrough`
+       suppresses the container's own fade/blur/slide so only the child
+       .hero-word spans animate. */
+    .reveal.reveal-passthrough {
+      opacity: 1;
+      filter: none;
+      transform: none;
+      transition: none;
+    }
+    .hero-word {
+      display: inline-block;
+      opacity: 0;
+      filter: blur(15px);
+      transform: translateY(30px);
+      transition: opacity 0.8s ease-out,
+                  filter 0.8s ease-out,
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, filter, transform;
+    }
+    .reveal.active .hero-word {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
+    }
+    .reveal.active .hero-word:nth-child(1) { transition-delay: 0ms; }
+    .reveal.active .hero-word:nth-child(2) { transition-delay: 120ms; }
+    .reveal.active .hero-word:nth-child(3) { transition-delay: 240ms; }
+    .reveal.active .hero-word:nth-child(4) { transition-delay: 360ms; }
+    .reveal.active .hero-word:nth-child(5) { transition-delay: 480ms; }
+    .reveal.active .hero-word:nth-child(6) { transition-delay: 600ms; }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-word {
+        transition: none !important;
+        opacity: 1 !important;
+        filter: blur(0) !important;
+        transform: none !important;
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .reveal, .reveal-slow {
         transition: none !important;
@@ -1736,7 +1776,7 @@
         <!-- Text and Link Row with increased top spacing -->
         <div class="row align-items-center mb-5 pb-lg-4 mt-4 pt-5" style="padding-top: 8rem !important;">
           <div class="col-12 col-lg-9 pe-lg-5">
-            <h1 class="mb-4 text-white fw-medium reveal delay-200" style="font-size: clamp(2.979rem, 7.245vw, 4.6575rem); letter-spacing: -0.04em;">La platforme pensée<br>pour <span id="rotating-word" class="rotating-word" style="--rotating-color: #44d62b;">vendre.</span></h1>
+            <h1 class="mb-4 text-white fw-medium reveal reveal-passthrough" style="font-size: clamp(2.979rem, 7.245vw, 4.6575rem); letter-spacing: -0.04em;"><span class="hero-word">La</span> <span class="hero-word">platforme</span> <span class="hero-word">pensée</span><br><span class="hero-word">pour</span> <span class="hero-word"><span id="rotating-word" class="rotating-word" style="--rotating-color: #44d62b;">vendre.</span></span></h1>
             <p class="fs-4 text-white text-opacity-75 mb-0 reveal delay-300" style="max-width: 600px;">
               Billetterie, engagement, données et marketing réunis dans un système conçu pour le sport.
             </p>
