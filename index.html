@@ -408,89 +408,604 @@
       color: var(--stadli-gray-100);
     }
 
-    /* ── Hero Mockup — Feature Hub ── */
+    /* ── Hero Mockup — Matchday command center ──
+       A live dashboard featuring: a hero revenue metric with sparkline, a
+       scrolling live-sales feed, a fan-profile alert, an AI-insight card, and
+       compact matchday KPIs. All motion is meaningful: the live dot pulses,
+       the feed scrolls, the sparkline draws in, and the capacity bar fills. */
     .mockup-hero {
       width: 100%;
       aspect-ratio: 2 / 1;
       max-height: 680px;
       position: relative;
       background-color: var(--bs-body-bg);
+      padding: 2cqi;
+      display: grid;
+      grid-template-columns: 1.55fr 1fr;
+      grid-template-rows: minmax(0, 1.35fr) minmax(0, 1fr);
+      gap: 1.5cqi;
+      overflow: hidden;
     }
-    .mockup-hero .hero-feature-card {
+
+    .mockup-hero .hero-panel {
+      background-color: #070707;
+      border: 1px solid var(--stadli-gray-800);
+      border-radius: 1cqi;
+      padding: 1.8cqi 2cqi;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* --- Main panel: match header + revenue + sparkline ------------------- */
+    .mockup-hero .hero-main { grid-column: 1; grid-row: 1; }
+
+    .mockup-hero .hero-match {
+      display: flex;
+      align-items: center;
+      gap: 0.9cqi;
+      margin-bottom: 0.6cqi;
+      font-size: clamp(7px, 0.84cqi, 10px);
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--stadli-gray-400);
+    }
+    .mockup-hero .hero-live-dot {
+      width: 0.8cqi;
+      height: 0.8cqi;
+      min-width: 6px;
+      min-height: 6px;
+      border-radius: 50%;
+      background-color: var(--spec-red);
+      flex-shrink: 0;
+      animation: hero-live-pulse 1.8s ease-out infinite;
+    }
+    @keyframes hero-live-pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(254, 0, 0, 0.55); }
+      70%  { box-shadow: 0 0 0 1.3cqi rgba(254, 0, 0, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(254, 0, 0, 0); }
+    }
+    .mockup-hero .hero-match-sep {
+      color: var(--stadli-gray-700);
+      font-weight: 400;
+    }
+    .mockup-hero .hero-match-title {
+      font-size: clamp(11px, 1.36cqi, 17px);
+      color: var(--stadli-gray-200);
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.8cqi;
+    }
+
+    .mockup-hero .hero-revenue-label {
+      font-size: clamp(6px, 0.76cqi, 9px);
+      color: var(--stadli-gray-500);
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 0.6cqi;
+    }
+    .mockup-hero .hero-revenue-value {
+      font-size: clamp(32px, 5.2cqi, 74px);
+      font-weight: 500;
+      color: var(--stadli-white);
+      letter-spacing: -0.035em;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      margin-bottom: 0.9cqi;
+      display: flex;
+      align-items: baseline;
+      gap: 0.4cqi;
+    }
+    .mockup-hero .hero-revenue-value .currency {
+      font-size: 0.6em;
+      color: var(--stadli-gray-400);
+      font-weight: 500;
+    }
+    .mockup-hero .hero-revenue-trend {
+      font-size: clamp(9px, 1.04cqi, 13px);
+      color: var(--bs-success);
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 1.2cqi;
+      display: flex;
+      align-items: center;
+      gap: 0.6cqi;
+    }
+    .mockup-hero .hero-revenue-trend .arrow {
+      font-size: 0.85em;
+    }
+    .mockup-hero .hero-revenue-trend .delta-sep {
+      color: var(--stadli-gray-700);
+    }
+    .mockup-hero .hero-revenue-trend .delta-note {
+      color: var(--stadli-gray-500);
+    }
+
+    .mockup-hero .hero-sparkline {
+      flex: 1;
+      min-height: 0;
+      position: relative;
+    }
+    .mockup-hero .hero-sparkline svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      display: block;
+    }
+    .mockup-hero .hero-spark-line {
+      fill: none;
+      stroke: url(#heroSparkGrad);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 800;
+      stroke-dashoffset: 800;
+      animation: hero-spark-draw 2.4s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+    }
+    .mockup-hero .hero-spark-fill {
+      fill: url(#heroSparkFill);
+      opacity: 0;
+      animation: hero-spark-fade 1.4s ease-out 1.8s forwards;
+    }
+    .mockup-hero .hero-spark-dot {
+      fill: var(--spec-green);
+      opacity: 0;
+      animation: hero-spark-pop 0.5s ease-out 2.5s forwards,
+                 hero-spark-pulse 2s ease-in-out 3s infinite;
+    }
+    .mockup-hero .hero-spark-dot-ring {
+      fill: none;
+      stroke: var(--spec-green);
+      stroke-width: 1;
+      opacity: 0;
+      transform-origin: center;
+      animation: hero-spark-ring 2s ease-out 3s infinite;
+    }
+    @keyframes hero-spark-draw {
+      to { stroke-dashoffset: 0; }
+    }
+    @keyframes hero-spark-fade {
+      to { opacity: 1; }
+    }
+    @keyframes hero-spark-pop {
+      0%   { opacity: 0; transform: scale(0.2); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    @keyframes hero-spark-pulse {
+      0%, 100% { filter: brightness(1); }
+      50%      { filter: brightness(1.4); }
+    }
+    @keyframes hero-spark-ring {
+      0%   { opacity: 0.6; r: 3; }
+      100% { opacity: 0;   r: 12; }
+    }
+
+    /* --- Feed panel: live sales --------------------------------------------- */
+    .mockup-hero .hero-feed {
+      grid-column: 2;
+      grid-row: 1 / 3;
+      padding: 1.5cqi 0 0.8cqi;
+    }
+    .mockup-hero .hero-feed-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 0 1.8cqi 1.2cqi;
+      border-bottom: 1px solid var(--stadli-gray-800);
+    }
+    .mockup-hero .hero-feed-label {
+      font-size: clamp(6px, 0.76cqi, 9px);
+      color: var(--stadli-gray-400);
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.7cqi;
+    }
+    .mockup-hero .hero-feed-label .hero-live-dot {
+      animation: hero-live-pulse 1.8s ease-out 0.4s infinite;
+    }
+    .mockup-hero .hero-feed-meta {
+      font-size: clamp(6px, 0.72cqi, 9px);
+      color: var(--stadli-gray-500);
+      font-variant-numeric: tabular-nums;
+    }
+    .mockup-hero .hero-feed-viewport {
+      flex: 1;
+      min-height: 0;
+      position: relative;
+      overflow: hidden;
+      mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+    }
+    .mockup-hero .hero-feed-track {
+      display: flex;
+      flex-direction: column;
+      animation: hero-feed-scroll 28s linear infinite;
+    }
+    @keyframes hero-feed-scroll {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-50%); }
+    }
+    .mockup-hero .hero-feed-item {
+      display: flex;
+      align-items: center;
+      gap: 1.1cqi;
+      padding: 1.1cqi 1.8cqi;
+      border-bottom: 1px solid #101010;
+      flex-shrink: 0;
+    }
+    .mockup-hero .hero-feed-icon {
+      width: 2.4cqi;
+      height: 2.4cqi;
+      min-width: 18px;
+      min-height: 18px;
+      border-radius: 0.5cqi;
       background-color: var(--stadli-gray-800);
       border: 1px solid var(--stadli-gray-700);
-      border-radius: 0.75rem;
-      width: 20cqi;
-      height: 7.5cqi;
-      position: absolute;
-      z-index: 10;
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      transform: translate(-50%, -50%);
+      flex-shrink: 0;
     }
-    .mockup-hero .hero-feature-card h3 {
-      font-size: clamp(0.72rem, 1.16cqi, 1.2rem);
+    .mockup-hero .hero-feed-icon svg {
+      width: 60%;
+      height: 60%;
+      stroke: var(--stadli-gray-400);
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .mockup-hero .hero-feed-text {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25cqi;
+    }
+    .mockup-hero .hero-feed-title {
+      font-size: clamp(8px, 0.92cqi, 11px);
+      color: var(--stadli-gray-200);
       font-weight: 500;
-      margin: 0;
-      color: var(--stadli-gray-100);
-      line-height: 1.2;
-      letter-spacing: -0.01em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
-    .mockup-hero .hero-top-left     { top: 28.333%; left: 25%; }
-    .mockup-hero .hero-top-right    { top: 28.333%; left: 75%; }
-    .mockup-hero .hero-bottom-left  { top: 71.667%; left: 25%; }
-    .mockup-hero .hero-bottom-right { top: 71.667%; left: 75%; }
-    .mockup-hero .hero-logo-center {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 15;
+    .mockup-hero .hero-feed-sub {
+      font-size: clamp(6px, 0.72cqi, 9px);
+      color: var(--stadli-gray-500);
+      font-variant-numeric: tabular-nums;
     }
-    .mockup-hero .hero-logo-center img {
-      display: block;
-      width: 22cqi;
-      height: auto;
+    .mockup-hero .hero-feed-amount {
+      font-size: clamp(9px, 1.04cqi, 13px);
+      color: var(--stadli-white);
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
     }
-    .mockup-hero .hero-lines {
-      position: absolute;
-      inset: 0;
+
+    /* --- Bottom row: fan profile + AI insight + compact KPIs --------------- */
+    .mockup-hero .hero-bottom {
+      grid-column: 1;
+      grid-row: 2;
+      display: grid;
+      grid-template-columns: 1.2fr 1.2fr 0.85fr;
+      gap: 1cqi;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    /* Shared bottom card styling */
+    .mockup-hero .hero-b-card {
+      background-color: #070707;
+      border: 1px solid var(--stadli-gray-800);
+      border-radius: 0.8cqi;
+      padding: 1.2cqi 1.4cqi;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .mockup-hero .hero-b-head {
+      display: flex;
+      align-items: center;
+      gap: 0.6cqi;
+      font-size: clamp(6px, 0.72cqi, 9px);
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--stadli-gray-500);
+    }
+    .mockup-hero .hero-b-head .spacer {
+      flex: 1;
+    }
+    .mockup-hero .hero-b-time {
+      color: var(--stadli-gray-500);
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.1em;
+    }
+
+    /* Fan profile card */
+    .mockup-hero .hero-fan {
+      gap: 1cqi;
+    }
+    .mockup-hero .hero-fan-head {
+      color: var(--bs-success);
+    }
+    .mockup-hero .hero-live-dot-green {
+      width: 0.8cqi;
+      height: 0.8cqi;
+      min-width: 6px;
+      min-height: 6px;
+      border-radius: 50%;
+      background-color: var(--spec-green);
+      flex-shrink: 0;
+      animation: hero-live-pulse-green 1.8s ease-out infinite;
+    }
+    @keyframes hero-live-pulse-green {
+      0%   { box-shadow: 0 0 0 0 rgba(68, 214, 43, 0.55); }
+      70%  { box-shadow: 0 0 0 1.3cqi rgba(68, 214, 43, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(68, 214, 43, 0); }
+    }
+    .mockup-hero .hero-fan-body {
+      display: flex;
+      align-items: center;
+      gap: 1cqi;
+    }
+    .mockup-hero .hero-fan-avatar {
+      width: 3.4cqi;
+      height: 3.4cqi;
+      min-width: 28px;
+      min-height: 28px;
+      border-radius: 50%;
+      overflow: hidden;
+      background-color: var(--stadli-gray-800);
+      flex-shrink: 0;
+      border: 1px solid var(--stadli-gray-700);
+    }
+    .mockup-hero .hero-fan-avatar img,
+    .mockup-hero .hero-fan-avatar svg {
       width: 100%;
       height: 100%;
-      pointer-events: none;
-      z-index: 1;
+      object-fit: cover;
+      display: block;
     }
-    .mockup-hero .hero-base-line {
-      stroke: var(--stadli-gray-800);
-      stroke-width: 1.5;
-      fill: none;
+    .mockup-hero .hero-fan-name {
+      font-size: clamp(10px, 1.2cqi, 14px);
+      font-weight: 600;
+      color: var(--stadli-white);
+      letter-spacing: -0.01em;
+      line-height: 1.1;
     }
-    .mockup-hero .hero-pulse-glow {
+    .mockup-hero .hero-fan-role {
+      font-size: clamp(7px, 0.8cqi, 10px);
+      color: var(--stadli-gray-500);
+      margin-top: 0.3cqi;
+    }
+    .mockup-hero .hero-fan-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5cqi;
+      padding: 0.9cqi 0;
+      border-top: 1px solid var(--stadli-gray-800);
+      border-bottom: 1px solid var(--stadli-gray-800);
+    }
+    .mockup-hero .hero-fan-stat-label {
+      font-size: clamp(6px, 0.68cqi, 8px);
+      color: var(--stadli-gray-500);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.3cqi;
+      display: block;
+    }
+    .mockup-hero .hero-fan-stat-value {
+      font-size: clamp(9px, 1.04cqi, 13px);
+      font-weight: 500;
+      color: var(--stadli-white);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.01em;
+    }
+    .mockup-hero .hero-fan-location {
+      display: flex;
+      align-items: center;
+      gap: 0.7cqi;
+      font-size: clamp(7px, 0.84cqi, 10px);
+      color: var(--stadli-gray-300);
+      margin-top: auto;
+    }
+    .mockup-hero .hero-fan-location svg {
+      width: 1.3cqi;
+      height: 1.3cqi;
+      min-width: 11px;
+      min-height: 11px;
       stroke: var(--spec-cyan);
-      stroke-width: 6;
       fill: none;
-      stroke-dasharray: 150 280;
-      stroke-linecap: round;
-      opacity: 0.55;
-      animation: mockup-hero-flow 12s linear infinite, mockup-hero-shimmer 2s ease-in-out infinite alternate;
-    }
-    .mockup-hero .hero-pulse-core {
-      stroke: var(--stadli-white);
       stroke-width: 2;
-      fill: none;
-      stroke-dasharray: 150 280;
       stroke-linecap: round;
-      animation: mockup-hero-flow 12s linear infinite;
+      stroke-linejoin: round;
+      flex-shrink: 0;
     }
-    @keyframes mockup-hero-flow {
-      from { stroke-dashoffset: 1720; }
-      to   { stroke-dashoffset: 0; }
+
+    /* AI insight card */
+    .mockup-hero .hero-ai {
+      gap: 0.9cqi;
+      background: linear-gradient(135deg, rgba(123, 47, 247, 0.09), rgba(1, 64, 240, 0.04) 45%, transparent 100%), #070707;
+      border-color: rgba(123, 47, 247, 0.22);
     }
-    @keyframes mockup-hero-shimmer {
-      0%   { opacity: 0.3; filter: brightness(0.8); }
-      100% { opacity: 1;   filter: brightness(1.4); }
+    .mockup-hero .hero-ai::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--spec-violet), transparent);
+      opacity: 0.6;
+    }
+    .mockup-hero .hero-ai-icon {
+      width: 1.6cqi;
+      height: 1.6cqi;
+      min-width: 13px;
+      min-height: 13px;
+      color: var(--spec-violet);
+      animation: hero-ai-sparkle 2.8s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    .mockup-hero .hero-ai-icon svg {
+      width: 100%;
+      height: 100%;
+      fill: currentColor;
+      display: block;
+    }
+    @keyframes hero-ai-sparkle {
+      0%, 100% { transform: rotate(0); filter: brightness(1); }
+      50%      { transform: rotate(180deg); filter: brightness(1.5); }
+    }
+    .mockup-hero .hero-ai-status-dot {
+      width: 0.55cqi;
+      height: 0.55cqi;
+      min-width: 4px;
+      min-height: 4px;
+      border-radius: 50%;
+      background-color: var(--spec-violet);
+      flex-shrink: 0;
+      animation: hero-ai-pulse 1.8s ease-out infinite;
+    }
+    @keyframes hero-ai-pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(123, 47, 247, 0.55); }
+      70%  { box-shadow: 0 0 0 1.3cqi rgba(123, 47, 247, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(123, 47, 247, 0); }
+    }
+    .mockup-hero .hero-ai-insight {
+      font-size: clamp(10px, 1.2cqi, 14px);
+      line-height: 1.4;
+      color: var(--stadli-gray-100);
+      letter-spacing: -0.005em;
+    }
+    .mockup-hero .hero-ai-insight strong,
+    .mockup-hero .hero-ai-recommendation strong.accent {
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--spec-violet), var(--spec-rose));
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: hero-ai-shimmer 3.5s linear infinite;
+    }
+    @keyframes hero-ai-shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    .mockup-hero .hero-ai-recommendation {
+      font-size: clamp(8px, 0.92cqi, 11px);
+      color: var(--stadli-gray-400);
+      line-height: 1.4;
+    }
+    .mockup-hero .hero-ai-recommendation strong {
+      color: var(--stadli-white);
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+    .mockup-hero .hero-ai-cta {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8cqi 1.1cqi;
+      background-color: rgba(123, 47, 247, 0.12);
+      border: 1px solid rgba(123, 47, 247, 0.3);
+      border-radius: 0.5cqi;
+      font-size: clamp(8px, 0.92cqi, 11px);
+      font-weight: 500;
+      color: var(--stadli-white);
+    }
+    .mockup-hero .hero-ai-cta .arrow {
+      color: var(--spec-violet);
+      font-size: 1.1em;
+    }
+
+    /* Compact stats column (right side of bottom row) */
+    .mockup-hero .hero-mini-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 1cqi;
+      min-width: 0;
+      min-height: 0;
+    }
+    .mockup-hero .hero-mini-stat {
+      background-color: #070707;
+      border: 1px solid var(--stadli-gray-800);
+      border-radius: 0.8cqi;
+      padding: 1cqi 1.2cqi;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.35cqi;
+      flex: 1;
+      min-width: 0;
+      min-height: 0;
+    }
+    .mockup-hero .hero-mini-label {
+      font-size: clamp(6px, 0.7cqi, 8px);
+      color: var(--stadli-gray-500);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .mockup-hero .hero-mini-value {
+      font-size: clamp(12px, 1.6cqi, 20px);
+      font-weight: 500;
+      color: var(--stadli-white);
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+    .mockup-hero .hero-mini-meta {
+      font-size: clamp(6px, 0.72cqi, 9px);
+      color: var(--stadli-gray-500);
+      font-variant-numeric: tabular-nums;
+    }
+    .mockup-hero .hero-mini-meta.is-positive {
+      color: var(--bs-success);
+    }
+
+    /* Capacity bar */
+    .mockup-hero .hero-capacity {
+      height: 3px;
+      background-color: var(--stadli-gray-800);
+      border-radius: 50rem;
+      overflow: hidden;
+      margin-top: 0.4cqi;
+    }
+    .mockup-hero .hero-capacity-fill {
+      height: 100%;
+      width: 76.8%;
+      background: linear-gradient(to right, var(--spec-cyan), var(--spec-green));
+      border-radius: 50rem;
+      animation: hero-capacity-grow 2s cubic-bezier(0.16, 1, 0.3, 1) 0.6s backwards;
+    }
+    @keyframes hero-capacity-grow {
+      from { width: 0; }
+      to   { width: 76.8%; }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .mockup-hero *,
+      .mockup-hero *::before,
+      .mockup-hero *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
     }
 
     /* Mockup card-header file path — truncate on narrow viewports so the
@@ -1509,7 +2024,7 @@
               <!-- Mockup Header -->
               <div class="card-header bg-transparent border-bottom border-secondary border-opacity-25 px-4 py-3 d-flex align-items-center gap-3">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white text-opacity-50"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                <span class="font-monospace text-white text-opacity-50 mockup-file-path">stadli/app/dashboard/main.tsx</span>
+                <span class="font-monospace text-white text-opacity-50 mockup-file-path">stadli/app/dashboard/matchday.tsx</span>
                 <div class="d-flex gap-2 ms-auto">
                   <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
                   <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
@@ -1520,27 +2035,282 @@
               <div class="mockup-frame">
                 <div class="mockup-content">
                   <div class="mockup-hero">
-                    <svg class="hero-lines" viewBox="0 0 1200 600" preserveAspectRatio="none">
-                      <defs>
-                        <filter id="mockup-hero-glow" x="-20%" y="-20%" width="140%" height="140%">
-                          <feGaussianBlur stdDeviation="8" result="blur"/>
-                          <feMerge>
-                            <feMergeNode in="blur"/>
-                            <feMergeNode in="blur"/>
-                          </feMerge>
-                        </filter>
-                      </defs>
-                      <rect x="300" y="170" width="600" height="260" rx="8" class="hero-base-line"/>
-                      <rect x="300" y="170" width="600" height="260" rx="8" class="hero-pulse-glow" filter="url(#mockup-hero-glow)"/>
-                      <rect x="300" y="170" width="600" height="260" rx="8" class="hero-pulse-core"/>
-                    </svg>
-                    <div class="hero-logo-center">
-                      <img src="logo.svg" alt="Stadli">
+
+                    <!-- MAIN PANEL — Revenue + sparkline -->
+                    <div class="hero-panel hero-main">
+                      <div class="hero-match">
+                        <span class="hero-live-dot"></span>
+                        <span>Tonight &middot; Live</span>
+                        <span class="hero-match-sep">&middot;</span>
+                        <span>19:30 ET</span>
+                        <span class="hero-match-sep">&middot;</span>
+                        <span>Main Arena</span>
+                      </div>
+                      <div class="hero-match-title">Home vs. Northside Rivals &middot; Championship night</div>
+
+                      <div class="hero-revenue-label">Gross revenue tonight</div>
+                      <div class="hero-revenue-value">
+                        <span class="currency">$</span>247,891
+                      </div>
+                      <div class="hero-revenue-trend">
+                        <span class="arrow">&#9650;</span>
+                        <span>$12,430 last hour</span>
+                        <span class="delta-sep">&middot;</span>
+                        <span class="delta-note">+18.3% vs. avg matchday</span>
+                      </div>
+
+                      <div class="hero-sparkline">
+                        <svg viewBox="0 0 400 80" preserveAspectRatio="none">
+                          <defs>
+                            <linearGradient id="heroSparkGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                              <stop offset="0%" stop-color="#00b0d8"/>
+                              <stop offset="100%" stop-color="#44d62b"/>
+                            </linearGradient>
+                            <linearGradient id="heroSparkFill" x1="0%" y1="0%" x2="0%" y2="100%">
+                              <stop offset="0%" stop-color="#44d62b" stop-opacity="0.25"/>
+                              <stop offset="100%" stop-color="#44d62b" stop-opacity="0"/>
+                            </linearGradient>
+                          </defs>
+                          <line x1="0" y1="20" x2="400" y2="20" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="2 4"/>
+                          <line x1="0" y1="50" x2="400" y2="50" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="2 4"/>
+                          <path class="hero-spark-fill"
+                                d="M0,68 L25,62 50,64 75,58 100,55 125,50 150,52 175,45 200,42 225,38 250,32 275,28 300,25 325,20 350,18 375,14 400,10 L400,80 L0,80 Z"/>
+                          <path class="hero-spark-line"
+                                d="M0,68 L25,62 50,64 75,58 100,55 125,50 150,52 175,45 200,42 225,38 250,32 275,28 300,25 325,20 350,18 375,14 400,10"/>
+                          <circle class="hero-spark-dot-ring" cx="400" cy="10" r="3"/>
+                          <circle class="hero-spark-dot" cx="400" cy="10" r="3"/>
+                        </svg>
+                      </div>
                     </div>
-                    <div class="hero-feature-card hero-top-left"><h3>Ticketing</h3></div>
-                    <div class="hero-feature-card hero-top-right"><h3>Analytics</h3></div>
-                    <div class="hero-feature-card hero-bottom-left"><h3>Marketing<br>campaigns</h3></div>
-                    <div class="hero-feature-card hero-bottom-right"><h3>CRM</h3></div>
+
+                    <!-- FEED PANEL — Live sales -->
+                    <div class="hero-panel hero-feed">
+                      <div class="hero-feed-head">
+                        <span class="hero-feed-label">
+                          <span class="hero-live-dot"></span>
+                          Live sales
+                        </span>
+                        <span class="hero-feed-meta">312 / hr</span>
+                      </div>
+                      <div class="hero-feed-viewport">
+                        <div class="hero-feed-track">
+                          <!-- Set A -->
+                          <div class="hero-feed-item">
+                            <div class="hero-feed-icon">
+                              <svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4V7z"/><path d="M10 8v8"/></svg>
+                            </div>
+                            <div class="hero-feed-text">
+                              <span class="hero-feed-title">Section 108 &middot; Row 12 &middot; 2 seats</span>
+                              <span class="hero-feed-sub">Ticket &middot; 14s ago</span>
+                            </div>
+                            <span class="hero-feed-amount">$240</span>
+                          </div>
+                          <div class="hero-feed-item">
+                            <div class="hero-feed-icon">
+                              <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            </div>
+                            <div class="hero-feed-text">
+                              <span class="hero-feed-title">Season pass renewal</span>
+                              <span class="hero-feed-sub">CRM &middot; 32s ago</span>
+                            </div>
+                            <span class="hero-feed-amount">$1,840</span>
+                          </div>
+                          <div class="hero-feed-item">
+                            <div class="hero-feed-icon">
+                              <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                            </div>
+                            <div class="hero-feed-text">
+                              <span class="hero-feed-title">Parking + merch bundle</span>
+                              <span class="hero-feed-sub">Commerce &middot; 58s ago</span>
+                            </div>
+                            <span class="hero-feed-amount">$95</span>
+                          </div>
+                          <div class="hero-feed-item">
+                            <div class="hero-feed-icon">
+                              <svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4V7z"/><path d="M10 8v8"/></svg>
+                            </div>
+                            <div class="hero-feed-text">
+                              <span class="hero-feed-title">Section 204 &middot; Row 5 &middot; 4 seats</span>
+                              <span class="hero-feed-sub">Ticket &middot; 1m 14s ago</span>
+                            </div>
+                            <span class="hero-feed-amount">$360</span>
+                          </div>
+                          <div class="hero-feed-item">
+                            <div class="hero-feed-icon">
+                              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            </div>
+                            <div class="hero-feed-text">
+                              <span class="hero-feed-title">Club box upgrade</span>
+                              <span class="hero-feed-sub">Upsell &middot; 2m 03s ago</span>
+                            </div>
+                            <span class="hero-feed-amount">$180</span>
+                          </div>
+                          <div class="hero-feed-item">
+                            <div class="hero-feed-icon">
+                              <svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4V7z"/><path d="M10 8v8"/></svg>
+                            </div>
+                            <div class="hero-feed-text">
+                              <span class="hero-feed-title">Section 312 &middot; Row 8 &middot; 2 seats</span>
+                              <span class="hero-feed-sub">Ticket &middot; 2m 41s ago</span>
+                            </div>
+                            <span class="hero-feed-amount">$180</span>
+                          </div>
+                          <!-- Set B (duplicate for seamless loop) -->
+                          <div class="hero-feed-item">
+                            <div class="hero-feed-icon">
+                              <svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4V7z"/><path d="M10 8v8"/></svg>
+                            </div>
+                            <div class="hero-feed-text">
+                              <span class="hero-feed-title">Section 108 &middot; Row 12 &middot; 2 seats</span>
+                              <span class="hero-feed-sub">Ticket &middot; 14s ago</span>
+                            </div>
+                            <span class="hero-feed-amount">$240</span>
+                          </div>
+                          <div class="hero-feed-item">
+                            <div class="hero-feed-icon">
+                              <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            </div>
+                            <div class="hero-feed-text">
+                              <span class="hero-feed-title">Season pass renewal</span>
+                              <span class="hero-feed-sub">CRM &middot; 32s ago</span>
+                            </div>
+                            <span class="hero-feed-amount">$1,840</span>
+                          </div>
+                          <div class="hero-feed-item">
+                            <div class="hero-feed-icon">
+                              <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                            </div>
+                            <div class="hero-feed-text">
+                              <span class="hero-feed-title">Parking + merch bundle</span>
+                              <span class="hero-feed-sub">Commerce &middot; 58s ago</span>
+                            </div>
+                            <span class="hero-feed-amount">$95</span>
+                          </div>
+                          <div class="hero-feed-item">
+                            <div class="hero-feed-icon">
+                              <svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4V7z"/><path d="M10 8v8"/></svg>
+                            </div>
+                            <div class="hero-feed-text">
+                              <span class="hero-feed-title">Section 204 &middot; Row 5 &middot; 4 seats</span>
+                              <span class="hero-feed-sub">Ticket &middot; 1m 14s ago</span>
+                            </div>
+                            <span class="hero-feed-amount">$360</span>
+                          </div>
+                          <div class="hero-feed-item">
+                            <div class="hero-feed-icon">
+                              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            </div>
+                            <div class="hero-feed-text">
+                              <span class="hero-feed-title">Club box upgrade</span>
+                              <span class="hero-feed-sub">Upsell &middot; 2m 03s ago</span>
+                            </div>
+                            <span class="hero-feed-amount">$180</span>
+                          </div>
+                          <div class="hero-feed-item">
+                            <div class="hero-feed-icon">
+                              <svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4V7z"/><path d="M10 8v8"/></svg>
+                            </div>
+                            <div class="hero-feed-text">
+                              <span class="hero-feed-title">Section 312 &middot; Row 8 &middot; 2 seats</span>
+                              <span class="hero-feed-sub">Ticket &middot; 2m 41s ago</span>
+                            </div>
+                            <span class="hero-feed-amount">$180</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- BOTTOM ROW — Fan profile + AI insight + compact KPIs -->
+                    <div class="hero-bottom">
+
+                      <!-- Fan profile card: a fan just scanned in -->
+                      <div class="hero-b-card hero-fan">
+                        <div class="hero-b-head hero-fan-head">
+                          <span class="hero-live-dot-green"></span>
+                          <span>Just scanned in</span>
+                          <span class="spacer"></span>
+                          <span class="hero-b-time">19:14</span>
+                        </div>
+
+                        <div class="hero-fan-body">
+                          <div class="hero-fan-avatar">
+                            <svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+                              <rect width="72" height="72" fill="#1a1a1a"/>
+                              <text x="36" y="36" text-anchor="middle" dominant-baseline="central" font-family="Helvetica Neue, sans-serif" font-size="24" font-weight="500" fill="#929292">MG</text>
+                            </svg>
+                          </div>
+                          <div>
+                            <div class="hero-fan-name">Marcus Grant</div>
+                            <div class="hero-fan-role">Season pass &middot; 5 games</div>
+                          </div>
+                        </div>
+
+                        <div class="hero-fan-stats">
+                          <div>
+                            <span class="hero-fan-stat-label">LTV</span>
+                            <span class="hero-fan-stat-value">$1,250</span>
+                          </div>
+                          <div>
+                            <span class="hero-fan-stat-label">Engage</span>
+                            <span class="hero-fan-stat-value">87</span>
+                          </div>
+                          <div>
+                            <span class="hero-fan-stat-label">Attend</span>
+                            <span class="hero-fan-stat-value">75%</span>
+                          </div>
+                        </div>
+
+                        <div class="hero-fan-location">
+                          <svg viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                          <span>Section 108 &middot; Row 12</span>
+                        </div>
+                      </div>
+
+                      <!-- AI insight card: generating recommendation -->
+                      <div class="hero-b-card hero-ai">
+                        <div class="hero-b-head">
+                          <span class="hero-ai-icon">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M12 2L13.8 9.4L21.2 11.2L13.8 13L12 20.4L10.2 13L2.8 11.2L10.2 9.4L12 2Z"/>
+                            </svg>
+                          </span>
+                          <span>AI Insight</span>
+                          <span class="spacer"></span>
+                          <span class="hero-ai-status-dot"></span>
+                          <span class="hero-b-time">Just now</span>
+                        </div>
+
+                        <div class="hero-ai-insight">
+                          Demand for <strong>Section 208</strong> is outpacing supply.
+                        </div>
+
+                        <div class="hero-ai-recommendation">
+                          Suggests releasing <strong>40 seats</strong> from hold. Projected lift: <strong class="accent">+$8,400</strong>.
+                        </div>
+
+                        <div class="hero-ai-cta">
+                          <span>Take action</span>
+                          <span class="arrow">&rarr;</span>
+                        </div>
+                      </div>
+
+                      <!-- Compact stats column -->
+                      <div class="hero-mini-stats">
+                        <div class="hero-mini-stat">
+                          <span class="hero-mini-label">Sold</span>
+                          <span class="hero-mini-value">14,208</span>
+                          <span class="hero-mini-meta">of 18,500 seats</span>
+                          <div class="hero-capacity"><div class="hero-capacity-fill"></div></div>
+                        </div>
+                        <div class="hero-mini-stat">
+                          <span class="hero-mini-label">Sell-through</span>
+                          <span class="hero-mini-value">76.8%</span>
+                          <span class="hero-mini-meta is-positive">&#9650; 4.2% vs. avg</span>
+                        </div>
+                      </div>
+
+                    </div>
+
                   </div>
                 </div>
               </div>
