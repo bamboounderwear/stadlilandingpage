@@ -285,7 +285,7 @@
     
     /* Utilities */
     .container-fluid {
-      max-width: 1440px;
+      max-width: 1280px;
       margin-left: auto;
       margin-right: auto;
     }
@@ -922,14 +922,17 @@
       letter-spacing: 0.02em;
     }
 
-    /* ── Analytics — Stat Cards with Trend Charts ── */
+    /* ── Analytics — Stat Cards + Report Table ── */
     .mockup-analytics {
       width: 100%;
       height: 100%;
+      padding: 28px 32px;
       background-color: var(--bs-body-bg);
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      gap: 24px;
       position: relative;
       overflow: hidden;
     }
@@ -937,43 +940,45 @@
       position: absolute;
       inset: 0;
       pointer-events: none;
-      background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.4) 100%);
+      background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.35) 100%);
     }
     .mockup-analytics .ana-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      width: 90%;
-      max-width: 1000px;
+      gap: 20px;
+      width: 100%;
+      max-width: 1040px;
       position: relative;
       z-index: 1;
+      flex-shrink: 0;
     }
     .mockup-analytics .ana-card {
       background-color: var(--stadli-gray-900);
       border: 1px solid var(--stadli-gray-800);
       border-radius: 0.75rem;
-      padding: 40px 32px 32px 32px;
+      padding: 22px 24px 20px;
       display: flex;
       flex-direction: column;
     }
     .mockup-analytics .ana-label {
       color: var(--stadli-gray-500);
-      font-size: 14px;
-      font-weight: 500;
+      font-size: 13px;
+      font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      margin-bottom: 16px;
+      margin-bottom: 10px;
     }
     .mockup-analytics .ana-value {
-      font-size: 48px;
+      font-size: 36px;
       font-weight: 500;
-      margin-bottom: 24px;
+      margin-bottom: 14px;
       color: var(--stadli-white);
       letter-spacing: -0.02em;
       font-variant-numeric: tabular-nums;
+      line-height: 1;
     }
     .mockup-analytics .ana-trend {
-      height: 60px;
+      height: 44px;
       width: 100%;
       margin-top: auto;
       position: relative;
@@ -987,6 +992,79 @@
     .mockup-analytics .ana-neutral { stroke: var(--spec-orange); }
     .mockup-analytics .ana-down    { stroke: var(--spec-red); }
     .mockup-analytics .ana-gradient-fill { opacity: 0.12; }
+
+    /* Report table below the stat cards */
+    .mockup-analytics .ana-table {
+      width: 100%;
+      max-width: 1040px;
+      flex-shrink: 0;
+      background-color: var(--stadli-gray-900);
+      border: 1px solid var(--stadli-gray-800);
+      border-radius: 0.75rem;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+    .mockup-analytics .ana-table-row {
+      display: grid;
+      grid-template-columns: 2.3fr 1fr 1.1fr 1.2fr 1.1fr;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--stadli-gray-800);
+      font-size: 14px;
+      color: var(--stadli-gray-200);
+    }
+    .mockup-analytics .ana-table-row:last-child {
+      border-bottom: none;
+    }
+    .mockup-analytics .ana-table-row.ana-table-head {
+      background-color: var(--stadli-gray-800);
+      border-bottom-color: var(--stadli-gray-700);
+      padding: 11px 24px;
+    }
+    .mockup-analytics .ana-table-head .ana-cell {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--stadli-gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .mockup-analytics .ana-cell {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .mockup-analytics .ana-cell-event {
+      color: var(--stadli-white);
+      font-weight: 500;
+    }
+    .mockup-analytics .ana-cell-num {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+    .mockup-analytics .ana-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 3px 10px;
+      border: 1px solid var(--stadli-gray-700);
+      border-radius: 50rem;
+      font-size: 11px;
+      color: var(--stadli-gray-300);
+      white-space: nowrap;
+      width: fit-content;
+    }
+    .mockup-analytics .ana-status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--bs-success);
+      flex-shrink: 0;
+    }
+    .mockup-analytics .ana-status.is-draft .ana-status-dot {
+      background-color: var(--bs-warning);
+    }
 
     /* ── AI — Insight Query Dashboard ── */
     .mockup-ai {
@@ -1692,6 +1770,65 @@
                       </div>
                     </div>
 
+                  </div>
+
+                  <!-- Report table under the stat cards -->
+                  <div class="ana-table" role="table" aria-label="Recent event performance">
+                    <div class="ana-table-row ana-table-head" role="row">
+                      <span class="ana-cell" role="columnheader">Event</span>
+                      <span class="ana-cell" role="columnheader">Date</span>
+                      <span class="ana-cell ana-cell-num" role="columnheader">Sold</span>
+                      <span class="ana-cell ana-cell-num" role="columnheader">Revenue</span>
+                      <span class="ana-cell" role="columnheader">Status</span>
+                    </div>
+                    <div class="ana-table-row" role="row">
+                      <span class="ana-cell ana-cell-event" role="cell">Summer jazz festival</span>
+                      <span class="ana-cell" role="cell">21 Jun</span>
+                      <span class="ana-cell ana-cell-num" role="cell">342 / 500</span>
+                      <span class="ana-cell ana-cell-num" role="cell">$45,732</span>
+                      <span role="cell">
+                        <span class="ana-status">
+                          <span class="ana-status-dot"></span>
+                          Published
+                        </span>
+                      </span>
+                    </div>
+                    <div class="ana-table-row" role="row">
+                      <span class="ana-cell ana-cell-event" role="cell">Rival game rematch</span>
+                      <span class="ana-cell" role="cell">28 Jun</span>
+                      <span class="ana-cell ana-cell-num" role="cell">188 / 500</span>
+                      <span class="ana-cell ana-cell-num" role="cell">$21,450</span>
+                      <span role="cell">
+                        <span class="ana-status">
+                          <span class="ana-status-dot"></span>
+                          Published
+                        </span>
+                      </span>
+                    </div>
+                    <div class="ana-table-row" role="row">
+                      <span class="ana-cell ana-cell-event" role="cell">Championship night</span>
+                      <span class="ana-cell" role="cell">05 Jul</span>
+                      <span class="ana-cell ana-cell-num" role="cell">412 / 500</span>
+                      <span class="ana-cell ana-cell-num" role="cell">$62,180</span>
+                      <span role="cell">
+                        <span class="ana-status">
+                          <span class="ana-status-dot"></span>
+                          Published
+                        </span>
+                      </span>
+                    </div>
+                    <div class="ana-table-row" role="row">
+                      <span class="ana-cell ana-cell-event" role="cell">Fan appreciation fest</span>
+                      <span class="ana-cell" role="cell">12 Jul</span>
+                      <span class="ana-cell ana-cell-num" role="cell">89 / 500</span>
+                      <span class="ana-cell ana-cell-num" role="cell">$8,240</span>
+                      <span role="cell">
+                        <span class="ana-status is-draft">
+                          <span class="ana-status-dot"></span>
+                          Draft
+                        </span>
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
