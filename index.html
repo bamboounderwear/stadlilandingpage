@@ -2753,38 +2753,52 @@
   <!-- Demo Request Modal -->
   <div class="modal fade" id="demoModal" tabindex="-1" aria-labelledby="demoModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content bg-body border border-secondary border-opacity-25">
-        <div class="modal-header border-bottom border-secondary border-opacity-25">
-          <div>
-            <h5 class="modal-title mb-1" id="demoModalLabel">Voyez Stadli en action.</h5>
-            <p class="text-body-secondary small mb-0">Parlons-nous de votre plan de match. Réservez votre démo aujourd'hui.</p>
-          </div>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+<div class="modal-content bg-body border border-secondary border-opacity-25">
+  <!-- Tweak: Added padding to match body, adjusted bottom padding to flow better -->
+  <div class="modal-header border-bottom border-secondary border-opacity-25 p-4 pb-3">
+    <div>
+      <h5 class="modal-title mb-1" id="demoModalLabel">Voyez Stadli en action.</h5>
+      <p class="text-body-secondary small mb-0">Parlons-nous de votre plan de match. Réservez votre démo aujourd'hui.</p>
+    </div>
+    <!-- Tweak: align-self-start keeps button crisp at the top right -->
+    <button type="button" class="btn-close btn-close-white align-self-start" data-bs-dismiss="modal" aria-label="Fermer"></button>
+  </div>
+  <!-- Tweak: Adjusted top padding to blend smoothly with header -->
+  <div class="modal-body p-4 pt-3">
+    <form>
+      <!-- Tweak: Rely entirely on g-3 for internal spacing -->
+      <div class="row g-3 mb-4">
+        
+        <div class="col-12 col-sm-6">
+          <!-- Tweak: mb-1 and small for tighter label-to-input grouping -->
+          <label class="form-label text-body-secondary small mb-1">Prénom</label>
+          <input type="text" class="form-control bg-body border-secondary px-3 py-2">
         </div>
-        <div class="modal-body p-4">
-          <form>
-            <div class="row g-3 mb-4">
-              <div class="col-12 col-sm-6">
-                <label class="form-label text-label text-body-secondary mb-2">Prénom</label>
-                <input type="text" class="form-control bg-body border-secondary px-3 py-2">
-              </div>
-              <div class="col-12 col-sm-6">
-                <label class="form-label text-label text-body-secondary mb-2">Nom</label>
-                <input type="text" class="form-control bg-body border-secondary px-3 py-2">
-              </div>
-                          <div class="mb-4">
-              <label class="form-label text-label text-body-secondary mb-2">Courriel</label>
-              <input type="email" class="form-control bg-body border-secondary text-body-color px-3 py-2" placeholder="nom@organisation.com">
-            </div>
-                        <div class="mb-4">
-              <label class="form-label text-label text-body-secondary mb-2">Organisation</label>
-              <input type="text" class="form-control bg-body border-secondary px-3 py-2">
-            </div>
-            </div>
-            <button type="submit" class="btn btn-primary w-100 py-3 mt-2">Demander une démo</button>
-          </form>
+        
+        <div class="col-12 col-sm-6">
+          <label class="form-label text-body-secondary small mb-1">Nom</label>
+          <input type="text" class="form-control bg-body border-secondary px-3 py-2">
         </div>
+        
+        <!-- Tweak: Added col-12 to fix broken grid layout -->
+        <div class="col-12">
+          <label class="form-label text-body-secondary small mb-1">Courriel</label>
+          <input type="email" class="form-control bg-body border-secondary text-body-color px-3 py-2" placeholder="nom@organisation.com">
+        </div>
+        
+        <!-- Tweak: Added col-12 to fix broken grid layout -->
+        <div class="col-12">
+          <label class="form-label text-body-secondary small mb-1">Organisation</label>
+          <input type="text" class="form-control bg-body border-secondary px-3 py-2">
+        </div>
+
       </div>
+      
+      <!-- Tweak: Swapped to py-2 and fw-medium for a more standard button feel -->
+      <button type="submit" class="btn btn-primary w-100 py-2 fw-medium">Demander une démo</button>
+    </form>
+  </div>
+</div>
     </div>
   </div>
 
