@@ -446,13 +446,13 @@
       --stagger-base: 350ms;
       --stagger-step: 110ms;
     }
-    /* !important on opacity + transition-delay is needed because some
-       mockup children set opacity explicitly (e.g. .mfc-ghost-card) or
-       use a `transition: all` shorthand (e.g. .mfc-card) which would
-       otherwise reset our delay back to 0. */
+    /* !important on opacity + transition is needed because some mockup
+       children set opacity explicitly (e.g. .mfc-ghost-card) or use a
+       `transition: all` shorthand (e.g. .mfc-card) with a snappy curve
+       that would otherwise win and make the fade feel abrupt. */
     .mockup-stagger > * {
       opacity: 0 !important;
-      transition: opacity 0.8s ease-out;
+      transition: opacity 0.8s ease-out !important;
       will-change: opacity;
     }
     .reveal.active .mockup-stagger > *,
