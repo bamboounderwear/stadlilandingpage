@@ -732,16 +732,17 @@
       z-index: 3;
       width: 600px;
       height: 100%;
-      padding: 26px 30px;
+      padding: 18px 24px;
       background-color: var(--stadli-gray-900);
       border: 1px solid var(--stadli-gray-800);
       border-radius: 1.5rem;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 12px;
+      overflow: hidden;
     }
     .mockup-crm .crm-card-title {
-      font-size: 26px;
+      font-size: 22px;
       font-weight: 700;
       color: var(--stadli-white);
       letter-spacing: -0.02em;
@@ -757,21 +758,22 @@
       background-color: var(--stadli-gray-800);
       border: 1px solid var(--stadli-gray-700);
       border-radius: 1.25rem;
-      padding: 22px 26px;
+      padding: 16px 20px;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
     }
     .mockup-crm .crm-panel-header {
       display: flex;
       align-items: center;
-      gap: 20px;
-      padding-bottom: 20px;
+      gap: 16px;
+      padding-bottom: 14px;
       border-bottom: 1px solid var(--stadli-gray-700);
       flex-shrink: 0;
     }
     .mockup-crm .crm-avatar {
-      width: 90px;
-      height: 90px;
+      width: 64px;
+      height: 64px;
       border-radius: 50%;
       overflow: hidden;
       flex-shrink: 0;
@@ -789,7 +791,7 @@
       min-width: 0;
     }
     .mockup-crm .crm-panel-name {
-      font-size: 32px;
+      font-size: 24px;
       font-weight: 700;
       color: var(--stadli-white);
       letter-spacing: -0.02em;
@@ -798,10 +800,10 @@
     .mockup-crm .crm-panel-role-row {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
     .mockup-crm .crm-panel-role {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 500;
       color: var(--stadli-gray-400);
     }
@@ -813,33 +815,33 @@
       flex-shrink: 0;
     }
 
-    /* Stat rows — distributed to fill remaining panel space */
+    /* Stat rows */
     .mockup-crm .crm-stats {
       flex: 1;
       min-height: 0;
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
+      justify-content: flex-start;
     }
     .mockup-crm .crm-stat-row {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      padding: 10px 0;
+      padding: 8px 0;
       border-bottom: 1px solid var(--stadli-gray-700);
     }
     .mockup-crm .crm-stat-row:last-child {
       border-bottom: none;
     }
     .mockup-crm .crm-stat-label {
-      font-size: 13px;
+      font-size: 11px;
       font-weight: 700;
       color: var(--stadli-gray-500);
       text-transform: uppercase;
       letter-spacing: 0.14em;
     }
     .mockup-crm .crm-stat-value {
-      font-size: 26px;
+      font-size: 20px;
       font-weight: 500;
       color: var(--stadli-white);
       letter-spacing: -0.01em;
@@ -847,79 +849,102 @@
       line-height: 1;
     }
     .mockup-crm .crm-stat-value .unit {
-      font-size: 18px;
+      font-size: 14px;
       font-weight: 500;
       color: var(--stadli-gray-400);
-      margin-left: 4px;
+      margin-left: 3px;
     }
     .mockup-crm .crm-stat-row.is-positive .crm-stat-value,
     .mockup-crm .crm-stat-row.is-positive .crm-stat-value .unit {
       color: var(--bs-success);
     }
 
-    /* Engagement timeline — viewport-width strip below the card stage.
-       Negative horizontal margin pulls the strip back to the mockup-crm
-       border-box edges (canceling the mockup-crm padding) so the top
-       divider spans the full viewport width. The timeline's own 2rem
-       padding then realigns its content with the stage content above. */
+    /* Engagement timeline — compact activity feed below the card stage */
     .mockup-crm .crm-timeline {
       flex-shrink: 0;
-      margin: 0 -2rem;
-      padding: 14px 2rem 16px;
+      padding: 12px 0 4px;
       border-top: 1px solid var(--stadli-gray-800);
+      max-width: 380px;
+      margin: 0 auto;
+      width: 100%;
     }
     .mockup-crm .crm-timeline-head {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
     .mockup-crm .crm-timeline-label {
-      font-size: 13px;
+      font-size: 11px;
       font-weight: 700;
       color: var(--stadli-gray-500);
       text-transform: uppercase;
       letter-spacing: 0.14em;
     }
     .mockup-crm .crm-timeline-meta {
-      font-size: 12px;
+      font-size: 10px;
       font-weight: 500;
       color: var(--stadli-gray-500);
       font-variant-numeric: tabular-nums;
     }
-    .mockup-crm .crm-timeline-track {
+    .mockup-crm .crm-timeline-feed {
+      display: flex;
+      flex-direction: column;
       position: relative;
-      height: 2px;
+      padding-left: 18px;
+    }
+    .mockup-crm .crm-timeline-feed::before {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 4px;
+      bottom: 4px;
+      width: 2px;
       background-color: var(--stadli-gray-700);
       border-radius: 50rem;
-      margin: 10px 8px 0;
     }
-    .mockup-crm .crm-timeline-event {
+    .mockup-crm .crm-tl-item {
+      display: flex;
+      align-items: center;
+      padding: 3px 0;
+      position: relative;
+    }
+    .mockup-crm .crm-tl-dot {
       position: absolute;
+      left: -18px;
       top: 50%;
-      transform: translate(-50%, -50%);
-      width: 14px;
-      height: 14px;
+      transform: translateY(-50%);
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
-      background-color: var(--stadli-gray-400);
-      border: 3px solid var(--bs-body-bg);
+      background-color: var(--stadli-gray-600);
+      border: 2px solid var(--bs-body-bg);
       box-sizing: content-box;
+      flex-shrink: 0;
+      z-index: 1;
     }
-    .mockup-crm .crm-timeline-event.is-positive {
+    .mockup-crm .crm-tl-dot.is-positive {
       background-color: var(--bs-success);
     }
-    .mockup-crm .crm-timeline-dates {
+    .mockup-crm .crm-tl-content {
       display: flex;
+      align-items: baseline;
       justify-content: space-between;
-      margin-top: 12px;
-      padding: 0 6px;
+      width: 100%;
+      min-width: 0;
     }
-    .mockup-crm .crm-timeline-date {
-      font-size: 11px;
+    .mockup-crm .crm-tl-event-name {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--stadli-gray-300);
+    }
+    .mockup-crm .crm-tl-event-date {
+      font-size: 10px;
       font-weight: 500;
       color: var(--stadli-gray-500);
       font-variant-numeric: tabular-nums;
-      letter-spacing: 0.02em;
+      flex-shrink: 0;
+      margin-left: 12px;
     }
 
     /* ── Analytics — Stat Cards + Report Table ── */
@@ -1631,12 +1656,10 @@
 
                     <!-- Focused card -->
                     <div class="crm-card">
-                      <h3 class="crm-card-title">360 Fan Profile</h3>
-
                       <div class="crm-panel">
                         <div class="crm-panel-header">
                           <div class="crm-avatar">
-                            <img src="https://placehold.co/110x110/303030/929292?text=MG" alt="Marcus Grant">
+                            <img src="https://placehold.co/64x64/303030/929292?text=MG" alt="Marcus Grant">
                           </div>
                           <div class="crm-panel-info">
                             <div class="crm-panel-name">Marcus Grant</div>
@@ -1670,25 +1693,41 @@
 
                   </div>
 
-                  <!-- Engagement timeline — viewport-width widget below the stage -->
+                  <!-- Engagement timeline — compact activity feed below the stage -->
                   <div class="crm-timeline">
                     <div class="crm-timeline-head">
-                      <span class="crm-timeline-label">Engagement timeline</span>
+                      <span class="crm-timeline-label">Recent activity</span>
                       <span class="crm-timeline-meta">Last 30 days</span>
                     </div>
-                    <div class="crm-timeline-track" role="img" aria-label="Seven fan engagement events across the last 30 days">
-                      <span class="crm-timeline-event is-positive" style="left: 5%;" title="Ticket purchased · Mar 3"></span>
-                      <span class="crm-timeline-event" style="left: 18%;" title="Email opened · Mar 8"></span>
-                      <span class="crm-timeline-event is-positive" style="left: 32%;" title="Merch purchased · Mar 13"></span>
-                      <span class="crm-timeline-event" style="left: 47%;" title="App login · Mar 18"></span>
-                      <span class="crm-timeline-event is-positive" style="left: 63%;" title="Game attended · Mar 22"></span>
-                      <span class="crm-timeline-event" style="left: 79%;" title="Survey completed · Mar 26"></span>
-                      <span class="crm-timeline-event is-positive" style="left: 95%;" title="Season renewal · Mar 30"></span>
-                    </div>
-                    <div class="crm-timeline-dates">
-                      <span class="crm-timeline-date">Mar 1</span>
-                      <span class="crm-timeline-date">Mar 15</span>
-                      <span class="crm-timeline-date">Mar 30</span>
+                    <div class="crm-timeline-feed" role="list" aria-label="Recent fan engagement events">
+                      <div class="crm-tl-item" role="listitem">
+                        <span class="crm-tl-dot is-positive"></span>
+                        <div class="crm-tl-content">
+                          <span class="crm-tl-event-name">Season renewal</span>
+                          <span class="crm-tl-event-date">Mar 30</span>
+                        </div>
+                      </div>
+                      <div class="crm-tl-item" role="listitem">
+                        <span class="crm-tl-dot"></span>
+                        <div class="crm-tl-content">
+                          <span class="crm-tl-event-name">Game attended</span>
+                          <span class="crm-tl-event-date">Mar 22</span>
+                        </div>
+                      </div>
+                      <div class="crm-tl-item" role="listitem">
+                        <span class="crm-tl-dot is-positive"></span>
+                        <div class="crm-tl-content">
+                          <span class="crm-tl-event-name">Merch purchased</span>
+                          <span class="crm-tl-event-date">Mar 13</span>
+                        </div>
+                      </div>
+                      <div class="crm-tl-item" role="listitem">
+                        <span class="crm-tl-dot is-positive"></span>
+                        <div class="crm-tl-content">
+                          <span class="crm-tl-event-name">Ticket purchased</span>
+                          <span class="crm-tl-event-date">Mar 3</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -2033,7 +2072,7 @@
 
                   <!-- Left: Seat Map -->
                   <div class="cart-seatmap">
-                    <img src="https://placehold.co/520x520/111111/484848?text=Stadium+Seatmap" alt="Stadium seat map">
+                    <img src="seatmap.png" alt="Stadium seat map">
                   </div>
 
                   <!-- Right: Cart -->
