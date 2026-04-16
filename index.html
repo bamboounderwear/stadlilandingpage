@@ -1752,7 +1752,7 @@
           <div class="reveal delay-400"><a href="#commerce" class="navbar-link text-decoration-none small fw-medium">Billetterie</a></div>
         </nav>
         <div class="d-flex gap-2">
-          <div class="reveal delay-500 d-none d-md-block"><button class="btn btn-ghost btn-sm navbar-ghost-btn">Articles</button></div>
+          <div class="reveal delay-500 d-none d-md-block"><button type="button" class="btn btn-ghost btn-sm navbar-ghost-btn" data-bs-toggle="modal" data-bs-target="#articlesModal">Articles</button></div>
           <div class="reveal delay-600"><button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#demoModal">Réserver une démo</button></div>
         </div>
       </div>
@@ -2952,6 +2952,21 @@
       </div>
     </div>
   </footer>
+
+  <!-- Articles Coming Soon Modal -->
+  <div class="modal fade" id="articlesModal" tabindex="-1" aria-labelledby="articlesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content bg-body border border-secondary border-opacity-25">
+        <div class="modal-header border-0 p-4 pb-0">
+          <button type="button" class="btn-close btn-close-white align-self-start ms-auto" data-bs-dismiss="modal" aria-label="Fermer"></button>
+        </div>
+        <div class="modal-body p-4 pt-2 text-center">
+          <h5 class="modal-title mb-2" id="articlesModalLabel">À venir</h5>
+          <p class="text-body-secondary small mb-0">Nos articles arrivent bientôt.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Demo Request Modal -->
   <div class="modal fade" id="demoModal" tabindex="-1" aria-labelledby="demoModalLabel" aria-hidden="true">
