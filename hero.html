@@ -24,9 +24,7 @@
             --gray-900: #010101;
             --primary: var(--gray-900);
             --secondary: var(--gray-600);
-
-            /* Spectrum tokens — marketing surface only */
-            --spec-cyan: #00b0d8;
+            --info: #3b6f8d; /* Blue-gray from your palette */
         }
 
         body {
@@ -44,7 +42,7 @@
         .mockup-container {
             width: 1200px;
             height: 600px;
-            background-color: var(--gray-900);
+            background-color: #06070a; /* Deep atmospheric dark */
             border: 1px solid var(--gray-800);
             border-radius: 20px;
             position: relative;
@@ -54,7 +52,7 @@
 
         /* Feature Cards */
         .feature-card {
-            background-color: var(--gray-900);
+            background-color: #080a0e;
             border: 1px solid var(--gray-800);
             border-radius: 12px;
             padding: 24px 32px;
@@ -116,7 +114,7 @@
            Rectangle perimeter is 2 * (600w + 260h) = 1720 
         */
         .data-pulse-glow {
-            stroke: var(--spec-cyan);
+            stroke: var(--info);
             stroke-width: 6;
             fill: none;
             stroke-dasharray: 150 280; /* Length of pulse vs gap */
@@ -125,7 +123,7 @@
         }
 
         .data-pulse-core {
-            stroke: var(--white);
+            stroke: #a8cde3; /* Lighter bright core */
             stroke-width: 2;
             fill: none;
             stroke-dasharray: 150 280;
