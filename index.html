@@ -696,305 +696,215 @@
       text-decoration: none;
     }
 
-    /* ── CRM — 360 Fan Profile Card Stack ── */
-    .mockup-crm {
+    /* ── CRM — Fan Profile Card Stack (3-up carousel) ── */
+    .mockup-fan-card {
+      /* Component tokens — aligned to the focused card aesthetic */
+      --mfc-card-bg: #1d1e20;
+      --mfc-card-border: rgba(255, 255, 255, 0.04);
+      --mfc-stat-bg: #151618;
+      --mfc-accent-green: var(--bs-success, #38d399);
+      --mfc-text-primary: var(--stadli-white);
+      --mfc-text-secondary: var(--stadli-gray-400);
+
       width: 100%;
-      padding: 1.7cqi;
+      padding: 6cqi 2cqi;
       background-color: var(--bs-body-bg);
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       position: relative;
       overflow: hidden;
     }
 
-    /* Stage — the area above the timeline strip where the card stack lives */
-    .mockup-crm .crm-stage {
-      flex: 1;
-      min-height: 0;
+    /* Stage holds the 3-card stack */
+    .mockup-fan-card .mfc-stage {
       position: relative;
+      width: 100%;
+      height: 88cqi;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    /* Ghost cards behind the focused card */
-    .mockup-crm .crm-ghost-card {
+    /* Base styling for all cards in the stack */
+    .mockup-fan-card .mfc-card {
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 32cqi;
-      height: 86%;
-      padding: 2.8cqi 2.7cqi;
-      background-color: var(--stadli-gray-900);
-      border: 1px solid var(--stadli-gray-800);
-      border-radius: 1.5rem;
-      opacity: 0.6;
-      filter: blur(1.5px);
-      z-index: 1;
+      width: 34cqi;
+      background-color: var(--mfc-card-bg);
+      border: 1px solid var(--mfc-card-border);
+      border-radius: 2.2cqi;
+      padding: 3.5cqi 2.5cqi 2.5cqi;
       display: flex;
       flex-direction: column;
-      gap: 1.7cqi;
+      align-items: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .mockup-crm .crm-ghost-card.is-left {
-      transform: translate(calc(-50% - 27cqi), -50%);
+
+    /* Main focused card */
+    .mockup-fan-card .mfc-main-card {
+      transform: translate(-50%, -50%);
+      z-index: 3;
     }
-    .mockup-crm .crm-ghost-card.is-right {
-      transform: translate(calc(-50% + 27cqi), -50%);
+
+    /* Blurred ghost cards behind */
+    .mockup-fan-card .mfc-ghost-card {
+      z-index: 1;
+      opacity: 0.45;
+      filter: blur(5px) brightness(0.6);
+      pointer-events: none;
     }
-    .mockup-crm .crm-ghost-avatar {
-      width: 7.3cqi;
-      height: 7.3cqi;
+    .mockup-fan-card .mfc-ghost-left {
+      transform: translate(calc(-50% - 20cqi), -50%) scale(0.85);
+    }
+    .mockup-fan-card .mfc-ghost-right {
+      transform: translate(calc(-50% + 20cqi), -50%) scale(0.85);
+    }
+
+    /* Avatar group */
+    .mockup-fan-card .mfc-avatar-wrapper {
+      position: relative;
+      margin-bottom: 1.5cqi;
+    }
+    .mockup-fan-card .mfc-avatar {
+      width: 11.5cqi;
+      height: 11.5cqi;
       border-radius: 50%;
       overflow: hidden;
-      flex-shrink: 0;
-      background-color: var(--stadli-gray-800);
+      box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.05);
     }
-    .mockup-crm .crm-ghost-avatar img {
+    .mockup-fan-card .mfc-avatar img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      display: block;
     }
-    .mockup-crm .crm-ghost-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5cqi;
+    .mockup-fan-card .mfc-status-dot {
+      position: absolute;
+      bottom: 0.4cqi;
+      right: 0.4cqi;
+      width: 2.2cqi;
+      height: 2.2cqi;
+      background-color: var(--mfc-accent-green);
+      border: 0.45cqi solid var(--mfc-card-bg);
+      border-radius: 50%;
     }
-    .mockup-crm .crm-ghost-name {
-      font-size: clamp(11px, 1.84cqi, 22px);
+
+    /* Header text */
+    .mockup-fan-card .mfc-name {
+      font-size: clamp(16px, 2.6cqi, 34px);
       font-weight: 600;
-      color: var(--stadli-gray-300);
-      letter-spacing: -0.01em;
+      color: var(--mfc-text-primary);
+      margin: 0 0 0.4cqi 0;
+      letter-spacing: -0.02em;
       line-height: 1.1;
     }
-    .mockup-crm .crm-ghost-role {
-      font-size: clamp(9px, 1.04cqi, 13px);
-      font-weight: 500;
-      color: var(--stadli-gray-500);
-      line-height: 1.2;
+    .mockup-fan-card .mfc-role {
+      font-size: clamp(12px, 1.3cqi, 18px);
+      font-weight: 400;
+      color: var(--mfc-text-secondary);
+      margin-bottom: 2.5cqi;
     }
 
-    /* Focused card */
-    .mockup-crm .crm-card {
-      position: relative;
-      z-index: 3;
-      width: 50cqi;
-      padding: 1.5cqi 2cqi;
-      background-color: var(--stadli-gray-900);
-      border: 1px solid var(--stadli-gray-800);
-      border-radius: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1cqi;
-      overflow: hidden;
-    }
-    .mockup-crm .crm-card-title {
-      font-size: clamp(11px, 1.44cqi, 18px);
-      font-weight: 700;
-      color: var(--stadli-white);
-      letter-spacing: -0.02em;
-      margin: 0;
-      padding: 0 0.3cqi;
-      line-height: 1;
-    }
-
-    /* Inner panel */
-    .mockup-crm .crm-panel {
-      flex: 1;
-      min-height: 0;
-      background-color: var(--stadli-gray-800);
-      border: 1px solid var(--stadli-gray-700);
-      border-radius: 1.25rem;
-      padding: 1.3cqi 1.7cqi;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-    .mockup-crm .crm-panel-header {
-      display: flex;
-      align-items: center;
-      gap: 1.3cqi;
-      padding-bottom: 1.2cqi;
-      border-bottom: 1px solid var(--stadli-gray-700);
-      flex-shrink: 0;
-    }
-    .mockup-crm .crm-avatar {
-      width: 5.3cqi;
-      height: 5.3cqi;
-      border-radius: 50%;
-      overflow: hidden;
-      flex-shrink: 0;
-      background-color: var(--stadli-gray-700);
-    }
-    .mockup-crm .crm-avatar img {
+    /* Stats 2x2 grid */
+    .mockup-fan-card .mfc-stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2cqi;
       width: 100%;
-      height: 100%;
-      object-fit: cover;
     }
-    .mockup-crm .crm-panel-info {
+
+    /* Individual stat block */
+    .mockup-fan-card .mfc-stat-block {
+      background-color: var(--mfc-stat-bg);
+      border-radius: 1cqi;
+      padding: 1.6cqi 1.8cqi;
       display: flex;
       flex-direction: column;
-      gap: 0.7cqi;
-      min-width: 0;
+      justify-content: space-between;
     }
-    .mockup-crm .crm-panel-name {
-      font-size: clamp(11px, 1.6cqi, 19px);
-      font-weight: 700;
-      color: var(--stadli-white);
-      letter-spacing: -0.02em;
+    .mockup-fan-card .mfc-stat-label {
+      font-size: clamp(7px, 0.85cqi, 12px);
+      color: var(--mfc-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 1.2cqi;
+      font-weight: 500;
+    }
+    .mockup-fan-card .mfc-stat-data {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .mockup-fan-card .mfc-stat-value {
+      font-size: clamp(18px, 2.8cqi, 38px);
+      font-weight: 600;
+      color: var(--mfc-text-primary);
       line-height: 1;
+      font-variant-numeric: tabular-nums;
     }
-    .mockup-crm .crm-panel-role-row {
+    .mockup-fan-card .mfc-stat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5cqi;
+      padding: 0.35cqi 0.8cqi;
+      border-radius: 50rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background-color: rgba(255, 255, 255, 0.03);
+      font-size: clamp(8px, 0.9cqi, 12px);
+      color: var(--mfc-text-secondary);
+      font-weight: 500;
+    }
+    .mockup-fan-card .mfc-stat-dot {
+      width: 0.5cqi;
+      height: 0.5cqi;
+      border-radius: 50%;
+      background-color: var(--mfc-accent-green);
+    }
+
+    /* Extended info cards */
+    .mockup-fan-card .mfc-extended-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2cqi;
+      width: 100%;
+      margin-top: 1.2cqi;
+    }
+    .mockup-fan-card .mfc-location-row {
       display: flex;
       align-items: center;
       gap: 0.8cqi;
+      margin-top: 0.4cqi;
     }
-    .mockup-crm .crm-panel-role {
-      font-size: clamp(8px, 0.96cqi, 11px);
+    .mockup-fan-card .mfc-location-text {
+      font-size: clamp(14px, 1.8cqi, 24px);
       font-weight: 500;
-      color: var(--stadli-gray-400);
+      color: var(--mfc-text-primary);
     }
-    .mockup-crm .crm-dot {
-      width: 0.75rem;
-      height: 0.75rem;
-      border-radius: 50%;
-      background-color: var(--bs-success);
-      flex-shrink: 0;
-    }
-
-    /* Stat rows */
-    .mockup-crm .crm-stats {
-      flex: 1;
-      min-height: 0;
+    .mockup-fan-card .mfc-badges-bento {
       display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: 0.8cqi;
+      margin-top: 0.8cqi;
     }
-    .mockup-crm .crm-stat-row {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      padding: 0.7cqi 0;
-      border-bottom: 1px solid var(--stadli-gray-700);
-    }
-    .mockup-crm .crm-stat-row:last-child {
-      border-bottom: none;
-    }
-    .mockup-crm .crm-stat-label {
-      font-size: clamp(7px, 0.72cqi, 9px);
-      font-weight: 700;
-      color: var(--stadli-gray-500);
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-    }
-    .mockup-crm .crm-stat-value {
-      font-size: clamp(11px, 1.36cqi, 16px);
+    .mockup-fan-card .mfc-badge {
+      background-color: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--mfc-text-primary);
+      padding: 0.6cqi 1cqi;
+      border-radius: 0.8cqi;
+      font-size: clamp(9px, 1.1cqi, 15px);
       font-weight: 500;
-      color: var(--stadli-white);
-      letter-spacing: -0.01em;
-      font-variant-numeric: tabular-nums;
-      line-height: 1;
-    }
-    .mockup-crm .crm-stat-value .unit {
-      font-size: clamp(8px, 0.96cqi, 11px);
-      font-weight: 500;
-      color: var(--stadli-gray-400);
-      margin-left: 3px;
-    }
-    .mockup-crm .crm-stat-row.is-positive .crm-stat-value,
-    .mockup-crm .crm-stat-row.is-positive .crm-stat-value .unit {
-      color: var(--bs-success);
-    }
-
-    /* Engagement timeline — compact activity feed below the card stage */
-    .mockup-crm .crm-timeline {
-      flex-shrink: 0;
-      padding: 1cqi 0 0.3cqi;
-      border-top: 1px solid var(--stadli-gray-800);
-      max-width: 32cqi;
-      margin: 0 auto;
-      width: 100%;
-    }
-    .mockup-crm .crm-timeline-head {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      margin-bottom: 0.7cqi;
-    }
-    .mockup-crm .crm-timeline-label {
-      font-size: clamp(7px, 0.72cqi, 9px);
-      font-weight: 700;
-      color: var(--stadli-gray-500);
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-    }
-    .mockup-crm .crm-timeline-meta {
-      font-size: clamp(6px, 0.64cqi, 8px);
-      font-weight: 500;
-      color: var(--stadli-gray-500);
-      font-variant-numeric: tabular-nums;
-    }
-    .mockup-crm .crm-timeline-feed {
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      padding-left: 18px;
-    }
-    .mockup-crm .crm-timeline-feed::before {
-      content: '';
-      position: absolute;
-      left: 4px;
-      top: 4px;
-      bottom: 4px;
-      width: 2px;
-      background-color: var(--stadli-gray-700);
-      border-radius: 50rem;
-    }
-    .mockup-crm .crm-tl-item {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      padding: 0.25cqi 0;
-      position: relative;
+      gap: 0.5cqi;
+      transition: background-color 0.2s ease, transform 0.2s ease;
     }
-    .mockup-crm .crm-tl-dot {
-      position: absolute;
-      left: -18px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background-color: var(--stadli-gray-600);
-      border: 2px solid var(--bs-body-bg);
-      box-sizing: content-box;
-      flex-shrink: 0;
-      z-index: 1;
-    }
-    .mockup-crm .crm-tl-dot.is-positive {
-      background-color: var(--bs-success);
-    }
-    .mockup-crm .crm-tl-content {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      width: 100%;
-      min-width: 0;
-    }
-    .mockup-crm .crm-tl-event-name {
-      font-size: clamp(7px, 0.8cqi, 10px);
-      font-weight: 500;
-      color: var(--stadli-gray-300);
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      min-width: 0;
-    }
-    .mockup-crm .crm-tl-event-date {
-      font-size: clamp(6px, 0.64cqi, 8px);
-      font-weight: 500;
-      color: var(--stadli-gray-500);
-      font-variant-numeric: tabular-nums;
-      flex-shrink: 0;
-      margin-left: 1cqi;
+    .mockup-fan-card .mfc-badge:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+      transform: translateY(-1px);
     }
 
     /* ── Analytics — Stat Cards + Report Table ── */
@@ -1664,7 +1574,7 @@
         <div class="card bg-glass-transparent backdrop-blur-md border border-secondary border-opacity-25 rounded-4 overflow-hidden w-100 reveal delay-200">
           <div class="card-header bg-black bg-opacity-50 border-bottom border-secondary border-opacity-25 px-4 py-3 d-flex align-items-center gap-3">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white text-opacity-50"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-            <span class="font-monospace text-white text-opacity-50 mockup-file-path">stadli/app/crm/fan_profile.tsx</span>
+            <span class="font-monospace text-white text-opacity-50 mockup-file-path">stadli/app/crm/fan_engagement_card.tsx</span>
             <div class="d-flex gap-2 ms-auto">
               <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
               <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
@@ -1674,110 +1584,186 @@
           <div class="card-body p-0 bg-black bg-opacity-10">
             <div class="mockup-frame">
               <div class="mockup-content">
-                <div class="mockup-crm">
+                <div class="mockup-fan-card">
+                  <div class="mfc-stage">
 
-                  <!-- Stage — card stack lives here, on top of timeline -->
-                  <div class="crm-stage">
-
-                    <!-- Ghost card behind to the left -->
-                    <div class="crm-ghost-card is-left" aria-hidden="true">
-                      <div class="crm-ghost-avatar">
-                        <img src="https://placehold.co/88x88/303030/929292?text=JB" alt="">
+                    <!-- Left Blurred Card -->
+                    <div class="mfc-card mfc-ghost-card mfc-ghost-left" aria-hidden="true">
+                      <div class="mfc-avatar-wrapper">
+                        <div class="mfc-avatar">
+                          <img src="https://placehold.co/400x400/2a2a2a/777777?text=PD" alt="">
+                        </div>
+                        <div class="mfc-status-dot"></div>
                       </div>
-                      <div class="crm-ghost-meta">
-                        <div class="crm-ghost-name">Jenn Bennett</div>
-                        <div class="crm-ghost-role">Tour Pass Holder</div>
-                      </div>
-                    </div>
-
-                    <!-- Ghost card behind to the right -->
-                    <div class="crm-ghost-card is-right" aria-hidden="true">
-                      <div class="crm-ghost-avatar">
-                        <img src="https://placehold.co/88x88/303030/929292?text=SB" alt="">
-                      </div>
-                      <div class="crm-ghost-meta">
-                        <div class="crm-ghost-name">S. Bonhamm</div>
-                        <div class="crm-ghost-role">Pass Holder</div>
-                      </div>
-                    </div>
-
-                    <!-- Focused card -->
-                    <div class="crm-card">
-                      <div class="crm-panel">
-                        <div class="crm-panel-header">
-                          <div class="crm-avatar">
-                            <img src="https://placehold.co/64x64/303030/929292?text=MG" alt="Marcus Grant">
-                          </div>
-                          <div class="crm-panel-info">
-                            <div class="crm-panel-name">Marcus Grant</div>
-                            <div class="crm-panel-role-row">
-                              <span class="crm-panel-role">Tour Pass Holder</span>
-                              <span class="crm-dot"></span>
-                            </div>
+                      <h2 class="mfc-name">Paul Davis</h2>
+                      <span class="mfc-role">Fan</span>
+                      <div class="mfc-stats-grid">
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">MATCHES ATTENDED</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">24</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 12%</div>
                           </div>
                         </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">GAMES WATCHED</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">41</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 8%</div>
+                          </div>
+                        </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">TICKETS PURCHASED</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">48</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 18%</div>
+                          </div>
+                        </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">GAME DAY TRIPS</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">12</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 5%</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mfc-extended-grid">
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">LOCATION</span>
+                          <div class="mfc-location-row">
+                            <span class="mfc-location-text">Chicago, IL</span>
+                          </div>
+                        </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">INTERESTS</span>
+                          <div class="mfc-badges-bento">
+                            <span class="mfc-badge">🏈 Football</span>
+                            <span class="mfc-badge">🍻 Tailgate</span>
+                            <span class="mfc-badge">🧢 Merch</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
-                        <div class="crm-stats">
-                          <div class="crm-stat-row">
-                            <span class="crm-stat-label">Purchases</span>
-                            <span class="crm-stat-value">5</span>
+                    <!-- Right Blurred Card -->
+                    <div class="mfc-card mfc-ghost-card mfc-ghost-right" aria-hidden="true">
+                      <div class="mfc-avatar-wrapper">
+                        <div class="mfc-avatar">
+                          <img src="https://placehold.co/400x400/2a2a2a/777777?text=MR" alt="">
+                        </div>
+                        <div class="mfc-status-dot"></div>
+                      </div>
+                      <h2 class="mfc-name">Mike Ross</h2>
+                      <span class="mfc-role">Fan</span>
+                      <div class="mfc-stats-grid">
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">MATCHES ATTENDED</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">18</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 9%</div>
                           </div>
-                          <div class="crm-stat-row">
-                            <span class="crm-stat-label">Engagement score</span>
-                            <span class="crm-stat-value">87</span>
+                        </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">GAMES WATCHED</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">32</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 11%</div>
                           </div>
-                          <div class="crm-stat-row is-positive">
-                            <span class="crm-stat-label">Attendance rate</span>
-                            <span class="crm-stat-value">75<span class="unit">%</span></span>
+                        </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">TICKETS PURCHASED</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">36</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 14%</div>
                           </div>
-                          <div class="crm-stat-row">
-                            <span class="crm-stat-label">Lifetime value</span>
-                            <span class="crm-stat-value">$1,250</span>
+                        </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">GAME DAY TRIPS</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">8</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 2%</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mfc-extended-grid">
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">LOCATION</span>
+                          <div class="mfc-location-row">
+                            <span class="mfc-location-text">Boston, MA</span>
+                          </div>
+                        </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">INTERESTS</span>
+                          <div class="mfc-badges-bento">
+                            <span class="mfc-badge">⚾ Baseball</span>
+                            <span class="mfc-badge">🌭 Concessions</span>
+                            <span class="mfc-badge">🎟️ Season Pass</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Center Active Card -->
+                    <div class="mfc-card mfc-main-card">
+                      <div class="mfc-avatar-wrapper">
+                        <div class="mfc-avatar">
+                          <img src="https://placehold.co/400x400/2a2a2a/ffffff?text=JD" alt="John Doe">
+                        </div>
+                        <div class="mfc-status-dot"></div>
+                      </div>
+                      <h2 class="mfc-name">John Doe</h2>
+                      <span class="mfc-role">Fan</span>
+
+                      <div class="mfc-stats-grid">
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">MATCHES ATTENDED</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">56</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 24%</div>
+                          </div>
+                        </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">GAMES WATCHED</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">88</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 16%</div>
+                          </div>
+                        </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">TICKETS PURCHASED</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">112</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 32%</div>
+                          </div>
+                        </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">GAME DAY TRIPS</span>
+                          <div class="mfc-stat-data">
+                            <span class="mfc-stat-value">32</span>
+                            <div class="mfc-stat-badge"><span class="mfc-stat-dot"></span> 8%</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="mfc-extended-grid">
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">LOCATION</span>
+                          <div class="mfc-location-row">
+                            <span class="mfc-location-text">New York, NY</span>
+                          </div>
+                        </div>
+                        <div class="mfc-stat-block">
+                          <span class="mfc-stat-label">INTERESTS</span>
+                          <div class="mfc-badges-bento">
+                            <span class="mfc-badge">🏀 Basketball</span>
+                            <span class="mfc-badge">⭐ VIP</span>
+                            <span class="mfc-badge">🧢 Merch</span>
                           </div>
                         </div>
                       </div>
                     </div>
 
                   </div>
-
-                  <!-- Engagement timeline — compact activity feed below the stage -->
-                  <div class="crm-timeline">
-                    <div class="crm-timeline-head">
-                      <span class="crm-timeline-label">Recent activity</span>
-                      <span class="crm-timeline-meta">Last 30 days</span>
-                    </div>
-                    <div class="crm-timeline-feed" role="list" aria-label="Recent fan engagement events">
-                      <div class="crm-tl-item" role="listitem">
-                        <span class="crm-tl-dot is-positive"></span>
-                        <div class="crm-tl-content">
-                          <span class="crm-tl-event-name">Season renewal</span>
-                          <span class="crm-tl-event-date">Mar 30</span>
-                        </div>
-                      </div>
-                      <div class="crm-tl-item" role="listitem">
-                        <span class="crm-tl-dot"></span>
-                        <div class="crm-tl-content">
-                          <span class="crm-tl-event-name">Game attended</span>
-                          <span class="crm-tl-event-date">Mar 22</span>
-                        </div>
-                      </div>
-                      <div class="crm-tl-item" role="listitem">
-                        <span class="crm-tl-dot is-positive"></span>
-                        <div class="crm-tl-content">
-                          <span class="crm-tl-event-name">Merch purchased</span>
-                          <span class="crm-tl-event-date">Mar 13</span>
-                        </div>
-                      </div>
-                      <div class="crm-tl-item" role="listitem">
-                        <span class="crm-tl-dot is-positive"></span>
-                        <div class="crm-tl-content">
-                          <span class="crm-tl-event-name">Ticket purchased</span>
-                          <span class="crm-tl-event-date">Mar 3</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
                 </div>
               </div>
             </div>
