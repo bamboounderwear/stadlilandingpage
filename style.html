@@ -375,6 +375,30 @@
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
     }
+
+    .tooltip-pill { --bs-tooltip-opacity: 1; }
+    .tooltip-pill .tooltip-inner {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.875rem;
+      border-radius: 9999px;
+      background-color: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(var(--bs-secondary-rgb), 0.25);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: #fff;
+      font-weight: 500;
+      max-width: none;
+    }
+    .tooltip-pill .tooltip-arrow { display: none !important; }
+    .tooltip-pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 9999px;
+      background-color: var(--spec-violet);
+      display: inline-block;
+    }
     
     .bg-glass {
       background-color: rgba(var(--bs-tertiary-bg-rgb), 0.6) !important;
@@ -1792,7 +1816,7 @@
           <div class="reveal delay-400"><a href="#commerce" class="navbar-link text-decoration-none small fw-medium">Billetterie</a></div>
         </nav>
         <div class="d-flex gap-2">
-          <div class="reveal delay-500 d-none d-md-block"><button class="btn btn-ghost btn-sm navbar-ghost-btn">Articles</button></div>
+          <div class="reveal delay-500 d-none d-md-block"><button type="button" class="btn btn-ghost btn-sm navbar-ghost-btn" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="bottom" data-bs-html="true" data-bs-custom-class="tooltip-pill" data-bs-title='<span class="tooltip-pill-dot"></span><span>À venir</span>'>Articles</button></div>
           <div class="reveal delay-600"><button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#demoModal">Réserver une démo</button></div>
         </div>
       </div>
@@ -2227,6 +2251,9 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // Bootstrap Tooltips
+      document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => new bootstrap.Tooltip(el));
+
       // Navbar Scroll Logic
       const navbar = document.getElementById('navbar');
       
