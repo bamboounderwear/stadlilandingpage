@@ -489,6 +489,30 @@
       100% { opacity: 1;   filter: brightness(1.4); }
     }
 
+    /* Hero dashboard card — responsive mask + overlap with next section.
+       On small screens, the mockup-hero is short (aspect-ratio 2/1), so a
+       large negative margin and aggressive mask would hide nearly all of it.
+       Scale both up on wider viewports where the mockup has room to breathe. */
+    .hero-dashboard-card {
+      mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+      margin-bottom: -2rem;
+    }
+    @media (min-width: 768px) {
+      .hero-dashboard-card {
+        mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+        margin-bottom: -5rem;
+      }
+    }
+    @media (min-width: 992px) {
+      .hero-dashboard-card {
+        mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
+        margin-bottom: -150px;
+      }
+    }
+
     /* ── Marketing — Email Builder ── */
     .mockup-marketing {
       width: 100%;
@@ -1446,7 +1470,7 @@
         <!-- Full-Width Dashboard Mockup fading at the bottom -->
         <div class="row flex-grow-1 position-relative z-1 reveal delay-400">
           <div class="col-12">
-            <div class="card rounded-top-4 border border-bottom-0 border-secondary border-opacity-50 bg-black bg-opacity-50 backdrop-blur-md w-100 overflow-hidden" style="mask-image: linear-gradient(to bottom, black 65%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%); margin-bottom: -150px;">
+            <div class="card hero-dashboard-card rounded-top-4 border border-bottom-0 border-secondary border-opacity-50 bg-black bg-opacity-50 backdrop-blur-md w-100 overflow-hidden">
 
               <!-- Mockup Header -->
               <div class="card-header bg-transparent border-bottom border-secondary border-opacity-25 px-4 py-3 d-flex align-items-center gap-3">
