@@ -65,11 +65,19 @@
       /* Custom Token for Primary Button Text */
       --stadli-btn-primary-color: #ffffff;
 
-      /* Spectrum Palette for Marketing (Cards/Fills) */
-      --spec-blue: #0140f0;
-      --spec-lime: #ecfc3b;
-      --spec-rose: #f6166e;
-      --spec-cyan: #00b0d8;
+      /* Spectrum Palette — data viz, narrative tags, and marketing surfaces only.
+         Never on admin chrome, buttons, form controls, icons, or hover states. */
+      --spec-red:     #fe0000;
+      --spec-orange:  #fe5619;
+      --spec-lime:    #ecfc3b;
+      --spec-green:   #44d62b;
+      --spec-teal:    #00d4a8;
+      --spec-cyan:    #00b0d8;
+      --spec-blue:    #0140f0;
+      --spec-violet:  #7b2ff7;
+      --spec-magenta: #d633ff;
+      --spec-rose:    #f6166e;
+      --spec-silver:  #eeeeee;
     }
 
     /* Dark Mode Overrides */
@@ -277,7 +285,7 @@
     
     /* Utilities */
     .container-fluid {
-      max-width: 1440px;
+      max-width: 1280px;
       margin-left: auto;
       margin-right: auto;
     }
@@ -379,15 +387,19 @@
 
     /* ============================================
        MOCKUP FRAMES — Fluid UI previews
-       Each frame enforces a 2:1 aspect ratio and is
-       registered as an inline-size container so inner
-       mockups can use cqi units for truly fluid layouts
-       that fill whatever window they're placed in.
+       Each frame enforces a 2:1 aspect ratio capped at
+       680px tall, and is registered as an inline-size
+       container so inner mockups can use cqi units.
+       Internal gutter padding lives on each individual
+       mockup (.mockup-crm, etc.) so each mockup's own
+       background extends edge-to-edge inside the fake
+       browser window.
        ============================================ */
     .mockup-frame {
       container-type: inline-size;
       width: 100%;
       aspect-ratio: 2 / 1;
+      max-height: 680px;
       position: relative;
       overflow: hidden;
     }
@@ -406,9 +418,9 @@
       background-color: var(--bs-body-bg);
     }
     .mockup-hero .hero-feature-card {
-      background-color: #080a0e;
-      border: 1px solid var(--stadli-gray-800);
-      border-radius: 12px;
+      background-color: var(--stadli-gray-800);
+      border: 1px solid var(--stadli-gray-700);
+      border-radius: 0.75rem;
       width: 20cqi;
       height: 7.5cqi;
       position: absolute;
@@ -417,7 +429,6 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
       transform: translate(-50%, -50%);
     }
     .mockup-hero .hero-feature-card h3 {
@@ -458,15 +469,16 @@
       fill: none;
     }
     .mockup-hero .hero-pulse-glow {
-      stroke: #3b6f8d;
+      stroke: var(--spec-cyan);
       stroke-width: 6;
       fill: none;
       stroke-dasharray: 150 280;
       stroke-linecap: round;
+      opacity: 0.55;
       animation: mockup-hero-flow 12s linear infinite, mockup-hero-shimmer 2s ease-in-out infinite alternate;
     }
     .mockup-hero .hero-pulse-core {
-      stroke: #a8cde3;
+      stroke: var(--stadli-white);
       stroke-width: 2;
       fill: none;
       stroke-dasharray: 150 280;
@@ -539,9 +551,8 @@
     }
     .mockup-marketing .mkt-block.is-dragging {
       transform: translate(60px, 0);
-      border-color: var(--stadli-gray-400);
-      background-color: rgba(255, 255, 255, 0.05);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      border-color: var(--stadli-gray-300);
+      background-color: var(--stadli-gray-800);
       z-index: 2;
       position: relative;
     }
@@ -572,7 +583,6 @@
       right: -44px;
       z-index: 3;
       pointer-events: none;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
     }
     .mockup-marketing .mkt-cursor svg { width: 32px; height: 32px; }
     .mockup-marketing .mkt-preview {
@@ -586,7 +596,7 @@
       width: 100%;
       max-width: 480px;
       border: 1px solid var(--stadli-gray-600);
-      border-radius: 10px;
+      border-radius: 0.75rem;
       padding: 36px 32px;
       display: flex;
       flex-direction: column;
@@ -638,137 +648,291 @@
       text-decoration: none;
     }
 
-    /* ── CRM — 360 Fan Profile Carousel ── */
+    /* ── CRM — 360 Fan Profile Card Stack ── */
     .mockup-crm {
       width: 100%;
       height: 100%;
+      padding: 2rem;
       background-color: var(--bs-body-bg);
       display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-direction: column;
       position: relative;
       overflow: hidden;
     }
-    .mockup-crm .crm-carousel {
+
+    /* Stage — the area above the timeline strip where the card stack lives */
+    .mockup-crm .crm-stage {
+      flex: 1;
+      min-height: 0;
       position: relative;
-      width: 700px;
-      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .mockup-crm .crm-card {
-      background-color: var(--stadli-gray-800);
-      border: 1px solid var(--stadli-gray-600);
-      border-radius: 12px;
-      padding: 28px 32px 32px;
-      width: 380px;
+
+    /* Ghost cards behind the focused card */
+    .mockup-crm .crm-ghost-card {
       position: absolute;
       top: 50%;
-      transform: translateY(-50%);
-    }
-    .mockup-crm .crm-card.card-left,
-    .mockup-crm .crm-card.card-right {
-      filter: blur(3px);
-      opacity: 0.45;
-      z-index: 1;
-      width: 340px;
-      padding: 24px 28px 28px;
-    }
-    .mockup-crm .crm-card.card-left  { left: -200px; }
-    .mockup-crm .crm-card.card-right { right: -200px; }
-    .mockup-crm .crm-card.card-center {
-      z-index: 3;
       left: 50%;
-      transform: translate(-50%, -50%);
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
-    }
-    .mockup-crm .crm-side {
+      width: 380px;
+      height: 86%;
+      padding: 34px 32px;
+      background-color: var(--stadli-gray-900);
+      border: 1px solid var(--stadli-gray-800);
+      border-radius: 1.5rem;
+      opacity: 0.6;
+      filter: blur(1.5px);
+      z-index: 1;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      padding-top: 12px;
+      gap: 20px;
     }
-    .mockup-crm .crm-side-avatar {
-      width: 72px;
-      height: 72px;
+    .mockup-crm .crm-ghost-card.is-left {
+      transform: translate(calc(-50% - 320px), -50%);
+    }
+    .mockup-crm .crm-ghost-card.is-right {
+      transform: translate(calc(-50% + 320px), -50%);
+    }
+    .mockup-crm .crm-ghost-avatar {
+      width: 88px;
+      height: 88px;
       border-radius: 50%;
-      border: 2px solid var(--stadli-gray-600);
+      overflow: hidden;
+      flex-shrink: 0;
+      background-color: var(--stadli-gray-800);
+    }
+    .mockup-crm .crm-ghost-avatar img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
     }
-    .mockup-crm .crm-side-name {
+    .mockup-crm .crm-ghost-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .mockup-crm .crm-ghost-name {
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--stadli-gray-300);
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+    }
+    .mockup-crm .crm-ghost-role {
       font-size: 16px;
       font-weight: 500;
-      color: var(--stadli-gray-200);
-      text-align: center;
+      color: var(--stadli-gray-500);
+      line-height: 1.2;
     }
-    .mockup-crm .crm-side-role {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--stadli-gray-400);
-      letter-spacing: 0.5px;
+
+    /* Focused card */
+    .mockup-crm .crm-card {
+      position: relative;
+      z-index: 3;
+      width: 600px;
+      height: 100%;
+      padding: 26px 30px;
+      background-color: var(--stadli-gray-900);
+      border: 1px solid var(--stadli-gray-800);
+      border-radius: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
-    .mockup-crm .crm-title {
-      font-size: 22px;
-      font-weight: 500;
-      color: var(--stadli-gray-100);
-      margin-bottom: 20px;
+    .mockup-crm .crm-card-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--stadli-white);
+      letter-spacing: -0.02em;
+      margin: 0;
+      padding: 0 4px;
+      line-height: 1;
     }
-    .mockup-crm .crm-header {
+
+    /* Inner panel */
+    .mockup-crm .crm-panel {
+      flex: 1;
+      min-height: 0;
+      background-color: var(--stadli-gray-800);
+      border: 1px solid var(--stadli-gray-700);
+      border-radius: 1.25rem;
+      padding: 22px 26px;
+      display: flex;
+      flex-direction: column;
+    }
+    .mockup-crm .crm-panel-header {
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding-bottom: 22px;
+      gap: 20px;
+      padding-bottom: 20px;
       border-bottom: 1px solid var(--stadli-gray-700);
+      flex-shrink: 0;
     }
     .mockup-crm .crm-avatar {
-      width: 76px;
-      height: 76px;
+      width: 90px;
+      height: 90px;
       border-radius: 50%;
-      border: 3px solid var(--stadli-gray-600);
+      overflow: hidden;
       flex-shrink: 0;
+      background-color: var(--stadli-gray-700);
+    }
+    .mockup-crm .crm-avatar img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
     }
-    .mockup-crm .crm-info { display: flex; flex-direction: column; gap: 4px; }
-    .mockup-crm .crm-name { font-size: 20px; font-weight: 500; color: var(--stadli-gray-100); }
-    .mockup-crm .crm-role-row { display: flex; align-items: center; gap: 8px; }
-    .mockup-crm .crm-role { font-size: 13px; font-weight: 500; color: var(--stadli-gray-400); }
-    .mockup-crm .crm-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background-color: #7ec7a3;
-      box-shadow: 0 0 8px rgba(126, 199, 163, 0.6);
-      flex-shrink: 0;
+    .mockup-crm .crm-panel-info {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 0;
     }
-    .mockup-crm .crm-stats { display: flex; flex-direction: column; }
-    .mockup-crm .crm-stat-row {
+    .mockup-crm .crm-panel-name {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--stadli-white);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .mockup-crm .crm-panel-role-row {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 14px 0;
-      border-bottom: 1px solid var(--stadli-gray-700);
+      gap: 12px;
     }
-    .mockup-crm .crm-stat-row:last-child { border-bottom: none; padding-bottom: 0; }
-    .mockup-crm .crm-stat-label {
-      font-size: 12px;
+    .mockup-crm .crm-panel-role {
+      font-size: 16px;
       font-weight: 500;
       color: var(--stadli-gray-400);
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
     }
-    .mockup-crm .crm-stat-value { font-size: 18px; font-weight: 500; color: var(--stadli-gray-100); }
-    .mockup-crm .crm-stat-value .unit { font-size: 14px; font-weight: 500; color: var(--stadli-gray-400); }
+    .mockup-crm .crm-dot {
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 50%;
+      background-color: var(--bs-success);
+      flex-shrink: 0;
+    }
 
-    /* ── Analytics — Stat Cards with Trend Charts ── */
+    /* Stat rows — distributed to fill remaining panel space */
+    .mockup-crm .crm-stats {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+    }
+    .mockup-crm .crm-stat-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--stadli-gray-700);
+    }
+    .mockup-crm .crm-stat-row:last-child {
+      border-bottom: none;
+    }
+    .mockup-crm .crm-stat-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--stadli-gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+    .mockup-crm .crm-stat-value {
+      font-size: 26px;
+      font-weight: 500;
+      color: var(--stadli-white);
+      letter-spacing: -0.01em;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+    .mockup-crm .crm-stat-value .unit {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--stadli-gray-400);
+      margin-left: 4px;
+    }
+    .mockup-crm .crm-stat-row.is-positive .crm-stat-value,
+    .mockup-crm .crm-stat-row.is-positive .crm-stat-value .unit {
+      color: var(--bs-success);
+    }
+
+    /* Engagement timeline — viewport-width strip below the card stage.
+       Negative horizontal margin pulls the strip back to the mockup-crm
+       border-box edges (canceling the mockup-crm padding) so the top
+       divider spans the full viewport width. The timeline's own 2rem
+       padding then realigns its content with the stage content above. */
+    .mockup-crm .crm-timeline {
+      flex-shrink: 0;
+      margin: 0 -2rem;
+      padding: 14px 2rem 16px;
+      border-top: 1px solid var(--stadli-gray-800);
+    }
+    .mockup-crm .crm-timeline-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .mockup-crm .crm-timeline-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--stadli-gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+    .mockup-crm .crm-timeline-meta {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--stadli-gray-500);
+      font-variant-numeric: tabular-nums;
+    }
+    .mockup-crm .crm-timeline-track {
+      position: relative;
+      height: 2px;
+      background-color: var(--stadli-gray-700);
+      border-radius: 50rem;
+      margin: 10px 8px 0;
+    }
+    .mockup-crm .crm-timeline-event {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background-color: var(--stadli-gray-400);
+      border: 3px solid var(--bs-body-bg);
+      box-sizing: content-box;
+    }
+    .mockup-crm .crm-timeline-event.is-positive {
+      background-color: var(--bs-success);
+    }
+    .mockup-crm .crm-timeline-dates {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 12px;
+      padding: 0 6px;
+    }
+    .mockup-crm .crm-timeline-date {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--stadli-gray-500);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── Analytics — Stat Cards + Report Table ── */
     .mockup-analytics {
       width: 100%;
       height: 100%;
+      padding: 28px 32px;
       background-color: var(--bs-body-bg);
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      gap: 24px;
       position: relative;
       overflow: hidden;
     }
@@ -776,43 +940,45 @@
       position: absolute;
       inset: 0;
       pointer-events: none;
-      background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.4) 100%);
+      background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.35) 100%);
     }
     .mockup-analytics .ana-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      width: 90%;
-      max-width: 1000px;
+      gap: 20px;
+      width: 100%;
+      max-width: 1040px;
       position: relative;
       z-index: 1;
+      flex-shrink: 0;
     }
     .mockup-analytics .ana-card {
       background-color: var(--stadli-gray-900);
       border: 1px solid var(--stadli-gray-800);
-      border-radius: 24px;
-      padding: 40px 32px 32px 32px;
+      border-radius: 0.75rem;
+      padding: 22px 24px 20px;
       display: flex;
       flex-direction: column;
     }
     .mockup-analytics .ana-label {
       color: var(--stadli-gray-500);
-      font-size: 14px;
-      font-weight: 500;
+      font-size: 13px;
+      font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      margin-bottom: 16px;
+      margin-bottom: 10px;
     }
     .mockup-analytics .ana-value {
-      font-size: 48px;
+      font-size: 36px;
       font-weight: 500;
-      margin-bottom: 24px;
+      margin-bottom: 14px;
       color: var(--stadli-white);
       letter-spacing: -0.02em;
       font-variant-numeric: tabular-nums;
+      line-height: 1;
     }
     .mockup-analytics .ana-trend {
-      height: 60px;
+      height: 44px;
       width: 100%;
       margin-top: auto;
       position: relative;
@@ -822,10 +988,83 @@
       height: 100%;
       overflow: visible;
     }
-    .mockup-analytics .ana-up      { stroke: #4ade80; filter: drop-shadow(0 0 8px rgba(74, 222, 128, 0.3)); }
-    .mockup-analytics .ana-neutral { stroke: #fbbf24; filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.3)); }
-    .mockup-analytics .ana-down    { stroke: #f87171; filter: drop-shadow(0 0 8px rgba(248, 113, 113, 0.3)); }
-    .mockup-analytics .ana-gradient-fill { opacity: 0.1; }
+    .mockup-analytics .ana-up      { stroke: var(--spec-green); }
+    .mockup-analytics .ana-neutral { stroke: var(--spec-orange); }
+    .mockup-analytics .ana-down    { stroke: var(--spec-red); }
+    .mockup-analytics .ana-gradient-fill { opacity: 0.12; }
+
+    /* Report table below the stat cards */
+    .mockup-analytics .ana-table {
+      width: 100%;
+      max-width: 1040px;
+      flex-shrink: 0;
+      background-color: var(--stadli-gray-900);
+      border: 1px solid var(--stadli-gray-800);
+      border-radius: 0.75rem;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+    .mockup-analytics .ana-table-row {
+      display: grid;
+      grid-template-columns: 2.3fr 1fr 1.1fr 1.2fr 1.1fr;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--stadli-gray-800);
+      font-size: 14px;
+      color: var(--stadli-gray-200);
+    }
+    .mockup-analytics .ana-table-row:last-child {
+      border-bottom: none;
+    }
+    .mockup-analytics .ana-table-row.ana-table-head {
+      background-color: var(--stadli-gray-800);
+      border-bottom-color: var(--stadli-gray-700);
+      padding: 11px 24px;
+    }
+    .mockup-analytics .ana-table-head .ana-cell {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--stadli-gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .mockup-analytics .ana-cell {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .mockup-analytics .ana-cell-event {
+      color: var(--stadli-white);
+      font-weight: 500;
+    }
+    .mockup-analytics .ana-cell-num {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+    .mockup-analytics .ana-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 3px 10px;
+      border: 1px solid var(--stadli-gray-700);
+      border-radius: 50rem;
+      font-size: 11px;
+      color: var(--stadli-gray-300);
+      white-space: nowrap;
+      width: fit-content;
+    }
+    .mockup-analytics .ana-status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--bs-success);
+      flex-shrink: 0;
+    }
+    .mockup-analytics .ana-status.is-draft .ana-status-dot {
+      background-color: var(--bs-warning);
+    }
 
     /* ── AI — Insight Query Dashboard ── */
     .mockup-ai {
@@ -868,19 +1107,20 @@
     .mockup-ai .ai-avatar {
       width: 32px;
       height: 32px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, #6366f1, #a855f7);
+      border-radius: 0.5rem;
+      background: linear-gradient(135deg, var(--spec-blue), var(--spec-violet));
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 500;
-      font-size: 12px;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.08em;
       color: var(--stadli-white);
       flex-shrink: 0;
     }
     .mockup-ai .ai-bubble {
       padding: 12px 16px;
-      border-radius: 16px;
+      border-radius: 0.75rem;
       font-size: 14px;
       line-height: 1.5;
       max-width: 90%;
@@ -938,7 +1178,7 @@
     }
     .mockup-ai .ai-card-trend {
       font-size: 14px;
-      color: #7ec7a3;
+      color: var(--bs-success);
       display: flex;
       align-items: center;
       gap: 4px;
@@ -956,8 +1196,8 @@
       min-height: 0;
     }
     .mockup-ai .ai-generating {
-      background: radial-gradient(circle at center, rgba(168, 85, 247, 0.2), transparent 70%);
-      border: 1px solid rgba(168, 85, 247, 0.3);
+      background: radial-gradient(circle at center, rgba(123, 47, 247, 0.18), transparent 70%);
+      border: 1px solid var(--stadli-gray-800);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -965,7 +1205,7 @@
       text-align: center;
     }
     .mockup-ai .ai-generating-text {
-      background: linear-gradient(to right, #6366f1, #ec4899);
+      background: linear-gradient(to right, var(--spec-blue), var(--spec-rose));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -977,7 +1217,7 @@
     .mockup-ai .ai-leaders-item { margin-bottom: 12px; }
     .mockup-ai .ai-leaders-item:last-child { margin-bottom: 0; }
     .mockup-ai .ai-leaders-name { font-size: 15px; font-weight: 500; color: var(--stadli-white); }
-    .mockup-ai .ai-leaders-trend { font-size: 12px; color: #7ec7a3; }
+    .mockup-ai .ai-leaders-trend { font-size: 12px; color: var(--bs-success); }
 
     /* ── Commerce — Stadium Cart ── */
     .mockup-commerce {
@@ -1009,7 +1249,7 @@
     }
     .mockup-commerce .cart-wrapper {
       border: 1px solid var(--stadli-gray-600);
-      border-radius: 10px;
+      border-radius: 0.75rem;
       margin: 24px 28px;
       display: flex;
       flex-direction: column;
@@ -1157,7 +1397,7 @@
           </div>
           <div class="col-12 col-lg-5 text-lg-end mt-4 mt-lg-0 reveal delay-400">
             <a href="#demo" class="text-decoration-none small d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill bg-black bg-opacity-50 border border-secondary border-opacity-25 backdrop-blur-md card-hover">
-              <span class="rounded-circle" style="width: 8px; height: 8px; background-color: #7b2ff7;"></span>
+              <span class="rounded-circle" style="width: 8px; height: 8px; background-color: var(--spec-violet);"></span>
               <span class="text-white fw-medium">Voyez Stadli en action</span>
               <span class="text-white text-opacity-50 ms-1">stadli.com/demo &rarr;</span>
             </a>
@@ -1251,7 +1491,7 @@
                 <div class="mockup-marketing">
                   <!-- Left Sidebar -->
                   <div class="mkt-sidebar">
-                    <div class="mkt-title">Email Marketing</div>
+                    <div class="mkt-title">Email marketing</div>
 
                     <div class="mkt-block">
                       <div class="mkt-block-icon">
@@ -1291,12 +1531,12 @@
                   <!-- Right Preview -->
                   <div class="mkt-preview">
                     <div class="mkt-email">
-                      <div class="mkt-email-heading">Support Our<br>Team</div>
+                      <div class="mkt-email-heading">Support our<br>team</div>
                       <div class="mkt-email-image">
                         <img src="https://placehold.co/480x220/1a1a1a/929292?text=Hero+Image" alt="Hero image placeholder">
                       </div>
                       <p class="mkt-email-body">Get your tickets now!</p>
-                      <a href="#" class="mkt-email-cta">Buy Tickets</a>
+                      <a href="#" class="mkt-email-cta">Buy tickets</a>
                     </div>
                   </div>
                 </div>
@@ -1343,50 +1583,95 @@
             <div class="mockup-frame">
               <div class="mockup-content">
                 <div class="mockup-crm">
-                  <div class="crm-carousel">
 
-                    <!-- Left Card (blurred) -->
-                    <div class="crm-card card-left">
-                      <div class="crm-side">
-                        <img src="https://placehold.co/72x72/303030/929292?text=JB" alt="Jenn B." class="crm-side-avatar">
-                        <div class="crm-side-name">Jenn Bennett</div>
-                        <div class="crm-side-role">Tour Pass Holder</div>
+                  <!-- Stage — card stack lives here, on top of timeline -->
+                  <div class="crm-stage">
+
+                    <!-- Ghost card behind to the left -->
+                    <div class="crm-ghost-card is-left" aria-hidden="true">
+                      <div class="crm-ghost-avatar">
+                        <img src="https://placehold.co/88x88/303030/929292?text=JB" alt="">
+                      </div>
+                      <div class="crm-ghost-meta">
+                        <div class="crm-ghost-name">Jenn Bennett</div>
+                        <div class="crm-ghost-role">Tour Pass Holder</div>
                       </div>
                     </div>
 
-                    <!-- Center Card (focused) -->
-                    <div class="crm-card card-center">
-                      <div class="crm-title">360 Fan Profile</div>
+                    <!-- Ghost card behind to the right -->
+                    <div class="crm-ghost-card is-right" aria-hidden="true">
+                      <div class="crm-ghost-avatar">
+                        <img src="https://placehold.co/88x88/303030/929292?text=SB" alt="">
+                      </div>
+                      <div class="crm-ghost-meta">
+                        <div class="crm-ghost-name">S. Bonhamm</div>
+                        <div class="crm-ghost-role">Pass Holder</div>
+                      </div>
+                    </div>
 
-                      <div class="crm-header">
-                        <img src="https://placehold.co/76x76/303030/929292?text=MG" alt="Marcus Grant" class="crm-avatar">
-                        <div class="crm-info">
-                          <div class="crm-name">Marcus Grant</div>
-                          <div class="crm-role-row">
-                            <span class="crm-role">Tour Pass Holder</span>
-                            <span class="crm-dot"></span>
+                    <!-- Focused card -->
+                    <div class="crm-card">
+                      <h3 class="crm-card-title">360 Fan Profile</h3>
+
+                      <div class="crm-panel">
+                        <div class="crm-panel-header">
+                          <div class="crm-avatar">
+                            <img src="https://placehold.co/110x110/303030/929292?text=MG" alt="Marcus Grant">
+                          </div>
+                          <div class="crm-panel-info">
+                            <div class="crm-panel-name">Marcus Grant</div>
+                            <div class="crm-panel-role-row">
+                              <span class="crm-panel-role">Tour Pass Holder</span>
+                              <span class="crm-dot"></span>
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div class="crm-stats">
-                        <div class="crm-stat-row"><span class="crm-stat-label">Purchases</span><span class="crm-stat-value">5</span></div>
-                        <div class="crm-stat-row"><span class="crm-stat-label">Engagement Score</span><span class="crm-stat-value">87</span></div>
-                        <div class="crm-stat-row"><span class="crm-stat-label">Attendance Rate</span><span class="crm-stat-value">75 <span class="unit">%</span></span></div>
-                        <div class="crm-stat-row"><span class="crm-stat-label">Lifetime Value</span><span class="crm-stat-value">$1,250</span></div>
-                      </div>
-                    </div>
-
-                    <!-- Right Card (blurred) -->
-                    <div class="crm-card card-right">
-                      <div class="crm-side">
-                        <img src="https://placehold.co/72x72/303030/929292?text=SB" alt="S. Bonhamm" class="crm-side-avatar">
-                        <div class="crm-side-name">S. Bonhamm</div>
-                        <div class="crm-side-role">Pass Holder</div>
+                        <div class="crm-stats">
+                          <div class="crm-stat-row">
+                            <span class="crm-stat-label">Purchases</span>
+                            <span class="crm-stat-value">5</span>
+                          </div>
+                          <div class="crm-stat-row">
+                            <span class="crm-stat-label">Engagement score</span>
+                            <span class="crm-stat-value">87</span>
+                          </div>
+                          <div class="crm-stat-row is-positive">
+                            <span class="crm-stat-label">Attendance rate</span>
+                            <span class="crm-stat-value">75<span class="unit">%</span></span>
+                          </div>
+                          <div class="crm-stat-row">
+                            <span class="crm-stat-label">Lifetime value</span>
+                            <span class="crm-stat-value">$1,250</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
                   </div>
+
+                  <!-- Engagement timeline — viewport-width widget below the stage -->
+                  <div class="crm-timeline">
+                    <div class="crm-timeline-head">
+                      <span class="crm-timeline-label">Engagement timeline</span>
+                      <span class="crm-timeline-meta">Last 30 days</span>
+                    </div>
+                    <div class="crm-timeline-track" role="img" aria-label="Seven fan engagement events across the last 30 days">
+                      <span class="crm-timeline-event is-positive" style="left: 5%;" title="Ticket purchased · Mar 3"></span>
+                      <span class="crm-timeline-event" style="left: 18%;" title="Email opened · Mar 8"></span>
+                      <span class="crm-timeline-event is-positive" style="left: 32%;" title="Merch purchased · Mar 13"></span>
+                      <span class="crm-timeline-event" style="left: 47%;" title="App login · Mar 18"></span>
+                      <span class="crm-timeline-event is-positive" style="left: 63%;" title="Game attended · Mar 22"></span>
+                      <span class="crm-timeline-event" style="left: 79%;" title="Survey completed · Mar 26"></span>
+                      <span class="crm-timeline-event is-positive" style="left: 95%;" title="Season renewal · Mar 30"></span>
+                    </div>
+                    <div class="crm-timeline-dates">
+                      <span class="crm-timeline-date">Mar 1</span>
+                      <span class="crm-timeline-date">Mar 15</span>
+                      <span class="crm-timeline-date">Mar 30</span>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -1439,8 +1724,8 @@
                         <svg viewBox="0 0 200 60" preserveAspectRatio="none">
                           <defs>
                             <linearGradient id="mockup-ana-grad-1" x1="0%" y1="0%" x2="0%" y2="100%">
-                              <stop offset="0%" stop-color="#4ade80" stop-opacity="0.2"/>
-                              <stop offset="100%" stop-color="#4ade80" stop-opacity="0"/>
+                              <stop offset="0%" style="stop-color: var(--spec-green); stop-opacity: 0.2;"/>
+                              <stop offset="100%" style="stop-color: var(--spec-green); stop-opacity: 0;"/>
                             </linearGradient>
                           </defs>
                           <path d="M0,50 Q20,45 40,48 T80,42 T120,35 T160,25 T200,10" fill="transparent" stroke-width="3" stroke-linecap="round" class="ana-up"/>
@@ -1451,14 +1736,14 @@
 
                     <!-- Conversion Rate Card -->
                     <div class="ana-card">
-                      <div class="ana-label">Conversion Rate</div>
+                      <div class="ana-label">Conversion rate</div>
                       <div class="ana-value">3.9%</div>
                       <div class="ana-trend">
                         <svg viewBox="0 0 200 60" preserveAspectRatio="none">
                           <defs>
                             <linearGradient id="mockup-ana-grad-2" x1="0%" y1="0%" x2="0%" y2="100%">
-                              <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.2"/>
-                              <stop offset="100%" stop-color="#fbbf24" stop-opacity="0"/>
+                              <stop offset="0%" style="stop-color: var(--spec-orange); stop-opacity: 0.2;"/>
+                              <stop offset="100%" style="stop-color: var(--spec-orange); stop-opacity: 0;"/>
                             </linearGradient>
                           </defs>
                           <path d="M0,45 Q15,55 30,45 T60,35 T90,50 T120,40 T150,30 T180,45 T200,45" fill="transparent" stroke-width="3" stroke-linecap="round" class="ana-neutral"/>
@@ -1475,8 +1760,8 @@
                         <svg viewBox="0 0 200 60" preserveAspectRatio="none">
                           <defs>
                             <linearGradient id="mockup-ana-grad-3" x1="0%" y1="0%" x2="0%" y2="100%">
-                              <stop offset="0%" stop-color="#4ade80" stop-opacity="0.2"/>
-                              <stop offset="100%" stop-color="#4ade80" stop-opacity="0"/>
+                              <stop offset="0%" style="stop-color: var(--spec-green); stop-opacity: 0.2;"/>
+                              <stop offset="100%" style="stop-color: var(--spec-green); stop-opacity: 0;"/>
                             </linearGradient>
                           </defs>
                           <path d="M0,55 Q30,50 60,42 T100,35 T140,25 T180,15 T200,5" fill="transparent" stroke-width="3" stroke-linecap="round" class="ana-up"/>
@@ -1485,6 +1770,65 @@
                       </div>
                     </div>
 
+                  </div>
+
+                  <!-- Report table under the stat cards -->
+                  <div class="ana-table" role="table" aria-label="Recent event performance">
+                    <div class="ana-table-row ana-table-head" role="row">
+                      <span class="ana-cell" role="columnheader">Event</span>
+                      <span class="ana-cell" role="columnheader">Date</span>
+                      <span class="ana-cell ana-cell-num" role="columnheader">Sold</span>
+                      <span class="ana-cell ana-cell-num" role="columnheader">Revenue</span>
+                      <span class="ana-cell" role="columnheader">Status</span>
+                    </div>
+                    <div class="ana-table-row" role="row">
+                      <span class="ana-cell ana-cell-event" role="cell">Summer jazz festival</span>
+                      <span class="ana-cell" role="cell">21 Jun</span>
+                      <span class="ana-cell ana-cell-num" role="cell">342 / 500</span>
+                      <span class="ana-cell ana-cell-num" role="cell">$45,732</span>
+                      <span role="cell">
+                        <span class="ana-status">
+                          <span class="ana-status-dot"></span>
+                          Published
+                        </span>
+                      </span>
+                    </div>
+                    <div class="ana-table-row" role="row">
+                      <span class="ana-cell ana-cell-event" role="cell">Rival game rematch</span>
+                      <span class="ana-cell" role="cell">28 Jun</span>
+                      <span class="ana-cell ana-cell-num" role="cell">188 / 500</span>
+                      <span class="ana-cell ana-cell-num" role="cell">$21,450</span>
+                      <span role="cell">
+                        <span class="ana-status">
+                          <span class="ana-status-dot"></span>
+                          Published
+                        </span>
+                      </span>
+                    </div>
+                    <div class="ana-table-row" role="row">
+                      <span class="ana-cell ana-cell-event" role="cell">Championship night</span>
+                      <span class="ana-cell" role="cell">05 Jul</span>
+                      <span class="ana-cell ana-cell-num" role="cell">412 / 500</span>
+                      <span class="ana-cell ana-cell-num" role="cell">$62,180</span>
+                      <span role="cell">
+                        <span class="ana-status">
+                          <span class="ana-status-dot"></span>
+                          Published
+                        </span>
+                      </span>
+                    </div>
+                    <div class="ana-table-row" role="row">
+                      <span class="ana-cell ana-cell-event" role="cell">Fan appreciation fest</span>
+                      <span class="ana-cell" role="cell">12 Jul</span>
+                      <span class="ana-cell ana-cell-num" role="cell">89 / 500</span>
+                      <span class="ana-cell ana-cell-num" role="cell">$8,240</span>
+                      <span role="cell">
+                        <span class="ana-status is-draft">
+                          <span class="ana-status-dot"></span>
+                          Draft
+                        </span>
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1556,51 +1900,51 @@
                     <!-- Middle Column: Main Stats -->
                     <div class="ai-mid-grid">
                       <div class="ai-stats-card">
-                        <div class="ai-card-label">Season Ticket Revenue</div>
+                        <div class="ai-card-label">Season ticket revenue</div>
                         <div class="ai-card-value">$842,000</div>
-                        <div class="ai-card-trend">+ 12.4 %</div>
+                        <div class="ai-card-trend">+12.4%</div>
                       </div>
 
                       <div class="ai-stats-card">
-                        <div class="ai-card-label">Roster Leaders</div>
+                        <div class="ai-card-label">Roster leaders</div>
                         <div class="ai-leaders-item">
                           <div class="ai-leaders-name">Batting AVG</div>
-                          <div class="ai-leaders-trend">.312 (Team High)</div>
+                          <div class="ai-leaders-trend">.312 (team high)</div>
                         </div>
                         <div class="ai-leaders-item">
-                          <div class="ai-leaders-name">Home Runs</div>
-                          <div class="ai-leaders-trend">42 (League Leader)</div>
+                          <div class="ai-leaders-name">Home runs</div>
+                          <div class="ai-leaders-trend">42 (league leader)</div>
                         </div>
                         <div class="ai-leaders-item">
-                          <div class="ai-leaders-name">Stolen Bases</div>
-                          <div class="ai-leaders-trend">18 (Last 30 Days)</div>
+                          <div class="ai-leaders-name">Stolen bases</div>
+                          <div class="ai-leaders-trend">18 (last 30 days)</div>
                         </div>
                         <div class="ai-leaders-item">
-                          <div class="ai-leaders-name">ERA (Starters)</div>
-                          <div class="ai-leaders-trend">2.45 (League Low)</div>
+                          <div class="ai-leaders-name">ERA (starters)</div>
+                          <div class="ai-leaders-trend">2.45 (league low)</div>
                         </div>
                       </div>
 
                       <div class="ai-stats-card">
-                        <div class="ai-card-label" style="margin-bottom: 4px;">Upcoming Series</div>
-                        <div style="color: var(--stadli-white); font-size: 13px;">Home vs. Dodgers (3 Games)</div>
+                        <div class="ai-card-label" style="margin-bottom: 4px;">Upcoming series</div>
+                        <div style="color: var(--stadli-white); font-size: 13px;">Home vs. Dodgers (3 games)</div>
                       </div>
                     </div>
 
                     <!-- Right Column: Secondary Stats & Loading -->
                     <div class="ai-right-grid">
                       <div class="ai-stats-card ai-generating">
-                        <div class="ai-generating-text">Simulating<br>matchups...</div>
+                        <div class="ai-generating-text">Simulating<br>matchups&hellip;</div>
                       </div>
                       <div class="ai-stats-card">
-                        <div class="ai-card-label">Win Percentage</div>
+                        <div class="ai-card-label">Win percentage</div>
                         <div class="ai-card-value">.640</div>
-                        <div class="ai-card-trend">+ 0.05 %</div>
+                        <div class="ai-card-trend">+0.05%</div>
                       </div>
                       <div class="ai-stats-card">
-                        <div class="ai-card-label">Avg. Attendance</div>
+                        <div class="ai-card-label">Avg. attendance</div>
                         <div class="ai-card-value">42,150</div>
-                        <div class="ai-card-trend">+ 15.2 %</div>
+                        <div class="ai-card-trend">+15.2%</div>
                       </div>
                     </div>
 
@@ -1658,13 +2002,13 @@
                       <div class="cart-title">Cart</div>
 
                       <div class="cart-items">
-                        <!-- Merch Jersey -->
+                        <!-- Merch jersey -->
                         <div class="cart-item">
                           <div class="cart-thumb">
-                            <img src="https://placehold.co/72x72/303030/929292?text=Jersey" alt="Merch Jersey">
+                            <img src="https://placehold.co/72x72/303030/929292?text=Jersey" alt="Merch jersey">
                           </div>
                           <div class="cart-details">
-                            <span class="cart-name">Merch Jersey</span>
+                            <span class="cart-name">Merch jersey</span>
                             <span class="cart-unit-price">$50.00</span>
                           </div>
                           <span class="cart-total">$50.00</span>
@@ -1682,13 +2026,13 @@
                           <span class="cart-total">$75.00</span>
                         </div>
 
-                        <!-- Digital Gift Card -->
+                        <!-- Digital gift card -->
                         <div class="cart-item">
                           <div class="cart-thumb">
-                            <img src="https://placehold.co/72x72/303030/929292?text=Gift+Card" alt="Digital Gift Card">
+                            <img src="https://placehold.co/72x72/303030/929292?text=Gift+Card" alt="Digital gift card">
                           </div>
                           <div class="cart-details">
-                            <span class="cart-name">Digital Gift Card</span>
+                            <span class="cart-name">Digital gift card</span>
                             <span class="cart-unit-price">$25.00</span>
                           </div>
                           <span class="cart-total">$25.00</span>
@@ -1725,16 +2069,16 @@
           
           <form class="text-start border p-4 p-md-5 rounded-4 bg-glass backdrop-blur-md reveal delay-200">
             <div class="mb-4">
-              <label class="form-label text-label text-body-secondary mb-2">Work Email</label>
+              <label class="form-label text-label text-body-secondary mb-2">Work email</label>
               <input type="email" class="form-control bg-body border-secondary text-body-color px-3 py-2" placeholder="name@organization.com">
             </div>
             <div class="row g-3 mb-4">
               <div class="col-12 col-sm-6">
-                <label class="form-label text-label text-body-secondary mb-2">First Name</label>
+                <label class="form-label text-label text-body-secondary mb-2">First name</label>
                 <input type="text" class="form-control bg-body border-secondary px-3 py-2">
               </div>
               <div class="col-12 col-sm-6">
-                <label class="form-label text-label text-body-secondary mb-2">Last Name</label>
+                <label class="form-label text-label text-body-secondary mb-2">Last name</label>
                 <input type="text" class="form-control bg-body border-secondary px-3 py-2">
               </div>
             </div>
@@ -1742,7 +2086,7 @@
               <label class="form-label text-label text-body-secondary mb-2">Organization</label>
               <input type="text" class="form-control bg-body border-secondary px-3 py-2">
             </div>
-            <button type="submit" class="btn btn-primary w-100 py-3 mt-2">Request Demo</button>
+            <button type="submit" class="btn btn-primary w-100 py-3 mt-2">Request demo</button>
           </form>
         </div>
       </div>
