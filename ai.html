@@ -24,8 +24,15 @@
             
             --primary: var(--gray-900);
             --secondary: var(--gray-600);
-            --accent-green: #2ecc71;
-            --bg-main: #0a0a0a;
+
+            /* Spectrum tokens — data-viz and marketing surfaces only */
+            --spec-blue:    #0140f0;
+            --spec-violet:  #7b2ff7;
+            --spec-green:   #44d62b;
+            --spec-rose:    #f6166e;
+
+            --accent-green: var(--spec-green);
+            --bg-main: var(--gray-900);
             --card-bg: var(--gray-900);
             --card-border: var(--gray-800);
         }
@@ -87,7 +94,7 @@
             width: 32px;
             height: 32px;
             border-radius: 8px;
-            background: linear-gradient(135deg, #6366f1, #a855f7);
+            background: linear-gradient(135deg, var(--spec-blue), var(--spec-violet));
             display: flex;
             align-items: center;
             justify-content: center;
@@ -172,8 +179,8 @@
 
         /* Right Column Specifics */
         .generating-card {
-            background: radial-gradient(circle at center, rgba(168, 85, 247, 0.2), transparent 70%);
-            border: 1px solid rgba(168, 85, 247, 0.3);
+            background: radial-gradient(circle at center, rgba(123, 47, 247, 0.2), transparent 70%);
+            border: 1px solid rgba(123, 47, 247, 0.3);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -287,7 +294,7 @@
             <!-- Right Column: Secondary Stats & Loading -->
             <div class="right-grid">
                 <div class="stats-card generating-card">
-                    <div style="background: linear-gradient(to right, #6366f1, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 20px; font-weight: 600;">
+                    <div style="background: linear-gradient(to right, var(--spec-blue), var(--spec-rose)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 20px; font-weight: 600;">
                         Simulating<br>matchups...
                     </div>
                 </div>

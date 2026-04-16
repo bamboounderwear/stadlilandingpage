@@ -24,15 +24,20 @@
             --gray-900: #010101;
 
             /* Semantic Colors (Dark Theme Defaults) */
-            --bg-body: #0a0a0b; /* Deep dark background slightly lighter than pure black for depth */
+            --bg-body: var(--gray-900);
             --card-bg: var(--gray-900);
             --text-primary: var(--white);
             --text-secondary: var(--gray-500);
-            
-            /* Trend Colors */
-            --trend-up: #4ade80;
-            --trend-neutral: #fbbf24;
-            --trend-down: #f87171;
+
+            /* Spectrum tokens — data-viz surfaces only */
+            --spec-green:  #44d62b;
+            --spec-orange: #fe5619;
+            --spec-red:    #fe0000;
+
+            /* Trend Colors (data viz — mapped to spectrum) */
+            --trend-up: var(--spec-green);
+            --trend-neutral: var(--spec-orange);
+            --trend-down: var(--spec-red);
         }
 
         body {
@@ -50,7 +55,7 @@
         .mockup-container {
             width: 1200px;
             height: 600px;
-            background-color: #050505;
+            background-color: var(--gray-900);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -109,9 +114,9 @@
             overflow: visible;
         }
 
-        .path-up { stroke: var(--trend-up); filter: drop-shadow(0 0 8px rgba(74, 222, 128, 0.3)); }
-        .path-neutral { stroke: var(--trend-neutral); filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.3)); }
-        .path-down { stroke: var(--trend-down); filter: drop-shadow(0 0 8px rgba(248, 113, 113, 0.3)); }
+        .path-up { stroke: var(--trend-up); filter: drop-shadow(0 0 8px rgba(68, 214, 43, 0.3)); }
+        .path-neutral { stroke: var(--trend-neutral); filter: drop-shadow(0 0 8px rgba(254, 86, 25, 0.3)); }
+        .path-down { stroke: var(--trend-down); filter: drop-shadow(0 0 8px rgba(254, 0, 0, 0.3)); }
 
         .gradient-fill {
             opacity: 0.1;
