@@ -857,22 +857,18 @@
       color: var(--bs-success);
     }
 
-    /* Engagement timeline — viewport-width strip below the card stage.
-       Negative horizontal margin pulls the strip back to the mockup-crm
-       border-box edges (canceling the mockup-crm padding) so the top
-       divider spans the full viewport width. The timeline's own 2rem
-       padding then realigns its content with the stage content above. */
+    /* Engagement timeline — activity feed below the card stage */
     .mockup-crm .crm-timeline {
       flex-shrink: 0;
       margin: 0 -2rem;
-      padding: 14px 2rem 16px;
+      padding: 18px 2rem 20px;
       border-top: 1px solid var(--stadli-gray-800);
     }
     .mockup-crm .crm-timeline-head {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
     .mockup-crm .crm-timeline-label {
       font-size: 13px;
@@ -887,39 +883,70 @@
       color: var(--stadli-gray-500);
       font-variant-numeric: tabular-nums;
     }
-    .mockup-crm .crm-timeline-track {
+    .mockup-crm .crm-timeline-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
       position: relative;
-      height: 2px;
+      padding-left: 20px;
+    }
+    .mockup-crm .crm-timeline-feed::before {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
       background-color: var(--stadli-gray-700);
       border-radius: 50rem;
-      margin: 10px 8px 0;
     }
-    .mockup-crm .crm-timeline-event {
-      position: absolute;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background-color: var(--stadli-gray-400);
-      border: 3px solid var(--bs-body-bg);
-      box-sizing: content-box;
-    }
-    .mockup-crm .crm-timeline-event.is-positive {
-      background-color: var(--bs-success);
-    }
-    .mockup-crm .crm-timeline-dates {
+    .mockup-crm .crm-tl-item {
       display: flex;
-      justify-content: space-between;
-      margin-top: 12px;
-      padding: 0 6px;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 6px 0;
+      position: relative;
     }
-    .mockup-crm .crm-timeline-date {
+    .mockup-crm .crm-tl-dot {
+      position: absolute;
+      left: -20px;
+      top: 9px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: var(--stadli-gray-600);
+      border: 2px solid var(--bs-body-bg);
+      box-sizing: content-box;
+      flex-shrink: 0;
+      z-index: 1;
+    }
+    .mockup-crm .crm-tl-dot.is-positive {
+      background-color: var(--bs-success);
+      box-shadow: 0 0 0 3px rgba(var(--bs-success-rgb), 0.15);
+    }
+    .mockup-crm .crm-tl-content {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      width: 100%;
+      min-width: 0;
+    }
+    .mockup-crm .crm-tl-event-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--stadli-gray-200);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .mockup-crm .crm-tl-event-date {
       font-size: 11px;
       font-weight: 500;
       color: var(--stadli-gray-500);
       font-variant-numeric: tabular-nums;
-      letter-spacing: 0.02em;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-left: 12px;
     }
 
     /* ── Analytics — Stat Cards + Report Table ── */
@@ -1670,25 +1697,62 @@
 
                   </div>
 
-                  <!-- Engagement timeline — viewport-width widget below the stage -->
+                  <!-- Engagement timeline — activity feed below the stage -->
                   <div class="crm-timeline">
                     <div class="crm-timeline-head">
-                      <span class="crm-timeline-label">Engagement timeline</span>
+                      <span class="crm-timeline-label">Recent activity</span>
                       <span class="crm-timeline-meta">Last 30 days</span>
                     </div>
-                    <div class="crm-timeline-track" role="img" aria-label="Seven fan engagement events across the last 30 days">
-                      <span class="crm-timeline-event is-positive" style="left: 5%;" title="Ticket purchased · Mar 3"></span>
-                      <span class="crm-timeline-event" style="left: 18%;" title="Email opened · Mar 8"></span>
-                      <span class="crm-timeline-event is-positive" style="left: 32%;" title="Merch purchased · Mar 13"></span>
-                      <span class="crm-timeline-event" style="left: 47%;" title="App login · Mar 18"></span>
-                      <span class="crm-timeline-event is-positive" style="left: 63%;" title="Game attended · Mar 22"></span>
-                      <span class="crm-timeline-event" style="left: 79%;" title="Survey completed · Mar 26"></span>
-                      <span class="crm-timeline-event is-positive" style="left: 95%;" title="Season renewal · Mar 30"></span>
-                    </div>
-                    <div class="crm-timeline-dates">
-                      <span class="crm-timeline-date">Mar 1</span>
-                      <span class="crm-timeline-date">Mar 15</span>
-                      <span class="crm-timeline-date">Mar 30</span>
+                    <div class="crm-timeline-feed" role="list" aria-label="Seven fan engagement events across the last 30 days">
+                      <div class="crm-tl-item" role="listitem">
+                        <span class="crm-tl-dot is-positive"></span>
+                        <div class="crm-tl-content">
+                          <span class="crm-tl-event-name">Season renewal</span>
+                          <span class="crm-tl-event-date">Mar 30</span>
+                        </div>
+                      </div>
+                      <div class="crm-tl-item" role="listitem">
+                        <span class="crm-tl-dot"></span>
+                        <div class="crm-tl-content">
+                          <span class="crm-tl-event-name">Survey completed</span>
+                          <span class="crm-tl-event-date">Mar 26</span>
+                        </div>
+                      </div>
+                      <div class="crm-tl-item" role="listitem">
+                        <span class="crm-tl-dot is-positive"></span>
+                        <div class="crm-tl-content">
+                          <span class="crm-tl-event-name">Game attended</span>
+                          <span class="crm-tl-event-date">Mar 22</span>
+                        </div>
+                      </div>
+                      <div class="crm-tl-item" role="listitem">
+                        <span class="crm-tl-dot"></span>
+                        <div class="crm-tl-content">
+                          <span class="crm-tl-event-name">App login</span>
+                          <span class="crm-tl-event-date">Mar 18</span>
+                        </div>
+                      </div>
+                      <div class="crm-tl-item" role="listitem">
+                        <span class="crm-tl-dot is-positive"></span>
+                        <div class="crm-tl-content">
+                          <span class="crm-tl-event-name">Merch purchased</span>
+                          <span class="crm-tl-event-date">Mar 13</span>
+                        </div>
+                      </div>
+                      <div class="crm-tl-item" role="listitem">
+                        <span class="crm-tl-dot"></span>
+                        <div class="crm-tl-content">
+                          <span class="crm-tl-event-name">Email opened</span>
+                          <span class="crm-tl-event-date">Mar 8</span>
+                        </div>
+                      </div>
+                      <div class="crm-tl-item" role="listitem">
+                        <span class="crm-tl-dot is-positive"></span>
+                        <div class="crm-tl-content">
+                          <span class="crm-tl-event-name">Ticket purchased</span>
+                          <span class="crm-tl-event-date">Mar 3</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
