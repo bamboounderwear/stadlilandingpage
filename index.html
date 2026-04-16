@@ -302,7 +302,7 @@
       100% { transform: translateX(100%); }
     }
 
-    /* AI Builder Zone Motif */
+    /* AI Builder Zone Motif — subtle shimmer border */
     .ai-builder-zone {
       position: relative;
       border: 1px solid var(--bs-border-color);
@@ -313,9 +313,21 @@
     .ai-builder-zone::before {
       content: "";
       position: absolute;
-      top: 0; left: 0; width: 100%; height: 2px;
-      background: linear-gradient(90deg, var(--spec-cyan), var(--spec-rose));
-      opacity: 0.7;
+      top: 0; left: -100%; width: 200%; height: 2px;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        transparent 35%,
+        rgba(var(--bs-emphasis-color-rgb), 0.35) 50%,
+        transparent 65%,
+        transparent 100%
+      );
+      animation: ai-zone-shimmer 3s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes ai-zone-shimmer {
+      0%   { transform: translateX(-25%); }
+      100% { transform: translateX(25%); }
     }
 
     /* Spectrum Classes for Marketing ONLY */
@@ -560,18 +572,26 @@
     }
     .bento-bar.active { background-color: var(--bs-success); }
 
-    /* 3. AI Insight (Bottom Left) */
+    /* 3. AI Insight (Bottom Left) — uses .ai-builder-zone shimmer pattern */
     .bento-ai {
       grid-column: 1 / 2;
       grid-row: 2 / 3;
-      background: linear-gradient(145deg, var(--stadli-gray-900), var(--stadli-black));
-      border-color: rgba(123, 47, 247, 0.3);
     }
-    .bento-ai-glow {
+    .bento-ai::before {
+      content: "";
       position: absolute;
-      top: 0; left: 0; width: 100%; height: 2px;
-      background: linear-gradient(90deg, transparent, var(--spec-violet), transparent);
-      opacity: 0.8;
+      top: 0; left: -100%; width: 200%; height: 2px;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        transparent 35%,
+        rgba(var(--bs-emphasis-color-rgb), 0.35) 50%,
+        transparent 65%,
+        transparent 100%
+      );
+      animation: ai-zone-shimmer 3s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 2;
     }
     .bento-ai-text {
       font-size: clamp(9.5px, 1.5675cqi, 30.4px);
@@ -1290,10 +1310,12 @@
       max-width: 85%;
     }
     .mockup-ai .ai-avatar {
+      position: relative;
       width: 2.7cqi;
       height: 2.7cqi;
       border-radius: 0.5rem;
-      background: linear-gradient(135deg, var(--spec-blue), var(--spec-violet));
+      background: var(--stadli-gray-800);
+      border: 1px solid var(--stadli-gray-700);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1302,6 +1324,22 @@
       letter-spacing: 0.08em;
       color: var(--stadli-white);
       flex-shrink: 0;
+      overflow: hidden;
+    }
+    .mockup-ai .ai-avatar::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%; width: 200%; height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        transparent 40%,
+        rgba(255, 255, 255, 0.12) 50%,
+        transparent 60%,
+        transparent 100%
+      );
+      animation: ai-zone-shimmer 3s ease-in-out infinite;
+      pointer-events: none;
     }
     .mockup-ai .ai-bubble {
       padding: 1cqi 1.3cqi;
@@ -1380,24 +1418,46 @@
       gap: 1.7cqi;
       min-height: 0;
     }
+    /* AI generating state — uses the design-system shimmer pattern */
     .mockup-ai .ai-generating {
-      background: radial-gradient(circle at center, rgba(123, 47, 247, 0.18), transparent 70%);
+      position: relative;
       border: 1px solid var(--stadli-gray-800);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
+      gap: 0.8cqi;
+      overflow: hidden;
+    }
+    .mockup-ai .ai-generating::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%; width: 200%; height: 2px;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        transparent 35%,
+        rgba(255, 255, 255, 0.35) 50%,
+        transparent 65%,
+        transparent 100%
+      );
+      animation: ai-zone-shimmer 3s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 2;
     }
     .mockup-ai .ai-generating-text {
-      background: linear-gradient(to right, var(--spec-blue), var(--spec-rose));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      color: transparent;
+      color: var(--stadli-gray-300);
       font-size: clamp(10.45px, 1.615cqi, 28.5px);
       font-weight: 500;
       line-height: 1.2;
+    }
+    .mockup-ai .ai-generating-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4cqi;
+      font-size: clamp(6.65px, 0.95cqi, 17.1px);
+      color: var(--stadli-gray-400);
     }
     .mockup-ai .ai-leaders-item { margin-bottom: 1cqi; }
     .mockup-ai .ai-leaders-item:last-child { margin-bottom: 0; }
@@ -1685,9 +1745,9 @@
 
                     <!-- 3. AI Insight (Bottom Left) -->
                     <div class="bento-card bento-ai">
-                      <div class="bento-ai-glow"></div>
                       <div class="bento-card-header">
-                        <h3 class="bento-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Stadli AI</h3>
+                        <h3 class="bento-title mb-0">Stadli AI</h3>
+                        <span class="badge badge-ai">AI</span>
                       </div>
                       <p class="bento-ai-text">
                         Les forfaits VIP de la section 104 se vendent <span class="bento-ai-highlight">3x plus vite</span> que la moyenne. Envisagez d'augmenter les prix dynamiquement.
@@ -2590,6 +2650,7 @@
                     <!-- Right Column: Secondary Stats & Loading -->
                     <div class="ai-right-grid">
                       <div class="ai-stats-card ai-generating">
+                        <span class="badge badge-ai">AI</span>
                         <div class="ai-generating-text">Prévision de<br>la demande&hellip;</div>
                       </div>
                       <div class="ai-stats-card">
