@@ -1218,6 +1218,26 @@
     .mockup-ai .ai-leaders-item:last-child { margin-bottom: 0; }
     .mockup-ai .ai-leaders-name { font-size: 15px; font-weight: 500; color: var(--stadli-white); }
     .mockup-ai .ai-leaders-trend { font-size: 12px; color: var(--bs-success); }
+    .mockup-ai .ai-progress-track {
+      width: 100%;
+      height: 4px;
+      background-color: var(--stadli-gray-800);
+      border-radius: 2px;
+      margin-top: 6px;
+      overflow: hidden;
+    }
+    .mockup-ai .ai-progress-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: linear-gradient(to right, var(--spec-blue), var(--spec-rose));
+    }
+    .mockup-ai .ai-sparkline-wrap {
+      margin-top: 8px;
+    }
+    .mockup-ai .ai-sparkline-wrap svg {
+      width: 100%;
+      display: block;
+    }
 
     /* ── Commerce — Stadium Cart ── */
     .mockup-commerce {
@@ -1531,12 +1551,12 @@
                   <!-- Right Preview -->
                   <div class="mkt-preview">
                     <div class="mkt-email">
-                      <div class="mkt-email-heading">Support our<br>team</div>
+                      <div class="mkt-email-heading" style="font-size: 21px; font-weight: 900; letter-spacing: 0px; line-height: 24px;">demo team</div>
                       <div class="mkt-email-image">
                         <img src="https://placehold.co/480x220/1a1a1a/929292?text=Hero+Image" alt="Hero image placeholder">
                       </div>
-                      <p class="mkt-email-body">Get your tickets now!</p>
-                      <a href="#" class="mkt-email-cta">Buy tickets</a>
+                      <p class="mkt-email-body" style="font-size: 24px; font-weight: 700; line-height: 32px; height: 24px;">Get your tickets today!</p><p class="mkt-email-body" style="line-height: 20px; font-size: 16px; font-weight: 400;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu tellus non lorem lobortis placerat.</p>
+                      <a href="#" class="mkt-email-cta" style="letter-spacing: 0px; font-weight: 600; border-radius: 24px;">Buy tickets</a>
                     </div>
                   </div>
                 </div>
@@ -1900,51 +1920,71 @@
                     <!-- Middle Column: Main Stats -->
                     <div class="ai-mid-grid">
                       <div class="ai-stats-card">
-                        <div class="ai-card-label">Season ticket revenue</div>
-                        <div class="ai-card-value">$842,000</div>
-                        <div class="ai-card-trend">+12.4%</div>
+                        <div class="ai-card-label">Total ticket revenue</div>
+                        <div class="ai-card-value">$1.24M</div>
+                        <div class="ai-card-trend">+18.3% vs. last season</div>
                       </div>
 
                       <div class="ai-stats-card">
-                        <div class="ai-card-label">Roster leaders</div>
+                        <div class="ai-card-label">Campaign performance</div>
                         <div class="ai-leaders-item">
-                          <div class="ai-leaders-name">Batting AVG</div>
-                          <div class="ai-leaders-trend">.312 (team high)</div>
+                          <div class="ai-leaders-name">Email open rate</div>
+                          <div class="ai-leaders-trend">34.2% (+6.1%)</div>
+                          <div class="ai-progress-track"><div class="ai-progress-fill" style="width: 68%;"></div></div>
                         </div>
                         <div class="ai-leaders-item">
-                          <div class="ai-leaders-name">Home runs</div>
-                          <div class="ai-leaders-trend">42 (league leader)</div>
+                          <div class="ai-leaders-name">Click-through rate</div>
+                          <div class="ai-leaders-trend">8.7% (+2.3%)</div>
+                          <div class="ai-progress-track"><div class="ai-progress-fill" style="width: 52%;"></div></div>
                         </div>
                         <div class="ai-leaders-item">
-                          <div class="ai-leaders-name">Stolen bases</div>
-                          <div class="ai-leaders-trend">18 (last 30 days)</div>
+                          <div class="ai-leaders-name">Conversion rate</div>
+                          <div class="ai-leaders-trend">4.1% (+0.9%)</div>
+                          <div class="ai-progress-track"><div class="ai-progress-fill" style="width: 38%;"></div></div>
                         </div>
                         <div class="ai-leaders-item">
-                          <div class="ai-leaders-name">ERA (starters)</div>
-                          <div class="ai-leaders-trend">2.45 (league low)</div>
+                          <div class="ai-leaders-name">Revenue per send</div>
+                          <div class="ai-leaders-trend">$2.48 (campaign high)</div>
+                          <div class="ai-progress-track"><div class="ai-progress-fill" style="width: 78%;"></div></div>
                         </div>
                       </div>
 
                       <div class="ai-stats-card">
-                        <div class="ai-card-label" style="margin-bottom: 4px;">Upcoming series</div>
-                        <div style="color: var(--stadli-white); font-size: 13px;">Home vs. Dodgers (3 games)</div>
+                        <div class="ai-card-label" style="margin-bottom: 4px;">Next on-sale</div>
+                        <div style="color: var(--stadli-white); font-size: 13px;">Playoff pre-sale &mdash; 1,240 waitlisted</div>
                       </div>
                     </div>
 
                     <!-- Right Column: Secondary Stats & Loading -->
                     <div class="ai-right-grid">
                       <div class="ai-stats-card ai-generating">
-                        <div class="ai-generating-text">Simulating<br>matchups&hellip;</div>
+                        <div class="ai-generating-text">Forecasting<br>demand&hellip;</div>
                       </div>
                       <div class="ai-stats-card">
-                        <div class="ai-card-label">Win percentage</div>
-                        <div class="ai-card-value">.640</div>
-                        <div class="ai-card-trend">+0.05%</div>
+                        <div class="ai-card-label">Season renewals</div>
+                        <div class="ai-card-value">78%</div>
+                        <div class="ai-card-trend">+5.4% vs. last year</div>
                       </div>
                       <div class="ai-stats-card">
-                        <div class="ai-card-label">Avg. attendance</div>
-                        <div class="ai-card-value">42,150</div>
-                        <div class="ai-card-trend">+15.2%</div>
+                        <div class="ai-card-label">Single-game sell-through</div>
+                        <div class="ai-card-value">91.3%</div>
+                        <div class="ai-card-trend">+11.8% (last 30 days)</div>
+                        <div class="ai-sparkline-wrap">
+                          <svg viewBox="0 0 120 32" preserveAspectRatio="none" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                              <linearGradient id="sparkGrad" x1="0" y1="0" x2="120" y2="0" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stop-color="var(--spec-blue)"/>
+                                <stop offset="100%" stop-color="var(--spec-rose)"/>
+                              </linearGradient>
+                              <linearGradient id="sparkFill" x1="0" y1="0" x2="0" y2="32" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stop-color="var(--spec-blue)" stop-opacity="0.18"/>
+                                <stop offset="100%" stop-color="var(--spec-blue)" stop-opacity="0"/>
+                              </linearGradient>
+                            </defs>
+                            <path d="M0,26 L10,24 20,22 30,25 40,20 50,18 60,21 70,16 80,14 90,10 100,8 110,6 120,3 L120,32 L0,32Z" fill="url(#sparkFill)"/>
+                            <polyline points="0,26 10,24 20,22 30,25 40,20 50,18 60,21 70,16 80,14 90,10 100,8 110,6 120,3" stroke="url(#sparkGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                        </div>
                       </div>
                     </div>
 
