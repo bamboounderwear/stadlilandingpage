@@ -387,13 +387,10 @@
 
     /* ============================================
        MOCKUP FRAMES — Fluid UI previews
-       Each frame enforces a 2:1 aspect ratio capped at
-       680px tall, and is registered as an inline-size
-       container so inner mockups can use cqi units.
-       Internal gutter padding lives on each individual
-       mockup (.mockup-crm, etc.) so each mockup's own
-       background extends edge-to-edge inside the fake
-       browser window.
+       Registered as an inline-size container so inner
+       mockups can use cqi units to scale proportionally.
+       Each mockup sizes to its own content; the hero
+       keeps aspect-ratio: 2/1 for its absolute children.
        ============================================ */
     .mockup-frame {
       container-type: inline-size;
@@ -498,39 +495,39 @@
       display: flex;
     }
     .mockup-marketing .mkt-sidebar {
-      width: 340px;
-      min-width: 340px;
-      padding: 28px 24px;
+      width: 28cqi;
+      min-width: 28cqi;
+      padding: 2.3cqi 2cqi;
       border-right: 1px solid var(--stadli-gray-700);
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 1.3cqi;
     }
     .mockup-marketing .mkt-title {
-      font-size: 18px;
+      font-size: clamp(12px, 1.5cqi, 18px);
       font-weight: 500;
       color: var(--stadli-gray-200);
-      margin-bottom: 4px;
+      margin-bottom: 0.3cqi;
     }
     .mockup-marketing .mkt-block {
       display: flex;
       align-items: center;
-      gap: 14px;
-      padding: 16px 18px;
+      gap: 1.2cqi;
+      padding: 1.3cqi 1.5cqi;
       border: 1px solid var(--stadli-gray-600);
       border-radius: 8px;
     }
     .mockup-marketing .mkt-block-icon {
-      width: 28px;
-      height: 28px;
+      width: 2.3cqi;
+      height: 2.3cqi;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
     }
     .mockup-marketing .mkt-block-icon svg {
-      width: 20px;
-      height: 20px;
+      width: 1.7cqi;
+      height: 1.7cqi;
       stroke: var(--stadli-gray-400);
       fill: none;
       stroke-width: 1.5;
@@ -538,7 +535,7 @@
       stroke-linejoin: round;
     }
     .mockup-marketing .mkt-block-label {
-      font-size: 15px;
+      font-size: clamp(11px, 1.25cqi, 15px);
       font-weight: 500;
       color: var(--stadli-gray-300);
     }
@@ -546,7 +543,7 @@
       position: relative;
     }
     .mockup-marketing .mkt-block.is-dragging {
-      transform: translate(60px, 0);
+      transform: translate(5cqi, 0);
       border-color: var(--stadli-gray-300);
       background-color: var(--stadli-gray-800);
       z-index: 2;
@@ -555,7 +552,7 @@
     .mockup-marketing .mkt-motion-lines {
       position: absolute;
       top: 50%;
-      right: calc(100% - 56px);
+      right: calc(100% - 4.7cqi);
       transform: translateY(-50%);
       display: flex;
       flex-direction: column;
@@ -569,39 +566,39 @@
       border-radius: 1px;
       background-color: var(--stadli-gray-500);
     }
-    .mockup-marketing .mkt-motion-lines span:nth-child(1) { width: 32px; opacity: 0.5; }
-    .mockup-marketing .mkt-motion-lines span:nth-child(2) { width: 48px; opacity: 0.7; }
-    .mockup-marketing .mkt-motion-lines span:nth-child(3) { width: 56px; opacity: 0.9; }
-    .mockup-marketing .mkt-motion-lines span:nth-child(4) { width: 40px; opacity: 0.6; }
+    .mockup-marketing .mkt-motion-lines span:nth-child(1) { width: 2.7cqi; opacity: 0.5; }
+    .mockup-marketing .mkt-motion-lines span:nth-child(2) { width: 4cqi; opacity: 0.7; }
+    .mockup-marketing .mkt-motion-lines span:nth-child(3) { width: 4.7cqi; opacity: 0.9; }
+    .mockup-marketing .mkt-motion-lines span:nth-child(4) { width: 3.3cqi; opacity: 0.6; }
     .mockup-marketing .mkt-cursor {
       position: absolute;
-      bottom: -8px;
-      right: -44px;
+      bottom: -0.7cqi;
+      right: -3.7cqi;
       z-index: 3;
       pointer-events: none;
     }
-    .mockup-marketing .mkt-cursor svg { width: 32px; height: 32px; }
+    .mockup-marketing .mkt-cursor svg { width: 2.7cqi; height: 2.7cqi; }
     .mockup-marketing .mkt-preview {
       flex: 1;
-      padding: 32px 40px;
+      padding: 2.7cqi 3.3cqi;
       display: flex;
       align-items: center;
       justify-content: center;
     }
     .mockup-marketing .mkt-email {
       width: 100%;
-      max-width: 480px;
+      max-width: 40cqi;
       border: 1px solid var(--stadli-gray-600);
       border-radius: 0.75rem;
-      padding: 36px 32px;
+      padding: 3cqi 2.7cqi;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 20px;
+      gap: 1.7cqi;
       background-color: rgba(255, 255, 255, 0.02);
     }
     .mockup-marketing .mkt-email-heading {
-      font-size: 32px;
+      font-size: clamp(16px, 2.7cqi, 32px);
       font-weight: 500;
       color: var(--stadli-gray-300);
       text-align: center;
@@ -617,12 +614,12 @@
     }
     .mockup-marketing .mkt-email-image img {
       width: 100%;
-      height: 220px;
+      height: 18cqi;
       object-fit: cover;
       display: block;
     }
     .mockup-marketing .mkt-email-body {
-      font-size: 16px;
+      font-size: clamp(11px, 1.3cqi, 16px);
       font-weight: 400;
       color: var(--stadli-gray-300);
       text-align: center;
@@ -632,10 +629,10 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 14px 48px;
+      padding: 1.2cqi 4cqi;
       background-color: var(--stadli-gray-200);
       color: var(--stadli-gray-900);
-      font-size: 14px;
+      font-size: clamp(10px, 1.2cqi, 14px);
       font-weight: 500;
       letter-spacing: 1.5px;
       text-transform: uppercase;
@@ -647,7 +644,7 @@
     /* ── CRM — 360 Fan Profile Card Stack ── */
     .mockup-crm {
       width: 100%;
-      padding: 2rem;
+      padding: 1.7cqi;
       background-color: var(--bs-body-bg);
       display: flex;
       flex-direction: column;
@@ -670,9 +667,9 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 380px;
+      width: 32cqi;
       height: 86%;
-      padding: 34px 32px;
+      padding: 2.8cqi 2.7cqi;
       background-color: var(--stadli-gray-900);
       border: 1px solid var(--stadli-gray-800);
       border-radius: 1.5rem;
@@ -681,17 +678,17 @@
       z-index: 1;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 1.7cqi;
     }
     .mockup-crm .crm-ghost-card.is-left {
-      transform: translate(calc(-50% - 320px), -50%);
+      transform: translate(calc(-50% - 27cqi), -50%);
     }
     .mockup-crm .crm-ghost-card.is-right {
-      transform: translate(calc(-50% + 320px), -50%);
+      transform: translate(calc(-50% + 27cqi), -50%);
     }
     .mockup-crm .crm-ghost-avatar {
-      width: 88px;
-      height: 88px;
+      width: 7.3cqi;
+      height: 7.3cqi;
       border-radius: 50%;
       overflow: hidden;
       flex-shrink: 0;
@@ -705,17 +702,17 @@
     .mockup-crm .crm-ghost-meta {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 0.5cqi;
     }
     .mockup-crm .crm-ghost-name {
-      font-size: 28px;
+      font-size: clamp(14px, 2.3cqi, 28px);
       font-weight: 600;
       color: var(--stadli-gray-300);
       letter-spacing: -0.01em;
       line-height: 1.1;
     }
     .mockup-crm .crm-ghost-role {
-      font-size: 16px;
+      font-size: clamp(11px, 1.3cqi, 16px);
       font-weight: 500;
       color: var(--stadli-gray-500);
       line-height: 1.2;
@@ -725,23 +722,23 @@
     .mockup-crm .crm-card {
       position: relative;
       z-index: 3;
-      width: 600px;
-      padding: 18px 24px;
+      width: 50cqi;
+      padding: 1.5cqi 2cqi;
       background-color: var(--stadli-gray-900);
       border: 1px solid var(--stadli-gray-800);
       border-radius: 1.5rem;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 1cqi;
       overflow: hidden;
     }
     .mockup-crm .crm-card-title {
-      font-size: 22px;
+      font-size: clamp(14px, 1.8cqi, 22px);
       font-weight: 700;
       color: var(--stadli-white);
       letter-spacing: -0.02em;
       margin: 0;
-      padding: 0 4px;
+      padding: 0 0.3cqi;
       line-height: 1;
     }
 
@@ -752,7 +749,7 @@
       background-color: var(--stadli-gray-800);
       border: 1px solid var(--stadli-gray-700);
       border-radius: 1.25rem;
-      padding: 16px 20px;
+      padding: 1.3cqi 1.7cqi;
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -760,14 +757,14 @@
     .mockup-crm .crm-panel-header {
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding-bottom: 14px;
+      gap: 1.3cqi;
+      padding-bottom: 1.2cqi;
       border-bottom: 1px solid var(--stadli-gray-700);
       flex-shrink: 0;
     }
     .mockup-crm .crm-avatar {
-      width: 64px;
-      height: 64px;
+      width: 5.3cqi;
+      height: 5.3cqi;
       border-radius: 50%;
       overflow: hidden;
       flex-shrink: 0;
@@ -781,11 +778,11 @@
     .mockup-crm .crm-panel-info {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 0.7cqi;
       min-width: 0;
     }
     .mockup-crm .crm-panel-name {
-      font-size: 24px;
+      font-size: clamp(14px, 2cqi, 24px);
       font-weight: 700;
       color: var(--stadli-white);
       letter-spacing: -0.02em;
@@ -794,10 +791,10 @@
     .mockup-crm .crm-panel-role-row {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 0.8cqi;
     }
     .mockup-crm .crm-panel-role {
-      font-size: 14px;
+      font-size: clamp(10px, 1.2cqi, 14px);
       font-weight: 500;
       color: var(--stadli-gray-400);
     }
@@ -821,21 +818,21 @@
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      padding: 8px 0;
+      padding: 0.7cqi 0;
       border-bottom: 1px solid var(--stadli-gray-700);
     }
     .mockup-crm .crm-stat-row:last-child {
       border-bottom: none;
     }
     .mockup-crm .crm-stat-label {
-      font-size: 11px;
+      font-size: clamp(9px, 0.9cqi, 11px);
       font-weight: 700;
       color: var(--stadli-gray-500);
       text-transform: uppercase;
       letter-spacing: 0.14em;
     }
     .mockup-crm .crm-stat-value {
-      font-size: 20px;
+      font-size: clamp(14px, 1.7cqi, 20px);
       font-weight: 500;
       color: var(--stadli-white);
       letter-spacing: -0.01em;
@@ -843,7 +840,7 @@
       line-height: 1;
     }
     .mockup-crm .crm-stat-value .unit {
-      font-size: 14px;
+      font-size: clamp(10px, 1.2cqi, 14px);
       font-weight: 500;
       color: var(--stadli-gray-400);
       margin-left: 3px;
@@ -856,9 +853,9 @@
     /* Engagement timeline — compact activity feed below the card stage */
     .mockup-crm .crm-timeline {
       flex-shrink: 0;
-      padding: 12px 0 4px;
+      padding: 1cqi 0 0.3cqi;
       border-top: 1px solid var(--stadli-gray-800);
-      max-width: 380px;
+      max-width: 32cqi;
       margin: 0 auto;
       width: 100%;
     }
@@ -866,17 +863,17 @@
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      margin-bottom: 8px;
+      margin-bottom: 0.7cqi;
     }
     .mockup-crm .crm-timeline-label {
-      font-size: 11px;
+      font-size: clamp(9px, 0.9cqi, 11px);
       font-weight: 700;
       color: var(--stadli-gray-500);
       text-transform: uppercase;
       letter-spacing: 0.14em;
     }
     .mockup-crm .crm-timeline-meta {
-      font-size: 10px;
+      font-size: clamp(8px, 0.8cqi, 10px);
       font-weight: 500;
       color: var(--stadli-gray-500);
       font-variant-numeric: tabular-nums;
@@ -885,7 +882,7 @@
       display: flex;
       flex-direction: column;
       position: relative;
-      padding-left: 18px;
+      padding-left: 1.5cqi;
     }
     .mockup-crm .crm-timeline-feed::before {
       content: '';
@@ -900,12 +897,12 @@
     .mockup-crm .crm-tl-item {
       display: flex;
       align-items: center;
-      padding: 3px 0;
+      padding: 0.25cqi 0;
       position: relative;
     }
     .mockup-crm .crm-tl-dot {
       position: absolute;
-      left: -18px;
+      left: -1.5cqi;
       top: 50%;
       transform: translateY(-50%);
       width: 8px;
@@ -928,29 +925,29 @@
       min-width: 0;
     }
     .mockup-crm .crm-tl-event-name {
-      font-size: 12px;
+      font-size: clamp(9px, 1cqi, 12px);
       font-weight: 500;
       color: var(--stadli-gray-300);
     }
     .mockup-crm .crm-tl-event-date {
-      font-size: 10px;
+      font-size: clamp(8px, 0.8cqi, 10px);
       font-weight: 500;
       color: var(--stadli-gray-500);
       font-variant-numeric: tabular-nums;
       flex-shrink: 0;
-      margin-left: 12px;
+      margin-left: 1cqi;
     }
 
     /* ── Analytics — Stat Cards + Report Table ── */
     .mockup-analytics {
       width: 100%;
-      padding: 28px 32px;
+      padding: 2.3cqi 2.7cqi;
       background-color: var(--bs-body-bg);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 24px;
+      gap: 2cqi;
       position: relative;
       overflow: hidden;
     }
@@ -963,9 +960,9 @@
     .mockup-analytics .ana-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      gap: 1.7cqi;
       width: 100%;
-      max-width: 1040px;
+      max-width: 87cqi;
       position: relative;
       z-index: 1;
       flex-shrink: 0;
@@ -974,29 +971,29 @@
       background-color: var(--stadli-gray-900);
       border: 1px solid var(--stadli-gray-800);
       border-radius: 0.75rem;
-      padding: 22px 24px 20px;
+      padding: 1.8cqi 2cqi 1.7cqi;
       display: flex;
       flex-direction: column;
     }
     .mockup-analytics .ana-label {
       color: var(--stadli-gray-500);
-      font-size: 13px;
+      font-size: clamp(9px, 1.1cqi, 13px);
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      margin-bottom: 10px;
+      margin-bottom: 0.8cqi;
     }
     .mockup-analytics .ana-value {
-      font-size: 36px;
+      font-size: clamp(18px, 3cqi, 36px);
       font-weight: 500;
-      margin-bottom: 14px;
+      margin-bottom: 1.2cqi;
       color: var(--stadli-white);
       letter-spacing: -0.02em;
       font-variant-numeric: tabular-nums;
       line-height: 1;
     }
     .mockup-analytics .ana-trend {
-      height: 44px;
+      height: 3.7cqi;
       width: 100%;
       margin-top: auto;
       position: relative;
@@ -1014,7 +1011,7 @@
     /* Report table below the stat cards */
     .mockup-analytics .ana-table {
       width: 100%;
-      max-width: 1040px;
+      max-width: 87cqi;
       flex-shrink: 0;
       background-color: var(--stadli-gray-900);
       border: 1px solid var(--stadli-gray-800);
@@ -1027,10 +1024,10 @@
       display: grid;
       grid-template-columns: 2.3fr 1fr 1.1fr 1.2fr 1.1fr;
       align-items: center;
-      gap: 16px;
-      padding: 14px 24px;
+      gap: 1.3cqi;
+      padding: 1.2cqi 2cqi;
       border-bottom: 1px solid var(--stadli-gray-800);
-      font-size: 14px;
+      font-size: clamp(10px, 1.2cqi, 14px);
       color: var(--stadli-gray-200);
     }
     .mockup-analytics .ana-table-row:last-child {
@@ -1039,10 +1036,10 @@
     .mockup-analytics .ana-table-row.ana-table-head {
       background-color: var(--stadli-gray-800);
       border-bottom-color: var(--stadli-gray-700);
-      padding: 11px 24px;
+      padding: 0.9cqi 2cqi;
     }
     .mockup-analytics .ana-table-head .ana-cell {
-      font-size: 11px;
+      font-size: clamp(8px, 0.9cqi, 11px);
       font-weight: 700;
       color: var(--stadli-gray-500);
       text-transform: uppercase;
@@ -1064,11 +1061,11 @@
     .mockup-analytics .ana-status {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 3px 10px;
+      gap: 0.7cqi;
+      padding: 0.25cqi 0.8cqi;
       border: 1px solid var(--stadli-gray-700);
       border-radius: 50rem;
-      font-size: 11px;
+      font-size: clamp(8px, 0.9cqi, 11px);
       color: var(--stadli-gray-300);
       white-space: nowrap;
       width: fit-content;
@@ -1094,10 +1091,10 @@
     }
     .mockup-ai .ai-content {
       flex: 1;
-      padding: 24px;
+      padding: 2cqi;
       display: grid;
-      grid-template-columns: 350px 1fr 300px;
-      gap: 20px;
+      grid-template-columns: 29cqi 1fr 25cqi;
+      gap: 1.7cqi;
       min-height: 0;
     }
     .mockup-ai .ai-chat-column {
@@ -1108,13 +1105,13 @@
     }
     .mockup-ai .ai-chat-bubbles {
       flex: 1;
-      margin-bottom: 20px;
+      margin-bottom: 1.7cqi;
       min-height: 0;
     }
     .mockup-ai .ai-chat-message {
       display: flex;
-      gap: 12px;
-      margin-bottom: 20px;
+      gap: 1cqi;
+      margin-bottom: 1.7cqi;
     }
     .mockup-ai .ai-chat-message.is-user {
       flex-direction: row-reverse;
@@ -1122,23 +1119,23 @@
       max-width: 85%;
     }
     .mockup-ai .ai-avatar {
-      width: 32px;
-      height: 32px;
+      width: 2.7cqi;
+      height: 2.7cqi;
       border-radius: 0.5rem;
       background: linear-gradient(135deg, var(--spec-blue), var(--spec-violet));
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 700;
-      font-size: 11px;
+      font-size: clamp(8px, 0.9cqi, 11px);
       letter-spacing: 0.08em;
       color: var(--stadli-white);
       flex-shrink: 0;
     }
     .mockup-ai .ai-bubble {
-      padding: 12px 16px;
+      padding: 1cqi 1.3cqi;
       border-radius: 0.75rem;
-      font-size: 14px;
+      font-size: clamp(10px, 1.2cqi, 14px);
       line-height: 1.5;
       max-width: 90%;
     }
@@ -1155,17 +1152,17 @@
       width: 100%;
       background-color: var(--stadli-gray-900);
       border: 1px solid var(--stadli-gray-700);
-      border-radius: 12px;
-      padding: 12px 40px 12px 16px;
+      border-radius: 1cqi;
+      padding: 1cqi 3.3cqi 1cqi 1.3cqi;
       color: var(--stadli-white);
-      font-size: 14px;
+      font-size: clamp(10px, 1.2cqi, 14px);
       font-family: inherit;
       outline: none;
     }
     .mockup-ai .ai-chat-input::placeholder { color: var(--stadli-gray-500); }
     .mockup-ai .ai-send-btn {
       position: absolute;
-      right: 12px;
+      right: 1cqi;
       top: 50%;
       transform: translateY(-50%);
       color: var(--stadli-gray-500);
@@ -1177,24 +1174,24 @@
     .mockup-ai .ai-stats-card {
       background-color: var(--stadli-gray-900);
       border: 1px solid var(--stadli-gray-800);
-      border-radius: 12px;
-      padding: 20px;
+      border-radius: 1cqi;
+      padding: 1.7cqi;
     }
     .mockup-ai .ai-card-label {
-      font-size: 13px;
+      font-size: clamp(9px, 1.1cqi, 13px);
       color: var(--stadli-gray-500);
-      margin-bottom: 8px;
+      margin-bottom: 0.7cqi;
     }
     .mockup-ai .ai-card-value {
-      font-size: 32px;
+      font-size: clamp(18px, 2.7cqi, 32px);
       font-weight: 500;
       color: var(--stadli-white);
-      margin-bottom: 4px;
+      margin-bottom: 0.3cqi;
       font-variant-numeric: tabular-nums;
       letter-spacing: -0.02em;
     }
     .mockup-ai .ai-card-trend {
-      font-size: 14px;
+      font-size: clamp(10px, 1.2cqi, 14px);
       color: var(--bs-success);
       display: flex;
       align-items: center;
@@ -1203,13 +1200,13 @@
     .mockup-ai .ai-mid-grid {
       display: grid;
       grid-template-rows: auto 1fr auto;
-      gap: 20px;
+      gap: 1.7cqi;
       min-height: 0;
     }
     .mockup-ai .ai-right-grid {
       display: grid;
       grid-template-rows: auto auto 1fr;
-      gap: 20px;
+      gap: 1.7cqi;
       min-height: 0;
     }
     .mockup-ai .ai-generating {
@@ -1227,20 +1224,20 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
       color: transparent;
-      font-size: 20px;
+      font-size: clamp(14px, 1.7cqi, 20px);
       font-weight: 500;
       line-height: 1.2;
     }
-    .mockup-ai .ai-leaders-item { margin-bottom: 12px; }
+    .mockup-ai .ai-leaders-item { margin-bottom: 1cqi; }
     .mockup-ai .ai-leaders-item:last-child { margin-bottom: 0; }
-    .mockup-ai .ai-leaders-name { font-size: 15px; font-weight: 500; color: var(--stadli-white); }
-    .mockup-ai .ai-leaders-trend { font-size: 12px; color: var(--bs-success); }
+    .mockup-ai .ai-leaders-name { font-size: clamp(11px, 1.25cqi, 15px); font-weight: 500; color: var(--stadli-white); }
+    .mockup-ai .ai-leaders-trend { font-size: clamp(9px, 1cqi, 12px); color: var(--bs-success); }
     .mockup-ai .ai-progress-track {
       width: 100%;
       height: 4px;
       background-color: var(--stadli-gray-800);
       border-radius: 2px;
-      margin-top: 6px;
+      margin-top: 0.5cqi;
       overflow: hidden;
     }
     .mockup-ai .ai-progress-fill {
@@ -1249,7 +1246,7 @@
       background: linear-gradient(to right, var(--spec-blue), var(--spec-rose));
     }
     .mockup-ai .ai-sparkline-wrap {
-      margin-top: 8px;
+      margin-top: 0.7cqi;
     }
     .mockup-ai .ai-sparkline-wrap svg {
       width: 100%;
@@ -1267,7 +1264,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 32px;
+      padding: 2.7cqi;
       min-width: 0;
     }
     .mockup-commerce .cart-seatmap img {
@@ -1277,8 +1274,8 @@
       border-radius: 8px;
     }
     .mockup-commerce .cart-panel {
-      width: 480px;
-      min-width: 480px;
+      width: 40cqi;
+      min-width: 40cqi;
       border-left: 1px solid var(--stadli-gray-700);
       display: flex;
       flex-direction: column;
@@ -1286,37 +1283,37 @@
     .mockup-commerce .cart-wrapper {
       border: 1px solid var(--stadli-gray-600);
       border-radius: 0.75rem;
-      margin: 24px 28px;
+      margin: 2cqi 2.3cqi;
       display: flex;
       flex-direction: column;
       flex: 1;
       overflow: hidden;
     }
     .mockup-commerce .cart-title {
-      font-size: 16px;
+      font-size: clamp(11px, 1.3cqi, 16px);
       font-weight: 500;
       color: var(--stadli-gray-300);
       letter-spacing: 2px;
       text-transform: uppercase;
-      padding: 20px 24px 16px;
+      padding: 1.7cqi 2cqi 1.3cqi;
     }
     .mockup-commerce .cart-items {
       flex: 1;
       display: flex;
       flex-direction: column;
-      padding: 0 24px;
+      padding: 0 2cqi;
     }
     .mockup-commerce .cart-item {
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding: 16px 0;
+      gap: 1.3cqi;
+      padding: 1.3cqi 0;
       border-bottom: 1px solid var(--stadli-gray-700);
     }
     .mockup-commerce .cart-item:last-child { border-bottom: none; }
     .mockup-commerce .cart-thumb {
-      width: 72px;
-      height: 72px;
+      width: 6cqi;
+      height: 6cqi;
       border-radius: 8px;
       border: 1px solid var(--stadli-gray-600);
       overflow: hidden;
@@ -1334,41 +1331,41 @@
       min-width: 0;
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 0.25cqi;
     }
     .mockup-commerce .cart-name {
-      font-size: 16px;
+      font-size: clamp(11px, 1.3cqi, 16px);
       font-weight: 500;
       color: var(--stadli-gray-100);
     }
     .mockup-commerce .cart-unit-price {
-      font-size: 13px;
+      font-size: clamp(9px, 1.1cqi, 13px);
       font-weight: 500;
       color: var(--stadli-gray-400);
     }
     .mockup-commerce .cart-total {
-      font-size: 16px;
+      font-size: clamp(11px, 1.3cqi, 16px);
       font-weight: 500;
       color: var(--stadli-gray-300);
       white-space: nowrap;
     }
     .mockup-commerce .cart-footer {
-      padding: 16px 24px 20px;
+      padding: 1.3cqi 2cqi 1.7cqi;
       border-top: 1px solid var(--stadli-gray-600);
     }
     .mockup-commerce .cart-subtotal {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 16px;
+      margin-bottom: 1.3cqi;
     }
     .mockup-commerce .cart-subtotal-label {
-      font-size: 18px;
+      font-size: clamp(12px, 1.5cqi, 18px);
       font-weight: 500;
       color: var(--stadli-gray-200);
     }
     .mockup-commerce .cart-subtotal-value {
-      font-size: 20px;
+      font-size: clamp(14px, 1.7cqi, 20px);
       font-weight: 500;
       color: var(--stadli-gray-100);
     }
@@ -1377,10 +1374,10 @@
       align-items: center;
       justify-content: center;
       width: 100%;
-      padding: 14px;
+      padding: 1.2cqi;
       background-color: var(--stadli-gray-200);
       color: var(--stadli-gray-900);
-      font-size: 15px;
+      font-size: clamp(11px, 1.25cqi, 15px);
       font-weight: 500;
       border: none;
       border-radius: 8px;
