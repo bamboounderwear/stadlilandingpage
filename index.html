@@ -147,6 +147,27 @@
       font-variant-numeric: tabular-nums;
     }
 
+    /* Rotating Hero Word */
+    .rotating-word {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--spec-violet, #8b5cf6), #c084fc);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      transition: opacity 350ms ease, transform 350ms ease;
+      will-change: opacity, transform;
+    }
+    .rotating-word.is-swapping {
+      opacity: 0;
+      transform: translateY(-0.15em);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .rotating-word {
+        transition: none;
+      }
+    }
+
     /* Section Spacing Overrides */
     section[id] {
       padding-top: 6rem !important;
@@ -1573,7 +1594,7 @@
         <!-- Text and Link Row with increased top spacing -->
         <div class="row align-items-center mb-5 pb-lg-4 mt-4 pt-5" style="padding-top: 8rem !important;">
           <div class="col-12 col-lg-7 pe-lg-5">
-            <h1 class="mb-4 text-white fw-medium reveal delay-200" style="font-size: clamp(3.31rem, 8.05vw, 5.175rem); letter-spacing: -0.04em;">Bonjour, Stadli.</h1>
+            <h1 class="mb-4 text-white fw-medium reveal delay-200" style="font-size: clamp(3.31rem, 8.05vw, 5.175rem); letter-spacing: -0.04em;">La platforme pensée pour <span id="rotating-word" class="rotating-word">vendre</span></h1>
             <p class="fs-4 text-white text-opacity-75 mb-0 reveal delay-300" style="max-width: 600px;">
               Billetterie, engagement, données et marketing réunis dans un système conçu pour le sport.
             </p>
@@ -2859,6 +2880,33 @@
         };
         window.requestAnimationFrame(step);
       };
+
+      // Rotating Hero Headline Word
+      const rotatingWordEl = document.getElementById('rotating-word');
+      if (rotatingWordEl) {
+        const words = [
+          'vendre',
+          'vos fans',
+          'convertir',
+          'comprendre',
+          'fidéliser',
+          'votre équipe',
+          'chaque match',
+          'fidéliser',
+          'grandir',
+          'mesurer'
+        ];
+        let idx = 0;
+        const swapDelay = 350; // must match CSS transition duration
+        setInterval(() => {
+          rotatingWordEl.classList.add('is-swapping');
+          setTimeout(() => {
+            idx = (idx + 1) % words.length;
+            rotatingWordEl.textContent = words[idx];
+            rotatingWordEl.classList.remove('is-swapping');
+          }, swapDelay);
+        }, 1500);
+      }
 
       // Live Revenue Counter Logic
       const revenueEl = document.getElementById('live-revenue-value');
