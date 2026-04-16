@@ -1,0 +1,2360 @@
+<!DOCTYPE html>
+<html lang="fr" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stadli  | Style Guide — Couleurs.</title>
+  <meta property="og:title" content="Stadli  | Style Guide — Couleurs.">
+  <meta property="og:image" content="https://stadlilandingpage.pages.dev/9d68add116347c4ed11c35ca0fee5583.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://stadlilandingpage.pages.dev/9d68add116347c4ed11c35ca0fee5583.jpg">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* * Stadli Design System - CSS Overrides 
+     * Mapped from SCSS tokens & philosophy rules.
+     */
+    
+    :root {
+      /* Typography System */
+      --bs-font-sans-serif: "Helvetica Neue", "Helvetica Now", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --bs-body-font-family: var(--bs-font-sans-serif);
+      
+      /* Neutrals */
+      --stadli-black: #000000;
+      --stadli-white: #ffffff;
+      --stadli-gray-100: #e8e8e8;
+      --stadli-gray-200: #d6d6d6;
+      --stadli-gray-300: #c0c0c0;
+      --stadli-gray-400: #929292;
+      --stadli-gray-500: #6a6a6a;
+      --stadli-gray-600: #484848;
+      --stadli-gray-700: #303030;
+      --stadli-gray-800: #1a1a1a;
+      --stadli-gray-900: #010101;
+
+      /* UI Semantics (Muted) + RGB mappings to override BS5 internal utilities */
+      --bs-primary: #010101;
+      --bs-primary-rgb: 1, 1, 1;
+      --bs-secondary: #6a6a6a;
+      --bs-secondary-rgb: 106, 106, 106;
+      --bs-success: #3f7f5f;
+      --bs-success-rgb: 63, 127, 95;
+      --bs-warning: #a0712c;
+      --bs-warning-rgb: 160, 113, 44;
+      --bs-danger: #954947;
+      --bs-danger-rgb: 149, 73, 71;
+      --bs-info: #3b6f8d;
+      --bs-info-rgb: 59, 111, 141;
+
+      /* Base Theme (Light) */
+      --bs-body-bg: #e8e8e8;
+      --bs-body-bg-rgb: 232, 232, 232;
+      --bs-body-color: #010101;
+      --bs-body-color-rgb: 1, 1, 1;
+      --bs-secondary-color: #303030;
+      --bs-tertiary-color: #484848;
+      --bs-emphasis-color: #010101;
+      --bs-emphasis-color-rgb: 1, 1, 1;
+      --bs-border-color: #d6d6d6;
+      --bs-tertiary-bg: #ffffff;
+      --bs-tertiary-bg-rgb: 255, 255, 255;
+      --bs-secondary-bg: #d6d6d6;
+      --bs-secondary-bg-rgb: 214, 214, 214;
+
+      /* Link Overrides */
+      --bs-link-color: var(--bs-body-color);
+      --bs-link-hover-color: var(--bs-secondary-color);
+      --bs-link-decoration: none;
+
+      /* Custom Token for Primary Button Text */
+      --stadli-btn-primary-color: #ffffff;
+
+      /* Spectrum Palette — data viz, narrative tags, and marketing surfaces only.
+         Never on admin chrome, buttons, form controls, icons, or hover states. */
+      --spec-red:     #fe0000;
+      --spec-orange:  #fe5619;
+      --spec-lime:    #ecfc3b;
+      --spec-green:   #44d62b;
+      --spec-teal:    #00d4a8;
+      --spec-cyan:    #00b0d8;
+      --spec-blue:    #0140f0;
+      --spec-violet:  #7b2ff7;
+      --spec-magenta: #d633ff;
+      --spec-rose:    #f6166e;
+      --spec-silver:  #eeeeee;
+    }
+
+    /* Dark Mode Overrides */
+    [data-bs-theme="dark"] {
+      --bs-primary: #ffffff;
+      --bs-primary-rgb: 255, 255, 255;
+      --bs-secondary: #929292;
+      --bs-secondary-rgb: 146, 146, 146;
+      --bs-success: #7ec7a3;
+      --bs-success-rgb: 126, 199, 163;
+      --bs-warning: #d7b06b;
+      --bs-warning-rgb: 215, 176, 107;
+      --bs-danger: #d28b86;
+      --bs-danger-rgb: 210, 139, 134;
+      --bs-info: #7cb0ce;
+      --bs-info-rgb: 124, 176, 206;
+
+      --bs-body-bg: #010101;
+      --bs-body-bg-rgb: 1, 1, 1;
+      --bs-body-color: #e8e8e8;
+      --bs-body-color-rgb: 232, 232, 232;
+      --bs-secondary-color: #929292;
+      --bs-tertiary-color: #6a6a6a;
+      --bs-emphasis-color: #ffffff;
+      --bs-emphasis-color-rgb: 255, 255, 255;
+      --bs-border-color: #161616;
+      --bs-tertiary-bg: #080808;
+      --bs-tertiary-bg-rgb: 8, 8, 8;
+      --bs-secondary-bg: #1a1a1a;
+      --bs-secondary-bg-rgb: 26, 26, 26;
+
+      --stadli-btn-primary-color: #000000;
+    }
+
+    body {
+      background-color: var(--bs-body-bg);
+      color: var(--bs-body-color);
+      -webkit-font-smoothing: antialiased;
+      font-size: 1.078rem; /* Increased base font size by 15% */
+      overflow-x: hidden;
+    }
+
+    /* Global link transitions */
+    a {
+      transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+    }
+
+    /* Typography Overrides */
+    h1, .h1 { font-size: clamp(2.875rem, 5.75vw, 5.75rem); font-weight: 500; line-height: 1.05; letter-spacing: -0.03em; }
+    h2, .h2 { font-size: clamp(2.01rem, 4.02vw, 3.16rem); font-weight: 500; line-height: 1.1; letter-spacing: -0.02em; }
+    h3, .h3 { font-size: 1.32rem; font-weight: 600; letter-spacing: -0.01em; }
+    
+    .text-label {
+      display: block;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+
+    /* Metric Emphasis (Oversized, tabular nums) */
+    .metric-hero {
+      font-size: clamp(4.025rem, 8.05vw, 7.475rem);
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Rotating Hero Word */
+    .rotating-word {
+      display: inline-block;
+      color: var(--rotating-color, var(--spec-violet));
+      transition: opacity 750ms cubic-bezier(0.2, 0.8, 0.2, 1),
+                  transform 750ms cubic-bezier(0.2, 0.8, 0.2, 1),
+                  filter 750ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      will-change: opacity, transform, filter;
+    }
+    /* Subtle white shimmer for the intro word — mirrors AI component motif */
+    .rotating-word.shimmer-text {
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(255, 255, 255, 0.55) 45%,
+        rgba(255, 255, 255, 1) 50%,
+        rgba(255, 255, 255, 0.55) 55%,
+        rgba(255, 255, 255, 1) 100%
+      );
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      animation: text-shimmer 3s ease-in-out infinite;
+    }
+    @keyframes text-shimmer {
+      0%   { background-position: 100% 0; }
+      100% { background-position: -100% 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .rotating-word.shimmer-text { animation: none; }
+    }
+    /* Outgoing: fade up + blur out */
+    .rotating-word.is-exiting {
+      opacity: 0;
+      transform: translateY(-0.45em);
+      filter: blur(12px);
+    }
+    /* Incoming start state: below, blurred, invisible — no transition so it
+       snaps into place before being removed to reveal with animation. */
+    .rotating-word.is-entering {
+      opacity: 0;
+      transform: translateY(0.45em);
+      filter: blur(12px);
+      transition: none;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .rotating-word,
+      .rotating-word.is-entering {
+        transition: none;
+      }
+      .rotating-word.is-exiting {
+        opacity: 0;
+        transform: none;
+        filter: none;
+      }
+    }
+
+    /* Section Spacing Overrides */
+    section[id] {
+      padding-top: 6rem !important;
+      padding-bottom: 6rem !important;
+    }
+    @media (min-width: 992px) {
+      section[id] {
+        padding-top: 9.5rem !important;
+        padding-bottom: 9.5rem !important;
+      }
+    }
+
+    /* Components - Buttons (Monochrome strictly enforced via component variables) */
+    .btn {
+      --bs-btn-focus-box-shadow: 0 0 0 0.2rem rgba(var(--bs-emphasis-color-rgb), 0.12);
+      font-weight: 500;
+      border-radius: 0.375rem;
+      padding: 0.5rem 1rem;
+      transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+    }
+    .btn-primary {
+      --bs-btn-color: var(--stadli-btn-primary-color);
+      --bs-btn-bg: var(--bs-primary);
+      --bs-btn-border-color: var(--bs-primary);
+      --bs-btn-hover-color: var(--stadli-btn-primary-color);
+      --bs-btn-hover-bg: var(--bs-primary);
+      --bs-btn-hover-border-color: var(--bs-primary);
+      --bs-btn-active-color: var(--stadli-btn-primary-color);
+      --bs-btn-active-bg: var(--bs-primary);
+      --bs-btn-active-border-color: var(--bs-primary);
+    }
+    /* Default border-secondary to 0.3 opacity across the whole site */
+    .border-secondary {
+      --bs-border-opacity: 0.3;
+    }
+    .btn-outline-secondary {
+      --bs-btn-color: var(--bs-body-color);
+      --bs-btn-bg: transparent;
+      --bs-btn-border-color: var(--bs-border-color);
+      --bs-btn-hover-color: var(--bs-body-color);
+      --bs-btn-hover-bg: var(--bs-secondary-bg);
+      --bs-btn-hover-border-color: var(--bs-border-color);
+      --bs-btn-active-color: var(--bs-body-color);
+      --bs-btn-active-bg: var(--bs-secondary-bg);
+      --bs-btn-active-border-color: var(--bs-border-color);
+    }
+    .btn-ghost {
+      --bs-btn-color: var(--bs-body-color);
+      --bs-btn-bg: transparent;
+      --bs-btn-border-color: transparent;
+      --bs-btn-hover-color: var(--bs-body-color);
+      --bs-btn-hover-bg: var(--bs-secondary-bg);
+      --bs-btn-hover-border-color: transparent;
+      --bs-btn-active-color: var(--bs-body-color);
+      --bs-btn-active-bg: var(--bs-secondary-bg);
+      --bs-btn-active-border-color: transparent;
+    }
+
+    /* Components - Cards (Flat, no shadows) */
+    .card {
+      --bs-card-bg: var(--bs-tertiary-bg);
+      --bs-card-border-color: var(--bs-border-color);
+      --bs-card-border-radius: 0.5rem;
+      --bs-card-box-shadow: none;
+      transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+    }
+    .card-hover {
+      transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-2px);
+    }
+    
+    /* Rounded Overrides */
+    .rounded-4 { border-radius: 0.75rem !important; }
+    
+    /* Patterns & Motifs */
+    .bg-dot-grid {
+      background-image: radial-gradient(var(--bs-border-color) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .slash-pattern {
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(0,0,0,0.03) 10px,
+        rgba(0,0,0,0.03) 12px
+      );
+    }
+
+    /* AI Badge Pattern */
+    .badge-ai {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--bs-body-color);
+      background: transparent;
+      border: 1px solid var(--bs-border-color);
+      border-radius: 50rem;
+      overflow: hidden;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    .badge-ai::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%; width: 200%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(var(--bs-emphasis-color-rgb), 0.15), transparent);
+      animation: badge-shimmer 2.4s ease-in-out infinite;
+    }
+    @keyframes badge-shimmer {
+      0% { transform: translateX(-50%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* AI Builder Zone Motif — subtle shimmer border */
+    .ai-builder-zone {
+      position: relative;
+      border: 1px solid var(--bs-border-color);
+      border-radius: 0.75rem;
+      background-color: var(--bs-body-bg);
+      overflow: hidden;
+    }
+    .ai-builder-zone::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%; width: 200%; height: 2px;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        transparent 35%,
+        rgba(var(--bs-emphasis-color-rgb), 0.35) 50%,
+        transparent 65%,
+        transparent 100%
+      );
+      animation: ai-zone-shimmer 3s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes ai-zone-shimmer {
+      0%   { transform: translateX(-25%); }
+      100% { transform: translateX(25%); }
+    }
+
+    /* Spectrum Classes for Marketing ONLY */
+    .bg-spec-lime { background-color: var(--spec-lime); color: var(--stadli-black); border-color: var(--spec-lime); }
+    .bg-spec-blue { background-color: var(--spec-blue); color: var(--stadli-white); border-color: var(--spec-blue); }
+    
+    /* Utilities */
+    .container-fluid {
+      max-width: 1280px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .min-vh-80 { min-height: 80vh; }
+    
+    .backdrop-blur-md {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    
+    .bg-glass {
+      background-color: rgba(var(--bs-tertiary-bg-rgb), 0.6) !important;
+    }
+
+    .bg-glass-transparent {
+      background-color: rgba(255, 255, 255, 0.05) !important;
+      border-color: rgba(255, 255, 255, 0.15) !important;
+    }
+
+    /* Navbar Transitions */
+    #navbar {
+      transition: background-color 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease;
+    }
+    .navbar-transparent {
+      background-color: transparent !important;
+      border-color: transparent !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+    .navbar-scrolled {
+      background-color: rgba(var(--bs-body-bg-rgb), 0.75) !important;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--bs-border-color) !important;
+    }
+
+    /* Navbar Contextual Colors */
+    .navbar-brand-logo {
+      color: var(--bs-emphasis-color);
+      transition: color 0.3s ease;
+    }
+    .navbar-link {
+      color: var(--bs-secondary-color);
+      transition: color 0.3s ease;
+    }
+    .navbar-link:hover {
+      color: var(--bs-emphasis-color);
+    }
+    .navbar-transparent .navbar-brand-logo {
+      color: #ffffff !important;
+    }
+    .navbar-transparent .navbar-link {
+      color: rgba(255, 255, 255, 0.8) !important;
+    }
+    .navbar-transparent .navbar-link:hover {
+      color: #ffffff !important;
+    }
+    .navbar-transparent .navbar-ghost-btn {
+      --bs-btn-color: #ffffff;
+      --bs-btn-hover-color: #ffffff;
+      --bs-btn-hover-bg: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Scroll Reveal Animations */
+    .reveal {
+      opacity: 0;
+      filter: blur(15px);
+      transform: translateY(30px);
+      transition: opacity 0.8s ease-out, filter 0.8s ease-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, filter, transform;
+    }
+    .reveal-slow {
+      opacity: 0;
+      filter: blur(20px);
+      transition: opacity 2.5s ease-out, filter 2.5s ease-out;
+      will-change: opacity, filter;
+    }
+    .reveal.active, .reveal-slow.active {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
+    }
+    .delay-100 { transition-delay: 100ms; }
+    .delay-200 { transition-delay: 200ms; }
+    .delay-300 { transition-delay: 300ms; }
+    .delay-400 { transition-delay: 400ms; }
+    .delay-500 { transition-delay: 500ms; }
+    .delay-600 { transition-delay: 600ms; }
+
+    /* Per-word stagger for the hero headline. The h1 keeps `.reveal` so the
+       IntersectionObserver still toggles `.active`, but `.reveal-passthrough`
+       suppresses the container's own fade/blur/slide so only the child
+       .hero-word spans animate. */
+    .reveal.reveal-passthrough {
+      opacity: 1;
+      filter: none;
+      transform: none;
+      transition: none;
+    }
+    .hero-word {
+      display: inline-block;
+      opacity: 0;
+      filter: blur(15px);
+      transform: translateY(30px);
+      transition: opacity 0.8s ease-out,
+                  filter 0.8s ease-out,
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, filter, transform;
+    }
+    .reveal.active .hero-word {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
+    }
+    .reveal.active .hero-word:nth-child(1) { transition-delay: 0ms; }
+    .reveal.active .hero-word:nth-child(2) { transition-delay: 120ms; }
+    .reveal.active .hero-word:nth-child(3) { transition-delay: 240ms; }
+    .reveal.active .hero-word:nth-child(4) { transition-delay: 360ms; }
+    .reveal.active .hero-word:nth-child(5) { transition-delay: 480ms; }
+    .reveal.active .hero-word:nth-child(6) { transition-delay: 600ms; }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-word {
+        transition: none !important;
+        opacity: 1 !important;
+        filter: blur(0) !important;
+        transform: none !important;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .reveal-slow {
+        transition: none !important;
+        opacity: 1 !important;
+        filter: blur(0) !important;
+        transform: translateY(0) !important;
+      }
+    }
+
+    /* Mockup interior stagger — children of .mockup-stagger fade in
+       sequentially once their nearest .reveal ancestor becomes active.
+       Base delay sits past the headline/text delays so the mockup
+       "fills in" after the section copy. Opacity-only transition keeps
+       this safe alongside elements that already use transform/filter
+       (e.g. the fan-card stack, ana-vignette overlay). */
+    .mockup-stagger {
+      --stagger-base: 350ms;
+      --stagger-step: 110ms;
+    }
+    /* !important on opacity + transition is needed because some mockup
+       children set opacity explicitly (e.g. .mfc-ghost-card) or use a
+       `transition: all` shorthand (e.g. .mfc-card) with a snappy curve
+       that would otherwise win and make the fade feel abrupt. */
+    .mockup-stagger > * {
+      opacity: 0 !important;
+      transition: opacity 0.8s ease-out !important;
+      will-change: opacity;
+    }
+    .reveal.active .mockup-stagger > *,
+    .reveal-slow.active .mockup-stagger > * {
+      opacity: 1 !important;
+    }
+    .mockup-stagger > *:nth-child(1)  { transition-delay: calc(var(--stagger-base) + var(--stagger-step) * 0) !important; }
+    .mockup-stagger > *:nth-child(2)  { transition-delay: calc(var(--stagger-base) + var(--stagger-step) * 1) !important; }
+    .mockup-stagger > *:nth-child(3)  { transition-delay: calc(var(--stagger-base) + var(--stagger-step) * 2) !important; }
+    .mockup-stagger > *:nth-child(4)  { transition-delay: calc(var(--stagger-base) + var(--stagger-step) * 3) !important; }
+    .mockup-stagger > *:nth-child(5)  { transition-delay: calc(var(--stagger-base) + var(--stagger-step) * 4) !important; }
+    .mockup-stagger > *:nth-child(6)  { transition-delay: calc(var(--stagger-base) + var(--stagger-step) * 5) !important; }
+    .mockup-stagger > *:nth-child(7)  { transition-delay: calc(var(--stagger-base) + var(--stagger-step) * 6) !important; }
+    .mockup-stagger > *:nth-child(8)  { transition-delay: calc(var(--stagger-base) + var(--stagger-step) * 7) !important; }
+    .mockup-stagger > *:nth-child(n+9){ transition-delay: calc(var(--stagger-base) + var(--stagger-step) * 8) !important; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .mockup-stagger > * {
+        transition: none !important;
+        opacity: 1 !important;
+      }
+    }
+
+    /* ============================================
+       MOCKUP FRAMES — Fluid UI previews
+       Registered as an inline-size container so inner
+       mockups can use cqi units to scale proportionally.
+       Each mockup sizes to its own content; the hero
+       keeps aspect-ratio: 2/1 for its absolute children.
+       ============================================ */
+    .mockup-frame {
+      container-type: inline-size;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+    .mockup-frame > .mockup-content {
+      width: 100%;
+      font-family: var(--bs-font-sans-serif);
+      color: var(--stadli-gray-100);
+    }
+
+    /* ── Hero Mockup — Bento Command Center ── */
+    .mockup-bento {
+      width: 100%;
+      aspect-ratio: 18 / 9;
+      max-height: 720px;
+      background-color: var(--bs-body-bg);
+      padding: 2.2cqi;
+      display: grid;
+      grid-template-columns: 2.2fr 1fr 1.6fr;
+      grid-template-rows: 1.1fr 1fr;
+      gap: 1.5cqi;
+    }
+    @media (max-width: 767.98px) {
+      .mockup-bento {
+        aspect-ratio: auto;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        max-height: none;
+      }
+    }
+
+    .bento-card {
+      background-color: var(--stadli-gray-900);
+      border: 1px solid var(--stadli-gray-800);
+      border-radius: 1.25cqi;
+      padding: 1.8cqi;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bento-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1cqi;
+      z-index: 2;
+    }
+
+    .bento-title {
+      font-size: clamp(7.6px, 1.1875cqi, 24.7px);
+      color: var(--stadli-gray-400);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .bento-value {
+      font-size: clamp(17.1px, 3.99cqi, 76px);
+      color: var(--stadli-white);
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      z-index: 2;
+    }
+
+    /* Live Indicator */
+    .bento-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6cqi;
+      font-size: clamp(6.65px, 0.9975cqi, 20.9px);
+      color: var(--stadli-gray-300);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .bento-live-dot {
+      width: 0.6cqi;
+      height: 0.6cqi;
+      border-radius: 50%;
+      background-color: var(--spec-red);
+      animation: bento-pulse-red 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    @keyframes bento-pulse-red {
+      0%   { box-shadow: 0 0 0 0 rgba(254, 0, 0, 0.8); }
+      70%  { box-shadow: 0 0 0 0.8cqi rgba(254, 0, 0, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(254, 0, 0, 0); }
+    }
+
+    /* 1. Revenue (Large Top Left) */
+    .bento-revenue { grid-column: 1 / 2; grid-row: 1 / 2; }
+    .bento-rev-chart {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 60%;
+      z-index: 1;
+    }
+    .bento-rev-chart svg { width: 100%; height: 100%; overflow: visible; }
+
+    /* 2. Carts (Small Top Middle) */
+    .bento-carts { grid-column: 2 / 3; grid-row: 1 / 2; }
+    .bento-trend-up {
+      font-size: clamp(7.6px, 1.33cqi, 24.7px);
+      color: var(--bs-success);
+      font-weight: 500;
+      margin-top: 0.5cqi;
+    }
+    .bento-bar-chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 0.5cqi;
+      height: 3.5cqi;
+      margin-top: auto;
+    }
+    .bento-bar {
+      flex: 1;
+      background-color: var(--stadli-gray-700);
+      border-radius: 2px 2px 0 0;
+    }
+    .bento-bar.active { background-color: var(--bs-success); }
+
+    /* 3. AI Insight (Bottom Left) — uses .ai-builder-zone shimmer pattern */
+    .bento-ai {
+      grid-column: 1 / 2;
+      grid-row: 2 / 3;
+    }
+    .bento-ai::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%; width: 200%; height: 2px;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        transparent 35%,
+        rgba(var(--bs-emphasis-color-rgb), 0.35) 50%,
+        transparent 65%,
+        transparent 100%
+      );
+      animation: ai-zone-shimmer 3s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .bento-ai-text {
+      font-size: clamp(9.5px, 1.5675cqi, 30.4px);
+      color: var(--stadli-gray-200);
+      line-height: 1.4;
+      margin-top: 0.5cqi;
+      margin-bottom: 1.5cqi;
+      max-width: 90%;
+    }
+    .bento-ai-highlight { color: var(--stadli-white); font-weight: 500; }
+    .bento-ai-action {
+      margin-top: auto;
+      align-self: flex-start;
+      background-color: var(--stadli-white);
+      color: var(--stadli-black);
+      padding: 0.8cqi 1.5cqi;
+      border-radius: 0.6cqi;
+      font-size: clamp(7.6px, 1.33cqi, 24.7px);
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6cqi;
+      border: none;
+    }
+
+    /* 4. Fan Profile (Small Bottom Middle) */
+    .bento-fan { grid-column: 2 / 3; grid-row: 2 / 3; display: flex; flex-direction: column; }
+    .bento-fan-avatar {
+      width: 3.5cqi;
+      height: 3.5cqi;
+      border-radius: 50%;
+      background-color: var(--stadli-gray-700);
+      overflow: hidden;
+      border: 1px solid var(--stadli-gray-600);
+    }
+    .bento-fan-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .bento-fan-name { font-size: clamp(11.4px, 1.6625cqi, 34.2px); font-weight: 600; color: var(--stadli-white); line-height: 1.1; letter-spacing: -0.01em; margin-top: 0.5cqi; }
+    .bento-fan-role { font-size: clamp(8.55px, 1.235cqi, 22.8px); color: var(--bs-success); font-weight: 500; margin-top: 0.2cqi; display: flex; align-items: center; gap: 0.4cqi; }
+    .bento-fan-role-dot { width: 6px; height: 6px; border-radius: 50%; background-color: var(--bs-success); animation: bento-pulse-green 2s infinite; }
+
+    @keyframes bento-pulse-green {
+      0%   { box-shadow: 0 0 0 0 rgba(68, 214, 43, 0.4); }
+      70%  { box-shadow: 0 0 0 0.6cqi rgba(68, 214, 43, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(68, 214, 43, 0); }
+    }
+
+    /* 5. Live Feed (Tall Right) */
+    .bento-feed { grid-column: 3 / 4; grid-row: 1 / 3; display: flex; flex-direction: column; }
+    .bento-feed-wrapper {
+      margin-top: 1cqi;
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+    .bento-feed-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 60%;
+      background: linear-gradient(to bottom, rgba(1, 1, 1, 0) 0%, var(--stadli-gray-900) 90%);
+      pointer-events: none;
+      z-index: 5;
+    }
+    .bento-feed-list {
+      display: flex;
+      flex-direction: column;
+      animation: bento-feed-scroll 12s linear infinite;
+    }
+    .bento-feed .feed-set {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2cqi;
+      padding-bottom: 1.2cqi;
+    }
+    .bento-feed:hover .bento-feed-list {
+      animation-play-state: paused;
+    }
+    @keyframes bento-feed-scroll {
+      0%   { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+    .bento-feed .feed-item {
+      display: flex;
+      align-items: center;
+      gap: 1cqi;
+    }
+    .bento-feed .feed-content {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2cqi;
+      min-width: 0;
+    }
+    .bento-feed .feed-text {
+      font-size: clamp(7.6px, 1.33cqi, 24.7px);
+      color: var(--stadli-white);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: 500;
+    }
+    .bento-feed .feed-subtext {
+      font-size: clamp(6.65px, 1.045cqi, 20.9px);
+      color: var(--stadli-gray-500);
+    }
+    .bento-feed .feed-time {
+      margin-left: auto;
+      font-size: clamp(6.65px, 1.045cqi, 20.9px);
+      color: var(--stadli-gray-600);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Mockup card-header file path — truncate on narrow viewports so the
+       long ".tsx" path doesn't push the traffic-light dots off-screen. */
+    .mockup-file-path {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 0.817rem;
+    }
+    @media (max-width: 767.98px) {
+      .mockup-file-path {
+        font-size: 0.57rem;
+      }
+    }
+
+    /* Hero dashboard card — responsive mask + overlap with next section.
+       On small screens, the mockup-bento stacks vertically, so a
+       large negative margin and aggressive mask would hide nearly all of it.
+       Scale both up on wider viewports where the mockup has room to breathe. */
+    .hero-dashboard-card {
+      mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+      margin-bottom: -2rem;
+    }
+    @media (min-width: 768px) {
+      .hero-dashboard-card {
+        mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+        margin-bottom: -5rem;
+      }
+    }
+    @media (min-width: 992px) {
+      .hero-dashboard-card {
+        mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
+        margin-bottom: -150px;
+      }
+    }
+
+    /* ── Marketing — Email Builder ── */
+    .mockup-marketing {
+      width: 100%;
+      background-color: var(--bs-body-bg);
+      display: flex;
+    }
+    .mockup-marketing .mkt-sidebar {
+      width: 28cqi;
+      min-width: 28cqi;
+      padding: 2.3cqi 2cqi;
+      border-right: 1px solid var(--stadli-gray-700);
+      display: flex;
+      flex-direction: column;
+      gap: 1.3cqi;
+    }
+    .mockup-marketing .mkt-title {
+      font-size: clamp(9.5px, 1.425cqi, 24.7px);
+      font-weight: 500;
+      color: var(--stadli-gray-200);
+      margin-bottom: 0.3cqi;
+    }
+    .mockup-marketing .mkt-block {
+      display: flex;
+      align-items: center;
+      gap: 1.2cqi;
+      padding: 1.3cqi 1.5cqi;
+      border: 1px solid var(--stadli-gray-600);
+      border-radius: 8px;
+    }
+    .mockup-marketing .mkt-block-icon {
+      width: 2.3cqi;
+      height: 2.3cqi;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .mockup-marketing .mkt-block-icon svg {
+      width: 1.7cqi;
+      height: 1.7cqi;
+      stroke: var(--stadli-gray-400);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .mockup-marketing .mkt-block-label {
+      font-size: clamp(8.55px, 1.235cqi, 20.9px);
+      font-weight: 500;
+      color: var(--stadli-gray-300);
+    }
+    .mockup-marketing .mkt-block-wrapper {
+      position: relative;
+    }
+    .mockup-marketing .mkt-block.is-dragging {
+      transform: translate(5cqi, 0);
+      border-color: var(--stadli-gray-300);
+      background-color: var(--stadli-gray-800);
+      z-index: 2;
+      position: relative;
+    }
+    .mockup-marketing .mkt-motion-lines {
+      position: absolute;
+      top: 50%;
+      right: calc(100% - 4.7cqi);
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .mockup-marketing .mkt-motion-lines span {
+      display: block;
+      height: 2px;
+      border-radius: 1px;
+      background-color: var(--stadli-gray-500);
+    }
+    .mockup-marketing .mkt-motion-lines span:nth-child(1) { width: 2.7cqi; opacity: 0.5; }
+    .mockup-marketing .mkt-motion-lines span:nth-child(2) { width: 4cqi; opacity: 0.7; }
+    .mockup-marketing .mkt-motion-lines span:nth-child(3) { width: 4.7cqi; opacity: 0.9; }
+    .mockup-marketing .mkt-motion-lines span:nth-child(4) { width: 3.3cqi; opacity: 0.6; }
+    .mockup-marketing .mkt-cursor {
+      position: absolute;
+      bottom: -0.7cqi;
+      right: -3.7cqi;
+      z-index: 3;
+      pointer-events: none;
+    }
+    .mockup-marketing .mkt-cursor svg { width: 2.7cqi; height: 2.7cqi; }
+    .mockup-marketing .mkt-preview {
+      flex: 1;
+      padding: 2.7cqi 3.3cqi;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mockup-marketing .mkt-email {
+      width: 100%;
+      max-width: 40cqi;
+      border: 1px solid var(--stadli-gray-600);
+      border-radius: 0.75rem;
+      padding: 3cqi 2.7cqi;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1cqi;
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+    .mockup-marketing .mkt-email-heading {
+      font-size: clamp(9.5px, 1.425cqi, 22.8px);
+      font-weight: 500;
+      color: var(--stadli-gray-300);
+      text-align: center;
+      letter-spacing: 1px;
+      line-height: 1.15;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    .mockup-marketing .mkt-email-image {
+      width: 100%;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .mockup-marketing .mkt-email-image img {
+      width: 100%;
+      height: 18cqi;
+      object-fit: cover;
+      display: block;
+    }
+    .mockup-marketing .mkt-email-subheading {
+      font-size: clamp(11.4px, 1.9cqi, 33.25px);
+      font-weight: 700;
+      padding-top: 0.5cqi;
+      color: var(--stadli-gray-200);
+      text-align: center;
+      line-height: 1.2;
+      margin: 0;
+    }
+    .mockup-marketing .mkt-email-body {
+      font-size: clamp(8.55px, 1.235cqi, 22.8px);
+      font-weight: 400;
+      color: var(--stadli-gray-300);
+      text-align: center;
+      line-height: 1.4;
+      margin: 0;
+    }
+    .mockup-marketing .mkt-email-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.2cqi 4cqi;
+      background-color: var(--stadli-gray-200);
+      color: var(--stadli-gray-900);
+      font-size: clamp(7.6px, 1.14cqi, 19px);
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+
+    /* ── CRM — Fan Profile Card Stack (3-up carousel) ── */
+    .mockup-fan-card {
+      /* Component tokens — aligned to the focused card aesthetic */
+      --mfc-card-bg: var(--stadli-gray-800);
+      --mfc-card-border: rgba(255, 255, 255, 0.04);
+      --mfc-stat-bg: var(--stadli-gray-900);
+      --mfc-accent-green: var(--bs-success);
+      --mfc-text-primary: var(--stadli-white);
+      --mfc-text-secondary: var(--stadli-gray-400);
+
+      width: 100%;
+      padding: 2.5cqi 2cqi;
+      background-color: var(--bs-body-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Stage holds the 3-card stack */
+    .mockup-fan-card .mfc-stage {
+      position: relative;
+      width: 100%;
+      height: 44cqi;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Base styling for all cards in the stack */
+    .mockup-fan-card .mfc-card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      max-height: 100%;
+      background-color: var(--mfc-card-bg);
+      border: 1px solid var(--mfc-card-border);
+      border-radius: 1.3cqi;
+      padding: 2cqi 1.5cqi 1.5cqi;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Main focused card */
+    .mockup-fan-card .mfc-main-card {
+      transform: translate(-50%, -50%);
+      z-index: 3;
+    }
+
+    /* Blurred ghost cards behind */
+    .mockup-fan-card .mfc-ghost-card {
+      z-index: 1;
+      opacity: 1;
+      filter: blur(5px) brightness(0.6);
+      pointer-events: none;
+    }
+    .mockup-fan-card .mfc-ghost-left {
+      transform: translate(calc(-50% - 13cqi), -50%) scale(0.85);
+    }
+    .mockup-fan-card .mfc-ghost-right {
+      transform: translate(calc(-50% + 13cqi), -50%) scale(0.85);
+    }
+    /* Tier 2 — further out, smaller, more blurred */
+    .mockup-fan-card .mfc-ghost-far-left {
+      transform: translate(calc(-50% - 26cqi), -50%) scale(0.72);
+      opacity: 1;
+      filter: blur(8px) brightness(0.5);
+    }
+    .mockup-fan-card .mfc-ghost-far-right {
+      transform: translate(calc(-50% + 26cqi), -50%) scale(0.72);
+      opacity: 1;
+      filter: blur(8px) brightness(0.5);
+    }
+    /* Tier 3 — edge of frame, extends under the mockup border */
+    .mockup-fan-card .mfc-ghost-deep-left {
+      transform: translate(calc(-50% - 40cqi), -50%) scale(0.6);
+      opacity: 1;
+      filter: blur(11px) brightness(0.4);
+    }
+    .mockup-fan-card .mfc-ghost-deep-right {
+      transform: translate(calc(-50% + 40cqi), -50%) scale(0.6);
+      opacity: 1;
+      filter: blur(11px) brightness(0.4);
+    }
+
+    /* Avatar group */
+    .mockup-fan-card .mfc-avatar-wrapper {
+      position: relative;
+      margin-bottom: 0.9cqi;
+    }
+    .mockup-fan-card .mfc-avatar {
+      width: 6cqi;
+      height: 6cqi;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.05);
+    }
+    .mockup-fan-card .mfc-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .mockup-fan-card .mfc-status-dot {
+      position: absolute;
+      bottom: 0.2cqi;
+      right: 0.2cqi;
+      width: 1.2cqi;
+      height: 1.2cqi;
+      background-color: var(--mfc-accent-green);
+      border: 0.25cqi solid var(--mfc-card-bg);
+      border-radius: 50%;
+    }
+
+    /* Header text */
+    .mockup-fan-card .mfc-name {
+      font-size: clamp(10.45px, 1.805cqi, 36.1px);
+      font-weight: 600;
+      color: var(--mfc-text-primary);
+      margin: 0 0 0.25cqi 0;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .mockup-fan-card .mfc-role {
+      font-size: clamp(7.6px, 0.9975cqi, 20.9px);
+      font-weight: 400;
+      color: var(--mfc-text-secondary);
+      margin-bottom: 1.3cqi;
+    }
+
+    /* Stats 2x2 grid */
+    .mockup-fan-card .mfc-stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6cqi;
+      width: 100%;
+    }
+
+    /* Individual stat block */
+    .mockup-fan-card .mfc-stat-block {
+      background-color: var(--mfc-stat-bg);
+      border-radius: 0.55cqi;
+      padding: 0.9cqi 1cqi;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .mockup-fan-card .mfc-stat-label {
+      font-size: clamp(4.75px, 0.76cqi, 17.1px);
+      color: var(--mfc-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.6cqi;
+      font-weight: 500;
+    }
+    .mockup-fan-card .mfc-stat-data {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .mockup-fan-card .mfc-stat-value {
+      font-size: clamp(11.4px, 1.9cqi, 39.9px);
+      font-weight: 600;
+      color: var(--mfc-text-primary);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .mockup-fan-card .mfc-stat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3cqi;
+      padding: 0.2cqi 0.5cqi;
+      border-radius: 50rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background-color: rgba(255, 255, 255, 0.03);
+      font-size: clamp(5.7px, 0.8075cqi, 18.05px);
+      color: var(--mfc-text-secondary);
+      font-weight: 500;
+    }
+    .mockup-fan-card .mfc-stat-dot {
+      width: 0.3cqi;
+      height: 0.3cqi;
+      border-radius: 50%;
+      background-color: var(--mfc-accent-green);
+    }
+
+    /* Extended info cards */
+    .mockup-fan-card .mfc-extended-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6cqi;
+      width: 100%;
+      margin-top: 0.6cqi;
+    }
+    .mockup-fan-card .mfc-badges-bento {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4cqi;
+      margin-top: 0.4cqi;
+    }
+    .mockup-fan-card .mfc-badge {
+      background-color: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--mfc-text-primary);
+      padding: 0.3cqi 0.6cqi;
+      border-radius: 0.45cqi;
+      font-size: clamp(6.65px, 0.9025cqi, 19px);
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3cqi;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+    .mockup-fan-card .mfc-badge:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+      transform: translateY(-1px);
+    }
+
+    /* ── Analytics — Stat Cards + Report Table ── */
+    .mockup-analytics {
+      width: 100%;
+      padding: 2.3cqi 2.7cqi;
+      background-color: var(--bs-body-bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2cqi;
+      position: relative;
+      overflow: hidden;
+    }
+    .mockup-analytics .ana-vignette {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.35) 100%);
+    }
+    .mockup-analytics .ana-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.7cqi;
+      width: 100%;
+      max-width: 87cqi;
+      position: relative;
+      z-index: 1;
+      flex-shrink: 0;
+    }
+    .mockup-analytics .ana-card {
+      background-color: var(--stadli-gray-900);
+      border: 1px solid var(--stadli-gray-800);
+      border-radius: 0.75rem;
+      padding: 1.8cqi 2cqi 1.7cqi;
+      display: flex;
+      flex-direction: column;
+    }
+    .mockup-analytics .ana-label {
+      color: var(--stadli-gray-500);
+      font-size: clamp(6.65px, 1.0925cqi, 19px);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.8cqi;
+    }
+    .mockup-analytics .ana-value {
+      font-size: clamp(13.3px, 2.755cqi, 47.5px);
+      font-weight: 500;
+      margin-bottom: 1.2cqi;
+      color: var(--stadli-white);
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+    .mockup-analytics .ana-trend {
+      height: 3.7cqi;
+      width: 100%;
+      margin-top: auto;
+      position: relative;
+    }
+    .mockup-analytics .ana-trend svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+    .mockup-analytics .ana-up      { stroke: var(--spec-green); }
+    .mockup-analytics .ana-neutral { stroke: var(--spec-orange); }
+    .mockup-analytics .ana-down    { stroke: var(--spec-red); }
+    .mockup-analytics .ana-gradient-fill { opacity: 0.12; }
+
+    /* Report table below the stat cards */
+    .mockup-analytics .ana-table {
+      width: 100%;
+      max-width: 87cqi;
+      flex-shrink: 0;
+      background-color: var(--stadli-gray-900);
+      border: 1px solid var(--stadli-gray-800);
+      border-radius: 0.75rem;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+    .mockup-analytics .ana-table-row {
+      display: grid;
+      grid-template-columns: 2.3fr 1fr 1.1fr 1.2fr 1.1fr;
+      align-items: center;
+      gap: 1.3cqi;
+      padding: 1.2cqi 2cqi;
+      border-bottom: 1px solid var(--stadli-gray-800);
+      font-size: clamp(7.6px, 1.14cqi, 19px);
+      color: var(--stadli-gray-200);
+    }
+    .mockup-analytics .ana-table-row:last-child {
+      border-bottom: none;
+    }
+    .mockup-analytics .ana-table-row.ana-table-head {
+      background-color: var(--stadli-gray-800);
+      border-bottom-color: var(--stadli-gray-700);
+      padding: 0.9cqi 2cqi;
+    }
+    .mockup-analytics .ana-table-head .ana-cell {
+      font-size: clamp(5.7px, 0.95cqi, 17.1px);
+      font-weight: 700;
+      color: var(--stadli-gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .mockup-analytics .ana-cell {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .mockup-analytics .ana-cell-event {
+      color: var(--stadli-white);
+      font-weight: 500;
+    }
+    .mockup-analytics .ana-cell-num {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+    .mockup-analytics .ana-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7cqi;
+      padding: 0.25cqi 0.8cqi;
+      border: 1px solid var(--stadli-gray-700);
+      border-radius: 50rem;
+      font-size: clamp(5.7px, 0.95cqi, 17.1px);
+      color: var(--stadli-gray-300);
+      white-space: nowrap;
+      width: fit-content;
+    }
+    .mockup-analytics .ana-status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--bs-success);
+      flex-shrink: 0;
+    }
+    .mockup-analytics .ana-status.is-draft .ana-status-dot {
+      background-color: var(--bs-warning);
+    }
+
+    /* ── AI — Insight Query Dashboard ── */
+    .mockup-ai {
+      width: 100%;
+      background-color: var(--bs-body-bg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .mockup-ai .ai-content {
+      flex: 1;
+      padding: 2cqi;
+      display: grid;
+      grid-template-columns: 29cqi 1fr 25cqi;
+      gap: 1.7cqi;
+      min-height: 0;
+    }
+    .mockup-ai .ai-chat-column {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 0;
+    }
+    .mockup-ai .ai-chat-bubbles {
+      flex: 1;
+      margin-bottom: 1.7cqi;
+      min-height: 0;
+    }
+    .mockup-ai .ai-chat-message {
+      display: flex;
+      gap: 1cqi;
+      margin-bottom: 1.7cqi;
+    }
+    .mockup-ai .ai-chat-message.is-user {
+      flex-direction: row-reverse;
+      margin-left: auto;
+      max-width: 85%;
+    }
+    .mockup-ai .ai-avatar {
+      position: relative;
+      width: 2.7cqi;
+      height: 2.7cqi;
+      border-radius: 0.5rem;
+      background: var(--stadli-gray-800);
+      border: 1px solid var(--stadli-gray-700);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: clamp(5.7px, 0.95cqi, 17.1px);
+      letter-spacing: 0.08em;
+      color: var(--stadli-white);
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .mockup-ai .ai-avatar::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%; width: 200%; height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        transparent 40%,
+        rgba(255, 255, 255, 0.12) 50%,
+        transparent 60%,
+        transparent 100%
+      );
+      animation: ai-zone-shimmer 3s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .mockup-ai .ai-bubble {
+      padding: 1cqi 1.3cqi;
+      border-radius: 0.75rem;
+      font-size: clamp(7.6px, 1.14cqi, 19px);
+      line-height: 1.5;
+      max-width: 90%;
+    }
+    .mockup-ai .ai-bubble-user {
+      background-color: var(--stadli-gray-800);
+      color: var(--stadli-gray-100);
+    }
+    .mockup-ai .ai-bubble-ai {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: var(--stadli-gray-300);
+    }
+    .mockup-ai .ai-chat-input-wrap { position: relative; }
+    .mockup-ai .ai-chat-input {
+      width: 100%;
+      background-color: var(--stadli-gray-900);
+      border: 1px solid var(--stadli-gray-700);
+      border-radius: 1cqi;
+      padding: 1cqi 3.3cqi 1cqi 1.3cqi;
+      color: var(--stadli-white);
+      font-size: clamp(7.6px, 1.14cqi, 19px);
+      font-family: inherit;
+      outline: none;
+    }
+    .mockup-ai .ai-chat-input::placeholder { color: var(--stadli-gray-500); }
+    .mockup-ai .ai-send-btn {
+      position: absolute;
+      right: 1cqi;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--stadli-gray-500);
+      background: none;
+      border: none;
+      padding: 0;
+      display: flex;
+    }
+    .mockup-ai .ai-stats-card {
+      background-color: var(--stadli-gray-900);
+      border: 1px solid var(--stadli-gray-800);
+      border-radius: 1cqi;
+      padding: 1.7cqi;
+    }
+    .mockup-ai .ai-card-label {
+      font-size: clamp(6.65px, 1.0925cqi, 19px);
+      color: var(--stadli-gray-500);
+      margin-bottom: 0.7cqi;
+    }
+    .mockup-ai .ai-card-value {
+      font-size: clamp(13.3px, 2.47cqi, 43.7px);
+      font-weight: 500;
+      color: var(--stadli-white);
+      margin-bottom: 0.3cqi;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+    }
+    .mockup-ai .ai-card-trend {
+      font-size: clamp(7.6px, 1.14cqi, 19px);
+      color: var(--bs-success);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .mockup-ai .ai-mid-grid {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 1.7cqi;
+      min-height: 0;
+    }
+    .mockup-ai .ai-right-grid {
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 1.7cqi;
+      min-height: 0;
+    }
+    /* AI generating state — uses the design-system shimmer pattern */
+    .mockup-ai .ai-generating {
+      position: relative;
+      border: 1px solid var(--stadli-gray-800);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 0.8cqi;
+      overflow: hidden;
+    }
+    .mockup-ai .ai-generating::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%; width: 200%; height: 2px;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        transparent 35%,
+        rgba(255, 255, 255, 0.35) 50%,
+        transparent 65%,
+        transparent 100%
+      );
+      animation: ai-zone-shimmer 3s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .mockup-ai .ai-generating-text {
+      color: var(--stadli-gray-300);
+      font-size: clamp(10.45px, 1.615cqi, 28.5px);
+      font-weight: 500;
+      line-height: 1.2;
+    }
+    .mockup-ai .ai-generating-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4cqi;
+      font-size: clamp(6.65px, 0.95cqi, 17.1px);
+      color: var(--stadli-gray-400);
+    }
+    .mockup-ai .ai-leaders-item { margin-bottom: 1cqi; }
+    .mockup-ai .ai-leaders-item:last-child { margin-bottom: 0; }
+    .mockup-ai .ai-leaders-name { font-size: clamp(8.55px, 1.235cqi, 20.9px); font-weight: 500; color: var(--stadli-white); }
+    .mockup-ai .ai-leaders-trend { font-size: clamp(6.65px, 0.9975cqi, 19px); color: var(--bs-success); }
+    .mockup-ai .ai-progress-track {
+      width: 100%;
+      height: 4px;
+      background-color: var(--stadli-gray-800);
+      border-radius: 2px;
+      margin-top: 0.5cqi;
+      overflow: hidden;
+    }
+    .mockup-ai .ai-progress-fill {
+      height: 100%;
+      border-radius: 2px;
+      background-color: var(--bs-emphasis-color);
+    }
+    .mockup-ai .ai-sparkline-wrap {
+      margin-top: 0.7cqi;
+    }
+    .mockup-ai .ai-sparkline-wrap svg {
+      width: 100%;
+      display: block;
+    }
+
+    /* ── Commerce — Stadium Cart ── */
+    .mockup-commerce {
+      width: 100%;
+      background-color: var(--bs-body-bg);
+      display: flex;
+    }
+    .mockup-commerce .cart-seatmap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.7cqi;
+      min-width: 0;
+    }
+    .mockup-commerce .cart-seatmap img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+    .mockup-commerce .cart-panel {
+      width: 40cqi;
+      min-width: 40cqi;
+      border-left: 1px solid var(--stadli-gray-700);
+      display: flex;
+      flex-direction: column;
+    }
+    .mockup-commerce .cart-wrapper {
+      border: 1px solid var(--stadli-gray-600);
+      border-radius: 0.75rem;
+      margin: 2cqi 2.3cqi;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      overflow: hidden;
+    }
+    .mockup-commerce .cart-title {
+      font-size: clamp(8.55px, 1.235cqi, 22.8px);
+      font-weight: 500;
+      color: var(--stadli-gray-300);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 1.7cqi 2cqi 1.3cqi;
+    }
+    .mockup-commerce .cart-items {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 0 2cqi;
+    }
+    .mockup-commerce .cart-item {
+      display: flex;
+      align-items: center;
+      gap: 1.3cqi;
+      padding: 1.3cqi 0;
+      border-bottom: 1px solid var(--stadli-gray-700);
+    }
+    .mockup-commerce .cart-item:last-child { border-bottom: none; }
+    .mockup-commerce .cart-thumb {
+      width: 6cqi;
+      height: 6cqi;
+      border-radius: 8px;
+      border: 1px solid var(--stadli-gray-600);
+      overflow: hidden;
+      flex-shrink: 0;
+      background-color: var(--stadli-gray-700);
+    }
+    .mockup-commerce .cart-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .mockup-commerce .cart-details {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25cqi;
+    }
+    .mockup-commerce .cart-name {
+      font-size: clamp(8.55px, 1.235cqi, 22.8px);
+      font-weight: 500;
+      color: var(--stadli-gray-100);
+    }
+    .mockup-commerce .cart-unit-price {
+      font-size: clamp(6.65px, 1.0925cqi, 19px);
+      font-weight: 500;
+      color: var(--stadli-gray-400);
+    }
+    .mockup-commerce .cart-total {
+      font-size: clamp(8.55px, 1.235cqi, 22.8px);
+      font-weight: 500;
+      color: var(--stadli-gray-300);
+      white-space: nowrap;
+    }
+    .mockup-commerce .cart-footer {
+      padding: 1.3cqi 2cqi 1.7cqi;
+      border-top: 1px solid var(--stadli-gray-600);
+    }
+    .mockup-commerce .cart-subtotal {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.3cqi;
+    }
+    .mockup-commerce .cart-subtotal-label {
+      font-size: clamp(9.5px, 1.425cqi, 24.7px);
+      font-weight: 500;
+      color: var(--stadli-gray-200);
+    }
+    .mockup-commerce .cart-subtotal-value {
+      font-size: clamp(10.45px, 1.615cqi, 28.5px);
+      font-weight: 500;
+      color: var(--stadli-gray-100);
+    }
+    .mockup-commerce .cart-checkout {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 1.2cqi;
+      background-color: var(--stadli-gray-200);
+      color: var(--stadli-gray-900);
+      font-size: clamp(8.55px, 1.235cqi, 20.9px);
+      font-weight: 500;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+    .modal {
+    backdrop-filter: blur(2px);
+        }
+        .modal-header {
+        align-items: start;          
+        }
+        .modal-header .btn-close {
+    font-size: 0.7rem;
+}
+
+    /* Style Guide — Swatches */
+    .swatch-card {
+      background-color: var(--bs-tertiary-bg);
+      border: 1px solid var(--bs-border-color);
+      border-radius: 0.75rem;
+      overflow: hidden;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+    .swatch-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--bs-secondary-color);
+    }
+    .swatch-chip {
+      aspect-ratio: 16 / 10;
+      width: 100%;
+      border-bottom: 1px solid var(--bs-border-color);
+    }
+    .swatch-meta {
+      padding: 0.85rem 1rem 1rem 1rem;
+    }
+    .swatch-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--bs-emphasis-color);
+    }
+    .swatch-token {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Liberation Mono", monospace;
+      font-size: 0.72rem;
+      color: var(--bs-secondary-color);
+      margin-top: 0.2rem;
+    }
+    .swatch-hex {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Liberation Mono", monospace;
+      font-size: 0.78rem;
+      color: var(--bs-tertiary-color);
+      text-transform: uppercase;
+      margin-top: 0.1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header id="navbar" class="position-fixed top-0 w-100 z-3 navbar-transparent">
+    <div class="container-fluid px-4 px-md-5">
+      <div class="d-flex justify-content-between align-items-center py-3">
+        <div class="reveal">
+          <a href="#" class="navbar-brand-logo text-decoration-none d-flex align-items-center">
+            <img src="logo.svg" alt="Stadli" height="28">
+          </a>
+        </div>
+        <nav class="d-none d-md-flex gap-4">
+          <div class="reveal delay-100"><a href="#marketing" class="navbar-link text-decoration-none small fw-medium">Marketing</a></div>
+          <div class="reveal delay-200"><a href="#crm" class="navbar-link text-decoration-none small fw-medium">CRM</a></div>
+          <div class="reveal delay-300"><a href="#bi" class="navbar-link text-decoration-none small fw-medium">Analytique</a></div>
+          <div class="reveal delay-400"><a href="#commerce" class="navbar-link text-decoration-none small fw-medium">Billetterie</a></div>
+        </nav>
+        <div class="d-flex gap-2">
+          <div class="reveal delay-500 d-none d-md-block"><button class="btn btn-ghost btn-sm navbar-ghost-btn">Articles</button></div>
+          <div class="reveal delay-600"><button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#demoModal">Réserver une démo</button></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="pt-5 pb-5" style="padding-top: 7rem !important;">
+      <div class="container-fluid px-4 px-md-5 pt-5 mt-lg-4">
+
+        <div class="reveal mb-5 pb-3">
+          <span class="text-label text-body-secondary mb-3">Design System</span>
+          <h1 class="mb-3">Couleurs.</h1>
+          <p class="lead text-body-secondary mb-0" style="max-width: 720px;">
+            La palette Stadli&nbsp;: neutres muets pour le chrome admin, spectre vif pour le marketing, le récit et la data-viz.
+          </p>
+        </div>
+
+        <!-- Neutrals -->
+        <div class="reveal mb-5">
+          <div class="d-flex align-items-baseline justify-content-between mb-3">
+            <h2 class="h3 mb-0">Neutres</h2>
+            <span class="text-label text-body-secondary">Base UI</span>
+          </div>
+          <hr class="mt-0 mb-4">
+          <div class="row g-3">
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #000000;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">Black</div>
+                  <div class="swatch-token">--stadli-black</div>
+                  <div class="swatch-hex">#000000</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #010101;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">Gray 900</div>
+                  <div class="swatch-token">--stadli-gray-900</div>
+                  <div class="swatch-hex">#010101</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #1a1a1a;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">Gray 800</div>
+                  <div class="swatch-token">--stadli-gray-800</div>
+                  <div class="swatch-hex">#1a1a1a</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #303030;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">Gray 700</div>
+                  <div class="swatch-token">--stadli-gray-700</div>
+                  <div class="swatch-hex">#303030</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #484848;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">Gray 600</div>
+                  <div class="swatch-token">--stadli-gray-600</div>
+                  <div class="swatch-hex">#484848</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #6a6a6a;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">Gray 500</div>
+                  <div class="swatch-token">--stadli-gray-500</div>
+                  <div class="swatch-hex">#6a6a6a</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #929292;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">Gray 400</div>
+                  <div class="swatch-token">--stadli-gray-400</div>
+                  <div class="swatch-hex">#929292</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #c0c0c0;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">Gray 300</div>
+                  <div class="swatch-token">--stadli-gray-300</div>
+                  <div class="swatch-hex">#c0c0c0</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #d6d6d6;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">Gray 200</div>
+                  <div class="swatch-token">--stadli-gray-200</div>
+                  <div class="swatch-hex">#d6d6d6</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #e8e8e8;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">Gray 100</div>
+                  <div class="swatch-token">--stadli-gray-100</div>
+                  <div class="swatch-hex">#e8e8e8</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #ffffff;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">White</div>
+                  <div class="swatch-token">--stadli-white</div>
+                  <div class="swatch-hex">#ffffff</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Semantics -->
+        <div class="reveal mb-5">
+          <div class="d-flex align-items-baseline justify-content-between mb-3">
+            <h2 class="h3 mb-0">Sémantiques</h2>
+            <span class="text-label text-body-secondary">UI States</span>
+          </div>
+          <hr class="mt-0 mb-4">
+          <div class="row g-3">
+            <div class="col-6 col-md-4 col-lg-2">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #010101;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">Primary</div>
+                  <div class="swatch-token">--bs-primary</div>
+                  <div class="swatch-hex">#010101</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #6a6a6a;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">Secondary</div>
+                  <div class="swatch-token">--bs-secondary</div>
+                  <div class="swatch-hex">#6a6a6a</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #3f7f5f;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">Success</div>
+                  <div class="swatch-token">--bs-success</div>
+                  <div class="swatch-hex">#3f7f5f</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #a0712c;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">Warning</div>
+                  <div class="swatch-token">--bs-warning</div>
+                  <div class="swatch-hex">#a0712c</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #954947;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">Danger</div>
+                  <div class="swatch-token">--bs-danger</div>
+                  <div class="swatch-hex">#954947</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #3b6f8d;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">Info</div>
+                  <div class="swatch-token">--bs-info</div>
+                  <div class="swatch-hex">#3b6f8d</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Spectrum -->
+        <div class="reveal mb-5">
+          <div class="d-flex align-items-baseline justify-content-between mb-3">
+            <h2 class="h3 mb-0">Spectre</h2>
+            <span class="text-label text-body-secondary">Marketing · Data-viz</span>
+          </div>
+          <hr class="mt-0 mb-4">
+          <p class="small text-body-secondary mb-4" style="max-width: 640px;">
+            Réservé au data-viz, aux tags narratifs et aux surfaces marketing. Jamais sur le chrome admin, les boutons, les contrôles de formulaire, les icônes ou les états hover.
+          </p>
+          <div class="row g-3">
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #fe0000;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">Red</div>
+                  <div class="swatch-token">--spec-red</div>
+                  <div class="swatch-hex">#fe0000</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #fe5619;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">Orange</div>
+                  <div class="swatch-token">--spec-orange</div>
+                  <div class="swatch-hex">#fe5619</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #ecfc3b;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">Lime</div>
+                  <div class="swatch-token">--spec-lime</div>
+                  <div class="swatch-hex">#ecfc3b</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #44d62b;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">Green</div>
+                  <div class="swatch-token">--spec-green</div>
+                  <div class="swatch-hex">#44d62b</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #00d4a8;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">Teal</div>
+                  <div class="swatch-token">--spec-teal</div>
+                  <div class="swatch-hex">#00d4a8</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #00b0d8;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">Cyan</div>
+                  <div class="swatch-token">--spec-cyan</div>
+                  <div class="swatch-hex">#00b0d8</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #0140f0;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">Blue</div>
+                  <div class="swatch-token">--spec-blue</div>
+                  <div class="swatch-hex">#0140f0</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #7b2ff7;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">Violet</div>
+                  <div class="swatch-token">--spec-violet</div>
+                  <div class="swatch-hex">#7b2ff7</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #d633ff;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">Magenta</div>
+                  <div class="swatch-token">--spec-magenta</div>
+                  <div class="swatch-hex">#d633ff</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #f6166e;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">Rose</div>
+                  <div class="swatch-token">--spec-rose</div>
+                  <div class="swatch-hex">#f6166e</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="swatch-card">
+                <div class="swatch-chip" style="background-color: #eeeeee;"></div>
+                <div class="swatch-meta">
+                  <div class="swatch-name">Silver</div>
+                  <div class="swatch-token">--spec-silver</div>
+                  <div class="swatch-hex">#eeeeee</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-top py-5 bg-body text-body-secondary">
+    <div class="container-fluid px-4 px-md-5">
+      <div class="row g-4">
+        <div class="col-12 col-md-4 reveal">
+          <div class="mb-3">
+            <img src="logo.svg" alt="Stadli" height="28">
+          </div>
+          <p class="small mb-0">Le moteur de billetterie pour les franchises sportives à haute cadence.</p>
+        </div>
+        <div class="col-6 col-md-2 offset-md-2 reveal delay-100">
+          <span class="text-label mb-3">Produit</span>
+          <div class="d-flex flex-column gap-2 small">
+            <a href="#commerce" class="text-decoration-none text-body-secondary">Billetterie</a>
+            <a href="#marketing" class="text-decoration-none text-body-secondary">Marketing</a>
+            <a href="#bi" class="text-decoration-none text-body-secondary">Insights IA</a>
+            <a href="#crm" class="text-decoration-none text-body-secondary">Profils de fans</a>
+          </div>
+        </div>
+        <div class="col-6 col-md-2 reveal delay-200">
+          <span class="text-label mb-3">Entreprise</span>
+          <div class="d-flex flex-column gap-2 small">
+            <a href="#" class="text-decoration-none text-body-secondary">À propos</a>
+            <a href="#" class="text-decoration-none text-body-secondary">Clients</a>
+            <a href="#" class="text-decoration-none text-body-secondary">Carrières</a>
+          </div>
+        </div>
+        <div class="col-6 col-md-2 reveal delay-300">
+          <span class="text-label mb-3">Mentions légales</span>
+          <div class="d-flex flex-column gap-2 small">
+            <a href="#" class="text-decoration-none text-body-secondary">Confidentialité</a>
+            <a href="#" class="text-decoration-none text-body-secondary">Conditions</a>
+          </div>
+        </div>
+      </div>
+      <div class="mt-5 pt-4 border-top d-flex justify-content-between align-items-center reveal delay-400">
+        <span class="small">&copy; 2026 Stadli Systems Inc.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Demo Request Modal -->
+  <div class="modal fade" id="demoModal" tabindex="-1" aria-labelledby="demoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+<div class="modal-content bg-body border border-secondary border-opacity-25">
+  <!-- Tweak: Added padding to match body, adjusted bottom padding to flow better -->
+  <div class="modal-header border-bottom border-secondary border-opacity-25 p-4 pb-3">
+    <div>
+      <h5 class="modal-title mb-1" id="demoModalLabel">Voyez Stadli en action.</h5>
+      <p class="text-body-secondary small mb-0">Parlons-nous de votre plan de match. Réservez votre démo aujourd'hui.</p>
+    </div>
+    <!-- Tweak: align-self-start keeps button crisp at the top right -->
+    <button type="button" class="btn-close btn-close-white align-self-start" data-bs-dismiss="modal" aria-label="Fermer"></button>
+  </div>
+  <!-- Tweak: Adjusted top padding to blend smoothly with header -->
+  <div class="modal-body p-4 pt-3">
+    <form>
+      <!-- Tweak: Rely entirely on g-3 for internal spacing -->
+      <div class="row g-3 mb-4">
+        
+        <div class="col-12 col-sm-6">
+          <!-- Tweak: mb-1 and small for tighter label-to-input grouping -->
+          <label class="form-label text-body-secondary small mb-1">Prénom</label>
+          <input type="text" class="form-control bg-body border-secondary px-3 py-2">
+        </div>
+        
+        <div class="col-12 col-sm-6">
+          <label class="form-label text-body-secondary small mb-1">Nom</label>
+          <input type="text" class="form-control bg-body border-secondary px-3 py-2">
+        </div>
+        
+        <!-- Tweak: Added col-12 to fix broken grid layout -->
+        <div class="col-12">
+          <label class="form-label text-body-secondary small mb-1">Courriel</label>
+          <input type="email" class="form-control bg-body border-secondary text-body-color px-3 py-2" placeholder="nom@organisation.com">
+        </div>
+        
+        <!-- Tweak: Added col-12 to fix broken grid layout -->
+        <div class="col-12">
+          <label class="form-label text-body-secondary small mb-1">Organisation</label>
+          <input type="text" class="form-control bg-body border-secondary px-3 py-2">
+        </div>
+
+      </div>
+      
+      <!-- Tweak: Swapped to py-2 and fw-medium for a more standard button feel -->
+      <button type="submit" class="btn btn-primary w-100 py-2 fw-medium">Demander une démo</button>
+    </form>
+  </div>
+</div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Navbar Scroll Logic
+      const navbar = document.getElementById('navbar');
+      
+      const handleScroll = () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add('navbar-scrolled');
+          navbar.classList.remove('navbar-transparent');
+        } else {
+          navbar.classList.add('navbar-transparent');
+          navbar.classList.remove('navbar-scrolled');
+        }
+      };
+
+      // Listen for scroll events
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      
+      // Call once on load to set initial state
+      handleScroll();
+
+      // Scroll Reveal Animation Logic
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.15
+      };
+
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.reveal, .reveal-slow').forEach(element => {
+        revealObserver.observe(element);
+      });
+
+      // Generic Smooth Animator
+      const animateValue = (element, start, end, duration, formatter) => {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+          if (!startTimestamp) startTimestamp = timestamp;
+          const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+          // easeOutQuart easing function for smooth deceleration
+          const easeProgress = 1 - Math.pow(1 - progress, 4);
+          const currentVal = start + (end - start) * easeProgress;
+          element.textContent = formatter(currentVal);
+          if (progress < 1) {
+            window.requestAnimationFrame(step);
+          }
+        };
+        window.requestAnimationFrame(step);
+      };
+
+      // Rotating Hero Headline Word
+      const rotatingWordEl = document.getElementById('rotating-word');
+      if (rotatingWordEl) {
+        const words = [
+          { text: 'vendre.',       color: '#44d62b' },
+          { text: 'vos fans.',     color: '#f6166e' },
+          { text: 'convertir.',    color: '#fe5619' },
+          { text: 'comprendre.',   color: '#00b0d8' },
+          { text: 'fidéliser.',    color: '#00d4a8' },
+          { text: 'votre équipe.', color: '#0140f0' },
+          { text: 'chaque match.', color: '#ecfc3b' },
+          { text: 'fidéliser.',    color: '#00d4a8' },
+          { text: 'grandir.',      color: '#7b2ff7' },
+          { text: 'mesurer.',      color: '#d633ff' }
+        ];
+        let idx = 0; // initial word matches words[0]; first tick advances to words[1]
+        const animDuration = 750; // must match CSS transition duration
+        setInterval(() => {
+          // Animate outgoing: float up + blur out
+          rotatingWordEl.classList.add('is-exiting');
+          setTimeout(() => {
+            idx = (idx + 1) % words.length;
+            const next = words[idx];
+            rotatingWordEl.textContent = next.text;
+            rotatingWordEl.style.setProperty('--rotating-color', next.color);
+            // Drop the intro shimmer once we move into the colored rotation
+            rotatingWordEl.classList.remove('shimmer-text');
+            // Snap incoming into start state (below, blurred, hidden) — no transition
+            rotatingWordEl.classList.remove('is-exiting');
+            rotatingWordEl.classList.add('is-entering');
+            // Force reflow so the transition runs when is-entering is removed
+            void rotatingWordEl.offsetWidth;
+            rotatingWordEl.classList.remove('is-entering');
+          }, animDuration);
+        }, 5000);
+      }
+
+      // Live Revenue Counter Logic
+      const revenueEl = document.getElementById('live-revenue-value');
+      if (revenueEl) {
+        let currentRevenue = 142850.00;
+        const currencyFormatter = (val) => new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'USD' }).format(val);
+
+        const updateRevenue = () => {
+          const increment = Math.random() * 205 + 45;
+          const newRevenue = currentRevenue + increment;
+          animateValue(revenueEl, currentRevenue, newRevenue, 1200, currencyFormatter);
+          currentRevenue = newRevenue;
+          const nextInterval = Math.random() * 5000 + 2000;
+          setTimeout(updateRevenue, nextInterval);
+        };
+
+        setTimeout(updateRevenue, Math.random() * 5000 + 2000);
+      }
+
+      // Live Carts Counter Logic
+      const cartsEl = document.getElementById('live-carts-value');
+      if (cartsEl) {
+        let currentCarts = 342;
+        const intFormatter = (val) => Math.round(val).toString();
+
+        const updateCarts = () => {
+          const newCarts = Math.floor(Math.random() * (350 - 325 + 1)) + 325;
+          animateValue(cartsEl, currentCarts, newCarts, 1000, intFormatter);
+          currentCarts = newCarts;
+          const nextInterval = Math.random() * 5000 + 3000;
+          setTimeout(updateCarts, nextInterval);
+        };
+
+        setTimeout(updateCarts, Math.random() * 5000 + 3000);
+      }
+    });
+  </script>
+</body>
+</html>
