@@ -1218,6 +1218,26 @@
     .mockup-ai .ai-leaders-item:last-child { margin-bottom: 0; }
     .mockup-ai .ai-leaders-name { font-size: 15px; font-weight: 500; color: var(--stadli-white); }
     .mockup-ai .ai-leaders-trend { font-size: 12px; color: var(--bs-success); }
+    .mockup-ai .ai-progress-track {
+      width: 100%;
+      height: 4px;
+      background-color: var(--stadli-gray-800);
+      border-radius: 2px;
+      margin-top: 6px;
+      overflow: hidden;
+    }
+    .mockup-ai .ai-progress-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: linear-gradient(to right, var(--spec-blue), var(--spec-rose));
+    }
+    .mockup-ai .ai-sparkline-wrap {
+      margin-top: 8px;
+    }
+    .mockup-ai .ai-sparkline-wrap svg {
+      width: 100%;
+      display: block;
+    }
 
     /* ── Commerce — Stadium Cart ── */
     .mockup-commerce {
@@ -1910,18 +1930,22 @@
                         <div class="ai-leaders-item">
                           <div class="ai-leaders-name">Email open rate</div>
                           <div class="ai-leaders-trend">34.2% (+6.1%)</div>
+                          <div class="ai-progress-track"><div class="ai-progress-fill" style="width: 68%;"></div></div>
                         </div>
                         <div class="ai-leaders-item">
                           <div class="ai-leaders-name">Click-through rate</div>
                           <div class="ai-leaders-trend">8.7% (+2.3%)</div>
+                          <div class="ai-progress-track"><div class="ai-progress-fill" style="width: 52%;"></div></div>
                         </div>
                         <div class="ai-leaders-item">
                           <div class="ai-leaders-name">Conversion rate</div>
                           <div class="ai-leaders-trend">4.1% (+0.9%)</div>
+                          <div class="ai-progress-track"><div class="ai-progress-fill" style="width: 38%;"></div></div>
                         </div>
                         <div class="ai-leaders-item">
                           <div class="ai-leaders-name">Revenue per send</div>
                           <div class="ai-leaders-trend">$2.48 (campaign high)</div>
+                          <div class="ai-progress-track"><div class="ai-progress-fill" style="width: 78%;"></div></div>
                         </div>
                       </div>
 
@@ -1945,6 +1969,22 @@
                         <div class="ai-card-label">Single-game sell-through</div>
                         <div class="ai-card-value">91.3%</div>
                         <div class="ai-card-trend">+11.8% (last 30 days)</div>
+                        <div class="ai-sparkline-wrap">
+                          <svg viewBox="0 0 120 32" preserveAspectRatio="none" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                              <linearGradient id="sparkGrad" x1="0" y1="0" x2="120" y2="0" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stop-color="var(--spec-blue)"/>
+                                <stop offset="100%" stop-color="var(--spec-rose)"/>
+                              </linearGradient>
+                              <linearGradient id="sparkFill" x1="0" y1="0" x2="0" y2="32" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stop-color="var(--spec-blue)" stop-opacity="0.18"/>
+                                <stop offset="100%" stop-color="var(--spec-blue)" stop-opacity="0"/>
+                              </linearGradient>
+                            </defs>
+                            <path d="M0,26 L10,24 20,22 30,25 40,20 50,18 60,21 70,16 80,14 90,10 100,8 110,6 120,3 L120,32 L0,32Z" fill="url(#sparkFill)"/>
+                            <polyline points="0,26 10,24 20,22 30,25 40,20 50,18 60,21 70,16 80,14 90,10 100,8 110,6 120,3" stroke="url(#sparkGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                        </div>
                       </div>
                     </div>
 
