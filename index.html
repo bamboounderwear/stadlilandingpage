@@ -82,8 +82,8 @@
 
     /* Dark Mode Overrides */
     [data-bs-theme="dark"] {
-      --bs-primary: #e8e8e8;
-      --bs-primary-rgb: 232, 232, 232;
+      --bs-primary: #ffffff;
+      --bs-primary-rgb: 255, 255, 255;
       --bs-secondary: #929292;
       --bs-secondary-rgb: 146, 146, 146;
       --bs-success: #7ec7a3;
@@ -172,11 +172,15 @@
       --bs-btn-bg: var(--bs-primary);
       --bs-btn-border-color: var(--bs-primary);
       --bs-btn-hover-color: var(--stadli-btn-primary-color);
-      --bs-btn-hover-bg: var(--bs-secondary-color);
-      --bs-btn-hover-border-color: var(--bs-secondary-color);
+      --bs-btn-hover-bg: var(--bs-primary);
+      --bs-btn-hover-border-color: var(--bs-primary);
       --bs-btn-active-color: var(--stadli-btn-primary-color);
-      --bs-btn-active-bg: var(--bs-secondary-color);
-      --bs-btn-active-border-color: var(--bs-secondary-color);
+      --bs-btn-active-bg: var(--bs-primary);
+      --bs-btn-active-border-color: var(--bs-primary);
+    }
+    /* Default border-secondary to 0.3 opacity across the whole site */
+    .border-secondary {
+      --bs-border-opacity: 0.3;
     }
     .btn-outline-secondary {
       --bs-btn-color: var(--bs-body-color);
@@ -387,25 +391,19 @@
 
     /* ============================================
        MOCKUP FRAMES — Fluid UI previews
-       Each frame enforces a 2:1 aspect ratio capped at
-       680px tall, and is registered as an inline-size
-       container so inner mockups can use cqi units.
-       Internal gutter padding lives on each individual
-       mockup (.mockup-crm, etc.) so each mockup's own
-       background extends edge-to-edge inside the fake
-       browser window.
+       Registered as an inline-size container so inner
+       mockups can use cqi units to scale proportionally.
+       Each mockup sizes to its own content; the hero
+       keeps aspect-ratio: 2/1 for its absolute children.
        ============================================ */
     .mockup-frame {
       container-type: inline-size;
       width: 100%;
-      aspect-ratio: 2 / 1;
-      max-height: 680px;
       position: relative;
       overflow: hidden;
     }
     .mockup-frame > .mockup-content {
       width: 100%;
-      height: 100%;
       font-family: var(--bs-font-sans-serif);
       color: var(--stadli-gray-100);
     }
@@ -413,7 +411,8 @@
     /* ── Hero Mockup — Feature Hub ── */
     .mockup-hero {
       width: 100%;
-      height: 100%;
+      aspect-ratio: 2 / 1;
+      max-height: 680px;
       position: relative;
       background-color: var(--bs-body-bg);
     }
@@ -432,7 +431,7 @@
       transform: translate(-50%, -50%);
     }
     .mockup-hero .hero-feature-card h3 {
-      font-size: clamp(0.9rem, 1.45cqi, 1.5rem);
+      font-size: clamp(0.72rem, 1.16cqi, 1.2rem);
       font-weight: 500;
       margin: 0;
       color: var(--stadli-gray-100);
@@ -494,47 +493,86 @@
       100% { opacity: 1;   filter: brightness(1.4); }
     }
 
+    /* Mockup card-header file path — truncate on narrow viewports so the
+       long ".tsx" path doesn't push the traffic-light dots off-screen. */
+    .mockup-file-path {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 0.86rem;
+    }
+    @media (max-width: 767.98px) {
+      .mockup-file-path {
+        font-size: 0.6rem;
+      }
+    }
+
+    /* Hero dashboard card — responsive mask + overlap with next section.
+       On small screens, the mockup-hero is short (aspect-ratio 2/1), so a
+       large negative margin and aggressive mask would hide nearly all of it.
+       Scale both up on wider viewports where the mockup has room to breathe. */
+    .hero-dashboard-card {
+      mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+      margin-bottom: -2rem;
+    }
+    @media (min-width: 768px) {
+      .hero-dashboard-card {
+        mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+        margin-bottom: -5rem;
+      }
+    }
+    @media (min-width: 992px) {
+      .hero-dashboard-card {
+        mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
+        margin-bottom: -150px;
+      }
+    }
+
     /* ── Marketing — Email Builder ── */
     .mockup-marketing {
       width: 100%;
-      height: 100%;
       background-color: var(--bs-body-bg);
       display: flex;
     }
     .mockup-marketing .mkt-sidebar {
-      width: 340px;
-      min-width: 340px;
-      padding: 28px 24px;
+      width: 28cqi;
+      min-width: 28cqi;
+      padding: 2.3cqi 2cqi;
       border-right: 1px solid var(--stadli-gray-700);
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 1.3cqi;
     }
     .mockup-marketing .mkt-title {
-      font-size: 18px;
+      font-size: clamp(10px, 1.2cqi, 14px);
       font-weight: 500;
       color: var(--stadli-gray-200);
-      margin-bottom: 4px;
+      margin-bottom: 0.3cqi;
     }
     .mockup-marketing .mkt-block {
       display: flex;
       align-items: center;
-      gap: 14px;
-      padding: 16px 18px;
+      gap: 1.2cqi;
+      padding: 1.3cqi 1.5cqi;
       border: 1px solid var(--stadli-gray-600);
       border-radius: 8px;
     }
     .mockup-marketing .mkt-block-icon {
-      width: 28px;
-      height: 28px;
+      width: 2.3cqi;
+      height: 2.3cqi;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
     }
     .mockup-marketing .mkt-block-icon svg {
-      width: 20px;
-      height: 20px;
+      width: 1.7cqi;
+      height: 1.7cqi;
       stroke: var(--stadli-gray-400);
       fill: none;
       stroke-width: 1.5;
@@ -542,7 +580,7 @@
       stroke-linejoin: round;
     }
     .mockup-marketing .mkt-block-label {
-      font-size: 15px;
+      font-size: clamp(9px, 1cqi, 12px);
       font-weight: 500;
       color: var(--stadli-gray-300);
     }
@@ -550,7 +588,7 @@
       position: relative;
     }
     .mockup-marketing .mkt-block.is-dragging {
-      transform: translate(60px, 0);
+      transform: translate(5cqi, 0);
       border-color: var(--stadli-gray-300);
       background-color: var(--stadli-gray-800);
       z-index: 2;
@@ -559,7 +597,7 @@
     .mockup-marketing .mkt-motion-lines {
       position: absolute;
       top: 50%;
-      right: calc(100% - 56px);
+      right: calc(100% - 4.7cqi);
       transform: translateY(-50%);
       display: flex;
       flex-direction: column;
@@ -573,39 +611,39 @@
       border-radius: 1px;
       background-color: var(--stadli-gray-500);
     }
-    .mockup-marketing .mkt-motion-lines span:nth-child(1) { width: 32px; opacity: 0.5; }
-    .mockup-marketing .mkt-motion-lines span:nth-child(2) { width: 48px; opacity: 0.7; }
-    .mockup-marketing .mkt-motion-lines span:nth-child(3) { width: 56px; opacity: 0.9; }
-    .mockup-marketing .mkt-motion-lines span:nth-child(4) { width: 40px; opacity: 0.6; }
+    .mockup-marketing .mkt-motion-lines span:nth-child(1) { width: 2.7cqi; opacity: 0.5; }
+    .mockup-marketing .mkt-motion-lines span:nth-child(2) { width: 4cqi; opacity: 0.7; }
+    .mockup-marketing .mkt-motion-lines span:nth-child(3) { width: 4.7cqi; opacity: 0.9; }
+    .mockup-marketing .mkt-motion-lines span:nth-child(4) { width: 3.3cqi; opacity: 0.6; }
     .mockup-marketing .mkt-cursor {
       position: absolute;
-      bottom: -8px;
-      right: -44px;
+      bottom: -0.7cqi;
+      right: -3.7cqi;
       z-index: 3;
       pointer-events: none;
     }
-    .mockup-marketing .mkt-cursor svg { width: 32px; height: 32px; }
+    .mockup-marketing .mkt-cursor svg { width: 2.7cqi; height: 2.7cqi; }
     .mockup-marketing .mkt-preview {
       flex: 1;
-      padding: 32px 40px;
+      padding: 2.7cqi 3.3cqi;
       display: flex;
       align-items: center;
       justify-content: center;
     }
     .mockup-marketing .mkt-email {
       width: 100%;
-      max-width: 480px;
+      max-width: 40cqi;
       border: 1px solid var(--stadli-gray-600);
       border-radius: 0.75rem;
-      padding: 36px 32px;
+      padding: 3cqi 2.7cqi;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 20px;
+      gap: 1.7cqi;
       background-color: rgba(255, 255, 255, 0.02);
     }
     .mockup-marketing .mkt-email-heading {
-      font-size: 32px;
+      font-size: clamp(13px, 2.16cqi, 26px);
       font-weight: 500;
       color: var(--stadli-gray-300);
       text-align: center;
@@ -621,25 +659,34 @@
     }
     .mockup-marketing .mkt-email-image img {
       width: 100%;
-      height: 220px;
+      height: 18cqi;
       object-fit: cover;
       display: block;
     }
+    .mockup-marketing .mkt-email-subheading {
+      font-size: clamp(12px, 1.6cqi, 19px);
+      font-weight: 700;
+      color: var(--stadli-gray-200);
+      text-align: center;
+      line-height: 1.2;
+      margin: 0;
+    }
     .mockup-marketing .mkt-email-body {
-      font-size: 16px;
+      font-size: clamp(9px, 1.04cqi, 13px);
       font-weight: 400;
       color: var(--stadli-gray-300);
       text-align: center;
+      line-height: 1.4;
       margin: 0;
     }
     .mockup-marketing .mkt-email-cta {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 14px 48px;
+      padding: 1.2cqi 4cqi;
       background-color: var(--stadli-gray-200);
       color: var(--stadli-gray-900);
-      font-size: 14px;
+      font-size: clamp(8px, 0.96cqi, 11px);
       font-weight: 500;
       letter-spacing: 1.5px;
       text-transform: uppercase;
@@ -651,8 +698,7 @@
     /* ── CRM — 360 Fan Profile Card Stack ── */
     .mockup-crm {
       width: 100%;
-      height: 100%;
-      padding: 2rem;
+      padding: 1.7cqi;
       background-color: var(--bs-body-bg);
       display: flex;
       flex-direction: column;
@@ -675,9 +721,9 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 380px;
+      width: 32cqi;
       height: 86%;
-      padding: 34px 32px;
+      padding: 2.8cqi 2.7cqi;
       background-color: var(--stadli-gray-900);
       border: 1px solid var(--stadli-gray-800);
       border-radius: 1.5rem;
@@ -686,17 +732,17 @@
       z-index: 1;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 1.7cqi;
     }
     .mockup-crm .crm-ghost-card.is-left {
-      transform: translate(calc(-50% - 320px), -50%);
+      transform: translate(calc(-50% - 27cqi), -50%);
     }
     .mockup-crm .crm-ghost-card.is-right {
-      transform: translate(calc(-50% + 320px), -50%);
+      transform: translate(calc(-50% + 27cqi), -50%);
     }
     .mockup-crm .crm-ghost-avatar {
-      width: 88px;
-      height: 88px;
+      width: 7.3cqi;
+      height: 7.3cqi;
       border-radius: 50%;
       overflow: hidden;
       flex-shrink: 0;
@@ -710,17 +756,17 @@
     .mockup-crm .crm-ghost-meta {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 0.5cqi;
     }
     .mockup-crm .crm-ghost-name {
-      font-size: 28px;
+      font-size: clamp(11px, 1.84cqi, 22px);
       font-weight: 600;
       color: var(--stadli-gray-300);
       letter-spacing: -0.01em;
       line-height: 1.1;
     }
     .mockup-crm .crm-ghost-role {
-      font-size: 16px;
+      font-size: clamp(9px, 1.04cqi, 13px);
       font-weight: 500;
       color: var(--stadli-gray-500);
       line-height: 1.2;
@@ -730,24 +776,23 @@
     .mockup-crm .crm-card {
       position: relative;
       z-index: 3;
-      width: 600px;
-      height: 100%;
-      padding: 18px 24px;
+      width: 50cqi;
+      padding: 1.5cqi 2cqi;
       background-color: var(--stadli-gray-900);
       border: 1px solid var(--stadli-gray-800);
       border-radius: 1.5rem;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 1cqi;
       overflow: hidden;
     }
     .mockup-crm .crm-card-title {
-      font-size: 22px;
+      font-size: clamp(11px, 1.44cqi, 18px);
       font-weight: 700;
       color: var(--stadli-white);
       letter-spacing: -0.02em;
       margin: 0;
-      padding: 0 4px;
+      padding: 0 0.3cqi;
       line-height: 1;
     }
 
@@ -758,7 +803,7 @@
       background-color: var(--stadli-gray-800);
       border: 1px solid var(--stadli-gray-700);
       border-radius: 1.25rem;
-      padding: 16px 20px;
+      padding: 1.3cqi 1.7cqi;
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -766,14 +811,14 @@
     .mockup-crm .crm-panel-header {
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding-bottom: 14px;
+      gap: 1.3cqi;
+      padding-bottom: 1.2cqi;
       border-bottom: 1px solid var(--stadli-gray-700);
       flex-shrink: 0;
     }
     .mockup-crm .crm-avatar {
-      width: 64px;
-      height: 64px;
+      width: 5.3cqi;
+      height: 5.3cqi;
       border-radius: 50%;
       overflow: hidden;
       flex-shrink: 0;
@@ -787,11 +832,11 @@
     .mockup-crm .crm-panel-info {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 0.7cqi;
       min-width: 0;
     }
     .mockup-crm .crm-panel-name {
-      font-size: 24px;
+      font-size: clamp(11px, 1.6cqi, 19px);
       font-weight: 700;
       color: var(--stadli-white);
       letter-spacing: -0.02em;
@@ -800,10 +845,10 @@
     .mockup-crm .crm-panel-role-row {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 0.8cqi;
     }
     .mockup-crm .crm-panel-role {
-      font-size: 14px;
+      font-size: clamp(8px, 0.96cqi, 11px);
       font-weight: 500;
       color: var(--stadli-gray-400);
     }
@@ -827,21 +872,21 @@
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      padding: 8px 0;
+      padding: 0.7cqi 0;
       border-bottom: 1px solid var(--stadli-gray-700);
     }
     .mockup-crm .crm-stat-row:last-child {
       border-bottom: none;
     }
     .mockup-crm .crm-stat-label {
-      font-size: 11px;
+      font-size: clamp(7px, 0.72cqi, 9px);
       font-weight: 700;
       color: var(--stadli-gray-500);
       text-transform: uppercase;
       letter-spacing: 0.14em;
     }
     .mockup-crm .crm-stat-value {
-      font-size: 20px;
+      font-size: clamp(11px, 1.36cqi, 16px);
       font-weight: 500;
       color: var(--stadli-white);
       letter-spacing: -0.01em;
@@ -849,7 +894,7 @@
       line-height: 1;
     }
     .mockup-crm .crm-stat-value .unit {
-      font-size: 14px;
+      font-size: clamp(8px, 0.96cqi, 11px);
       font-weight: 500;
       color: var(--stadli-gray-400);
       margin-left: 3px;
@@ -862,9 +907,9 @@
     /* Engagement timeline — compact activity feed below the card stage */
     .mockup-crm .crm-timeline {
       flex-shrink: 0;
-      padding: 12px 0 4px;
+      padding: 1cqi 0 0.3cqi;
       border-top: 1px solid var(--stadli-gray-800);
-      max-width: 380px;
+      max-width: 32cqi;
       margin: 0 auto;
       width: 100%;
     }
@@ -872,17 +917,17 @@
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      margin-bottom: 8px;
+      margin-bottom: 0.7cqi;
     }
     .mockup-crm .crm-timeline-label {
-      font-size: 11px;
+      font-size: clamp(7px, 0.72cqi, 9px);
       font-weight: 700;
       color: var(--stadli-gray-500);
       text-transform: uppercase;
       letter-spacing: 0.14em;
     }
     .mockup-crm .crm-timeline-meta {
-      font-size: 10px;
+      font-size: clamp(6px, 0.64cqi, 8px);
       font-weight: 500;
       color: var(--stadli-gray-500);
       font-variant-numeric: tabular-nums;
@@ -906,7 +951,7 @@
     .mockup-crm .crm-tl-item {
       display: flex;
       align-items: center;
-      padding: 3px 0;
+      padding: 0.25cqi 0;
       position: relative;
     }
     .mockup-crm .crm-tl-dot {
@@ -934,30 +979,33 @@
       min-width: 0;
     }
     .mockup-crm .crm-tl-event-name {
-      font-size: 12px;
+      font-size: clamp(7px, 0.8cqi, 10px);
       font-weight: 500;
       color: var(--stadli-gray-300);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      min-width: 0;
     }
     .mockup-crm .crm-tl-event-date {
-      font-size: 10px;
+      font-size: clamp(6px, 0.64cqi, 8px);
       font-weight: 500;
       color: var(--stadli-gray-500);
       font-variant-numeric: tabular-nums;
       flex-shrink: 0;
-      margin-left: 12px;
+      margin-left: 1cqi;
     }
 
     /* ── Analytics — Stat Cards + Report Table ── */
     .mockup-analytics {
       width: 100%;
-      height: 100%;
-      padding: 28px 32px;
+      padding: 2.3cqi 2.7cqi;
       background-color: var(--bs-body-bg);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 24px;
+      gap: 2cqi;
       position: relative;
       overflow: hidden;
     }
@@ -970,9 +1018,9 @@
     .mockup-analytics .ana-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      gap: 1.7cqi;
       width: 100%;
-      max-width: 1040px;
+      max-width: 87cqi;
       position: relative;
       z-index: 1;
       flex-shrink: 0;
@@ -981,29 +1029,29 @@
       background-color: var(--stadli-gray-900);
       border: 1px solid var(--stadli-gray-800);
       border-radius: 0.75rem;
-      padding: 22px 24px 20px;
+      padding: 1.8cqi 2cqi 1.7cqi;
       display: flex;
       flex-direction: column;
     }
     .mockup-analytics .ana-label {
       color: var(--stadli-gray-500);
-      font-size: 13px;
+      font-size: clamp(7px, 0.88cqi, 10px);
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      margin-bottom: 10px;
+      margin-bottom: 0.8cqi;
     }
     .mockup-analytics .ana-value {
-      font-size: 36px;
+      font-size: clamp(14px, 2.4cqi, 29px);
       font-weight: 500;
-      margin-bottom: 14px;
+      margin-bottom: 1.2cqi;
       color: var(--stadli-white);
       letter-spacing: -0.02em;
       font-variant-numeric: tabular-nums;
       line-height: 1;
     }
     .mockup-analytics .ana-trend {
-      height: 44px;
+      height: 3.7cqi;
       width: 100%;
       margin-top: auto;
       position: relative;
@@ -1021,7 +1069,7 @@
     /* Report table below the stat cards */
     .mockup-analytics .ana-table {
       width: 100%;
-      max-width: 1040px;
+      max-width: 87cqi;
       flex-shrink: 0;
       background-color: var(--stadli-gray-900);
       border: 1px solid var(--stadli-gray-800);
@@ -1034,10 +1082,10 @@
       display: grid;
       grid-template-columns: 2.3fr 1fr 1.1fr 1.2fr 1.1fr;
       align-items: center;
-      gap: 16px;
-      padding: 14px 24px;
+      gap: 1.3cqi;
+      padding: 1.2cqi 2cqi;
       border-bottom: 1px solid var(--stadli-gray-800);
-      font-size: 14px;
+      font-size: clamp(8px, 0.96cqi, 11px);
       color: var(--stadli-gray-200);
     }
     .mockup-analytics .ana-table-row:last-child {
@@ -1046,10 +1094,10 @@
     .mockup-analytics .ana-table-row.ana-table-head {
       background-color: var(--stadli-gray-800);
       border-bottom-color: var(--stadli-gray-700);
-      padding: 11px 24px;
+      padding: 0.9cqi 2cqi;
     }
     .mockup-analytics .ana-table-head .ana-cell {
-      font-size: 11px;
+      font-size: clamp(6px, 0.72cqi, 9px);
       font-weight: 700;
       color: var(--stadli-gray-500);
       text-transform: uppercase;
@@ -1071,11 +1119,11 @@
     .mockup-analytics .ana-status {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 3px 10px;
+      gap: 0.7cqi;
+      padding: 0.25cqi 0.8cqi;
       border: 1px solid var(--stadli-gray-700);
       border-radius: 50rem;
-      font-size: 11px;
+      font-size: clamp(6px, 0.72cqi, 9px);
       color: var(--stadli-gray-300);
       white-space: nowrap;
       width: fit-content;
@@ -1094,7 +1142,6 @@
     /* ── AI — Insight Query Dashboard ── */
     .mockup-ai {
       width: 100%;
-      height: 100%;
       background-color: var(--bs-body-bg);
       overflow: hidden;
       display: flex;
@@ -1102,10 +1149,10 @@
     }
     .mockup-ai .ai-content {
       flex: 1;
-      padding: 24px;
+      padding: 2cqi;
       display: grid;
-      grid-template-columns: 350px 1fr 300px;
-      gap: 20px;
+      grid-template-columns: 29cqi 1fr 25cqi;
+      gap: 1.7cqi;
       min-height: 0;
     }
     .mockup-ai .ai-chat-column {
@@ -1116,13 +1163,13 @@
     }
     .mockup-ai .ai-chat-bubbles {
       flex: 1;
-      margin-bottom: 20px;
+      margin-bottom: 1.7cqi;
       min-height: 0;
     }
     .mockup-ai .ai-chat-message {
       display: flex;
-      gap: 12px;
-      margin-bottom: 20px;
+      gap: 1cqi;
+      margin-bottom: 1.7cqi;
     }
     .mockup-ai .ai-chat-message.is-user {
       flex-direction: row-reverse;
@@ -1130,23 +1177,23 @@
       max-width: 85%;
     }
     .mockup-ai .ai-avatar {
-      width: 32px;
-      height: 32px;
+      width: 2.7cqi;
+      height: 2.7cqi;
       border-radius: 0.5rem;
       background: linear-gradient(135deg, var(--spec-blue), var(--spec-violet));
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 700;
-      font-size: 11px;
+      font-size: clamp(6px, 0.72cqi, 9px);
       letter-spacing: 0.08em;
       color: var(--stadli-white);
       flex-shrink: 0;
     }
     .mockup-ai .ai-bubble {
-      padding: 12px 16px;
+      padding: 1cqi 1.3cqi;
       border-radius: 0.75rem;
-      font-size: 14px;
+      font-size: clamp(8px, 0.96cqi, 11px);
       line-height: 1.5;
       max-width: 90%;
     }
@@ -1163,17 +1210,17 @@
       width: 100%;
       background-color: var(--stadli-gray-900);
       border: 1px solid var(--stadli-gray-700);
-      border-radius: 12px;
-      padding: 12px 40px 12px 16px;
+      border-radius: 1cqi;
+      padding: 1cqi 3.3cqi 1cqi 1.3cqi;
       color: var(--stadli-white);
-      font-size: 14px;
+      font-size: clamp(8px, 0.96cqi, 11px);
       font-family: inherit;
       outline: none;
     }
     .mockup-ai .ai-chat-input::placeholder { color: var(--stadli-gray-500); }
     .mockup-ai .ai-send-btn {
       position: absolute;
-      right: 12px;
+      right: 1cqi;
       top: 50%;
       transform: translateY(-50%);
       color: var(--stadli-gray-500);
@@ -1185,24 +1232,24 @@
     .mockup-ai .ai-stats-card {
       background-color: var(--stadli-gray-900);
       border: 1px solid var(--stadli-gray-800);
-      border-radius: 12px;
-      padding: 20px;
+      border-radius: 1cqi;
+      padding: 1.7cqi;
     }
     .mockup-ai .ai-card-label {
-      font-size: 13px;
+      font-size: clamp(7px, 0.88cqi, 10px);
       color: var(--stadli-gray-500);
-      margin-bottom: 8px;
+      margin-bottom: 0.7cqi;
     }
     .mockup-ai .ai-card-value {
-      font-size: 32px;
+      font-size: clamp(14px, 2.16cqi, 26px);
       font-weight: 500;
       color: var(--stadli-white);
-      margin-bottom: 4px;
+      margin-bottom: 0.3cqi;
       font-variant-numeric: tabular-nums;
       letter-spacing: -0.02em;
     }
     .mockup-ai .ai-card-trend {
-      font-size: 14px;
+      font-size: clamp(8px, 0.96cqi, 11px);
       color: var(--bs-success);
       display: flex;
       align-items: center;
@@ -1211,13 +1258,13 @@
     .mockup-ai .ai-mid-grid {
       display: grid;
       grid-template-rows: auto 1fr auto;
-      gap: 20px;
+      gap: 1.7cqi;
       min-height: 0;
     }
     .mockup-ai .ai-right-grid {
       display: grid;
       grid-template-rows: auto auto 1fr;
-      gap: 20px;
+      gap: 1.7cqi;
       min-height: 0;
     }
     .mockup-ai .ai-generating {
@@ -1235,20 +1282,20 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
       color: transparent;
-      font-size: 20px;
+      font-size: clamp(11px, 1.36cqi, 16px);
       font-weight: 500;
       line-height: 1.2;
     }
-    .mockup-ai .ai-leaders-item { margin-bottom: 12px; }
+    .mockup-ai .ai-leaders-item { margin-bottom: 1cqi; }
     .mockup-ai .ai-leaders-item:last-child { margin-bottom: 0; }
-    .mockup-ai .ai-leaders-name { font-size: 15px; font-weight: 500; color: var(--stadli-white); }
-    .mockup-ai .ai-leaders-trend { font-size: 12px; color: var(--bs-success); }
+    .mockup-ai .ai-leaders-name { font-size: clamp(9px, 1cqi, 12px); font-weight: 500; color: var(--stadli-white); }
+    .mockup-ai .ai-leaders-trend { font-size: clamp(7px, 0.8cqi, 10px); color: var(--bs-success); }
     .mockup-ai .ai-progress-track {
       width: 100%;
       height: 4px;
       background-color: var(--stadli-gray-800);
       border-radius: 2px;
-      margin-top: 6px;
+      margin-top: 0.5cqi;
       overflow: hidden;
     }
     .mockup-ai .ai-progress-fill {
@@ -1257,7 +1304,7 @@
       background: linear-gradient(to right, var(--spec-blue), var(--spec-rose));
     }
     .mockup-ai .ai-sparkline-wrap {
-      margin-top: 8px;
+      margin-top: 0.7cqi;
     }
     .mockup-ai .ai-sparkline-wrap svg {
       width: 100%;
@@ -1267,7 +1314,6 @@
     /* ── Commerce — Stadium Cart ── */
     .mockup-commerce {
       width: 100%;
-      height: 100%;
       background-color: var(--bs-body-bg);
       display: flex;
     }
@@ -1276,7 +1322,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 32px;
+      padding: 2.7cqi;
       min-width: 0;
     }
     .mockup-commerce .cart-seatmap img {
@@ -1286,8 +1332,8 @@
       border-radius: 8px;
     }
     .mockup-commerce .cart-panel {
-      width: 480px;
-      min-width: 480px;
+      width: 40cqi;
+      min-width: 40cqi;
       border-left: 1px solid var(--stadli-gray-700);
       display: flex;
       flex-direction: column;
@@ -1295,37 +1341,37 @@
     .mockup-commerce .cart-wrapper {
       border: 1px solid var(--stadli-gray-600);
       border-radius: 0.75rem;
-      margin: 24px 28px;
+      margin: 2cqi 2.3cqi;
       display: flex;
       flex-direction: column;
       flex: 1;
       overflow: hidden;
     }
     .mockup-commerce .cart-title {
-      font-size: 16px;
+      font-size: clamp(9px, 1.04cqi, 13px);
       font-weight: 500;
       color: var(--stadli-gray-300);
       letter-spacing: 2px;
       text-transform: uppercase;
-      padding: 20px 24px 16px;
+      padding: 1.7cqi 2cqi 1.3cqi;
     }
     .mockup-commerce .cart-items {
       flex: 1;
       display: flex;
       flex-direction: column;
-      padding: 0 24px;
+      padding: 0 2cqi;
     }
     .mockup-commerce .cart-item {
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding: 16px 0;
+      gap: 1.3cqi;
+      padding: 1.3cqi 0;
       border-bottom: 1px solid var(--stadli-gray-700);
     }
     .mockup-commerce .cart-item:last-child { border-bottom: none; }
     .mockup-commerce .cart-thumb {
-      width: 72px;
-      height: 72px;
+      width: 6cqi;
+      height: 6cqi;
       border-radius: 8px;
       border: 1px solid var(--stadli-gray-600);
       overflow: hidden;
@@ -1343,41 +1389,41 @@
       min-width: 0;
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 0.25cqi;
     }
     .mockup-commerce .cart-name {
-      font-size: 16px;
+      font-size: clamp(9px, 1.04cqi, 13px);
       font-weight: 500;
       color: var(--stadli-gray-100);
     }
     .mockup-commerce .cart-unit-price {
-      font-size: 13px;
+      font-size: clamp(7px, 0.88cqi, 10px);
       font-weight: 500;
       color: var(--stadli-gray-400);
     }
     .mockup-commerce .cart-total {
-      font-size: 16px;
+      font-size: clamp(9px, 1.04cqi, 13px);
       font-weight: 500;
       color: var(--stadli-gray-300);
       white-space: nowrap;
     }
     .mockup-commerce .cart-footer {
-      padding: 16px 24px 20px;
+      padding: 1.3cqi 2cqi 1.7cqi;
       border-top: 1px solid var(--stadli-gray-600);
     }
     .mockup-commerce .cart-subtotal {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 16px;
+      margin-bottom: 1.3cqi;
     }
     .mockup-commerce .cart-subtotal-label {
-      font-size: 18px;
+      font-size: clamp(10px, 1.2cqi, 14px);
       font-weight: 500;
       color: var(--stadli-gray-200);
     }
     .mockup-commerce .cart-subtotal-value {
-      font-size: 20px;
+      font-size: clamp(11px, 1.36cqi, 16px);
       font-weight: 500;
       color: var(--stadli-gray-100);
     }
@@ -1386,10 +1432,10 @@
       align-items: center;
       justify-content: center;
       width: 100%;
-      padding: 14px;
+      padding: 1.2cqi;
       background-color: var(--stadli-gray-200);
       color: var(--stadli-gray-900);
-      font-size: 15px;
+      font-size: clamp(9px, 1cqi, 12px);
       font-weight: 500;
       border: none;
       border-radius: 8px;
@@ -1417,7 +1463,7 @@
         </nav>
         <div class="d-flex gap-2">
           <div class="reveal delay-500 d-none d-md-block"><button class="btn btn-ghost btn-sm navbar-ghost-btn">Sign in</button></div>
-          <div class="reveal delay-600"><button class="btn btn-primary btn-sm">Book demo</button></div>
+          <div class="reveal delay-600"><button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#demoModal">Book demo</button></div>
         </div>
       </div>
     </div>
@@ -1427,21 +1473,26 @@
     <!-- Hero Section with Linear-inspired Layout -->
     <section class="d-flex flex-column align-items-center w-100 position-relative pt-5 pb-0" style="overflow: hidden;">
       
-      <!-- Independent Background Layer with placehold.co -->
-      <div class="position-absolute top-0 start-0 w-100 h-100 reveal-slow" style="background: linear-gradient(to bottom, rgba(1, 1, 1, 0.5) 0%, rgba(1, 1, 1, 0.85) 60%, var(--bs-body-bg) 100%), url('https://placehold.co/1920x1080/000000/333333?text=Stadium+Background') center top/cover no-repeat; z-index: 0;"></div>
+      <!-- Video Background Layer -->
+      <div class="position-absolute top-0 start-0 w-100 h-100" style="z-index: 0; overflow: hidden;">
+        <video autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: cover;">
+          <source src="backgroundvideo.mp4" type="video/mp4">
+        </video>
+        <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(to bottom, rgba(1, 1, 1, 0.5) 0%, rgba(1, 1, 1, 0.85) 60%, var(--bs-body-bg) 100%);"></div>
+      </div>
 
       <div class="container-fluid px-4 px-md-5 pt-5 mt-lg-4 d-flex flex-column flex-grow-1 position-relative z-1">
         
         <!-- Text and Link Row with increased top spacing -->
         <div class="row align-items-center mb-5 pb-lg-4 mt-4 pt-5" style="padding-top: 8rem !important;">
           <div class="col-12 col-lg-7 pe-lg-5">
-            <h1 class="mb-4 text-white fw-medium reveal delay-200" style="font-size: clamp(2.875rem, 8.05vw, 5.175rem); letter-spacing: -0.04em;">Bonjour, Stadli.</h1>
+            <h1 class="mb-4 text-white fw-medium reveal delay-200" style="font-size: clamp(3.31rem, 8.05vw, 5.175rem); letter-spacing: -0.04em;">Bonjour, Stadli.</h1>
             <p class="fs-4 text-white text-opacity-75 mb-0 reveal delay-300" style="max-width: 600px;">
-              Une seule plateforme pour vendre, engager et comprendre vos fans.
+              Billetterie, engagement, données et marketing réunis dans un système conçu pour le sport.
             </p>
           </div>
           <div class="col-12 col-lg-5 text-lg-end mt-4 mt-lg-0 reveal delay-400">
-            <a href="#demo" class="text-decoration-none small d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill bg-black bg-opacity-50 border border-secondary border-opacity-25 backdrop-blur-md card-hover">
+            <a href="#" class="text-decoration-none small d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill bg-black bg-opacity-50 border border-secondary border-opacity-25 backdrop-blur-md card-hover" data-bs-toggle="modal" data-bs-target="#demoModal">
               <span class="rounded-circle" style="width: 8px; height: 8px; background-color: var(--spec-violet);"></span>
               <span class="text-white fw-medium">Voyez Stadli en action</span>
               <span class="text-white text-opacity-50 ms-1">stadli.com/demo &rarr;</span>
@@ -1452,12 +1503,12 @@
         <!-- Full-Width Dashboard Mockup fading at the bottom -->
         <div class="row flex-grow-1 position-relative z-1 reveal delay-400">
           <div class="col-12">
-            <div class="card rounded-top-4 border border-bottom-0 border-secondary border-opacity-50 bg-black bg-opacity-50 backdrop-blur-md w-100 overflow-hidden" style="mask-image: linear-gradient(to bottom, black 65%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%); margin-bottom: -150px;">
+            <div class="card hero-dashboard-card rounded-top-4 border border-bottom-0 border-secondary border-opacity-50 bg-black bg-opacity-50 backdrop-blur-md w-100 overflow-hidden">
 
               <!-- Mockup Header -->
               <div class="card-header bg-transparent border-bottom border-secondary border-opacity-25 px-4 py-3 d-flex align-items-center gap-3">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white text-opacity-50"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                <span class="font-monospace text-white text-opacity-50" style="font-size: 0.86rem;">stadli/app/dashboard/main.tsx</span>
+                <span class="font-monospace text-white text-opacity-50 mockup-file-path">stadli/app/dashboard/main.tsx</span>
                 <div class="d-flex gap-2 ms-auto">
                   <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
                   <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
@@ -1507,11 +1558,8 @@
             <h2 class="mb-0 fw-medium text-body-emphasis" style="letter-spacing: -0.03em;">Des campagnes qui connaissent vos fans.</h2>
           </div>
           <div class="col-12 col-lg-5 offset-lg-1 reveal delay-100">
-            <p class="fs-5 text-body-secondary mb-3">
-              From inbox to ticket sold. Marketing that proves its ROI.
-            </p>
-            <p class="text-body-secondary mb-4">
-              Drag-and-drop emails, SMS, promo codes, and full revenue tracking. Design, send, and measure campaigns — without leaving the platform.
+            <p class="fs-5 text-body-secondary mb-4">
+              Créez des campagnes, déclenchez des offres et mesurez l'impact en temps réel.
             </p>
             <a href="#marketing" class="text-decoration-none text-body-secondary small d-inline-flex align-items-center gap-2">
               <span class="text-label mb-0 text-body-secondary" style="color: inherit;">Explore marketing tools</span> <span>&rarr;</span>
@@ -1523,7 +1571,7 @@
         <div class="card bg-glass-transparent backdrop-blur-md border border-secondary border-opacity-25 rounded-4 overflow-hidden w-100 reveal delay-200">
           <div class="card-header bg-black bg-opacity-50 border-bottom border-secondary border-opacity-25 px-4 py-3 d-flex align-items-center gap-3">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white text-opacity-50"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-            <span class="font-monospace text-white text-opacity-50" style="font-size: 0.86rem;">stadli/app/marketing/campaign_builder.tsx</span>
+            <span class="font-monospace text-white text-opacity-50 mockup-file-path">stadli/app/marketing/campaign_builder.tsx</span>
             <div class="d-flex gap-2 ms-auto">
               <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
               <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
@@ -1576,12 +1624,13 @@
                   <!-- Right Preview -->
                   <div class="mkt-preview">
                     <div class="mkt-email">
-                      <div class="mkt-email-heading" style="font-size: 21px; font-weight: 900; letter-spacing: 0px; line-height: 24px;">demo team</div>
+                      <div class="mkt-email-heading">demo team</div>
                       <div class="mkt-email-image">
                         <img src="https://placehold.co/480x220/1a1a1a/929292?text=Hero+Image" alt="Hero image placeholder">
                       </div>
-                      <p class="mkt-email-body" style="font-size: 24px; font-weight: 700; line-height: 32px; height: 24px;">Get your tickets today!</p><p class="mkt-email-body" style="line-height: 20px; font-size: 16px; font-weight: 400;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu tellus non lorem lobortis placerat.</p>
-                      <a href="#" class="mkt-email-cta" style="letter-spacing: 0px; font-weight: 600; border-radius: 24px;">Buy tickets</a>
+                      <p class="mkt-email-subheading">Get your tickets today!</p>
+                      <p class="mkt-email-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu tellus non lorem lobortis placerat.</p>
+                      <a href="#" class="mkt-email-cta">Buy tickets</a>
                     </div>
                   </div>
                 </div>
@@ -1601,11 +1650,8 @@
             <h2 class="mb-0 fw-medium text-body-emphasis" style="letter-spacing: -0.03em;">Connaissez vos fans comme jamais.</h2>
           </div>
           <div class="col-12 col-lg-5 offset-lg-1 reveal delay-100">
-            <p class="fs-5 text-body-secondary mb-3">
-              Know your fans like never before. Every fan, one source of truth.
-            </p>
-            <p class="text-body-secondary mb-4">
-              Your fan data, finally unified. Bring purchases, attendance, merchandising, and marketing engagement under a single pane of glass.
+            <p class="fs-5 text-body-secondary mb-4">
+              Segmentation dynamique, suivi de fidélité et historique complet des interactions avec vos partisants.
             </p>
             <a href="#crm" class="text-decoration-none text-body-secondary small d-inline-flex align-items-center gap-2">
               <span class="text-label mb-0 text-body-secondary" style="color: inherit;">Explore fan profiles</span> <span>&rarr;</span>
@@ -1617,7 +1663,7 @@
         <div class="card bg-glass-transparent backdrop-blur-md border border-secondary border-opacity-25 rounded-4 overflow-hidden w-100 reveal delay-200">
           <div class="card-header bg-black bg-opacity-50 border-bottom border-secondary border-opacity-25 px-4 py-3 d-flex align-items-center gap-3">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white text-opacity-50"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-            <span class="font-monospace text-white text-opacity-50" style="font-size: 0.86rem;">stadli/app/crm/fan_profile.tsx</span>
+            <span class="font-monospace text-white text-opacity-50 mockup-file-path">stadli/app/crm/fan_profile.tsx</span>
             <div class="d-flex gap-2 ms-auto">
               <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
               <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
@@ -1749,7 +1795,7 @@
           </div>
           <div class="col-12 col-lg-5 offset-lg-1 reveal delay-100">
             <p class="fs-5 text-body-secondary mb-4">
-              From gut feeling to game plan. The full picture, not just the score. Analytics built for game day.
+              Les réponses sont dans vos données. Tableaux de bord en temps réel, objectifs de vente et comparaisons par période.
             </p>
             <a href="#bi" class="text-decoration-none text-body-secondary small d-inline-flex align-items-center gap-2">
               <span class="text-label mb-0 text-body-secondary" style="color: inherit;">Explore analytics</span> <span>&rarr;</span>
@@ -1761,7 +1807,7 @@
         <div class="card bg-glass-transparent backdrop-blur-md border border-secondary border-opacity-25 rounded-4 overflow-hidden w-100 reveal delay-200">
           <div class="card-header bg-black bg-opacity-50 border-bottom border-secondary border-opacity-25 px-4 py-3 d-flex align-items-center gap-3">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white text-opacity-50"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-            <span class="font-monospace text-white text-opacity-50" style="font-size: 0.86rem;">stadli/app/analytics/matchday_dashboard.tsx</span>
+            <span class="font-monospace text-white text-opacity-50 mockup-file-path">stadli/app/analytics/matchday_dashboard.tsx</span>
             <div class="d-flex gap-2 ms-auto">
               <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
               <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
@@ -1907,7 +1953,7 @@
           </div>
           <div class="col-12 col-lg-5 offset-lg-1 reveal delay-100">
             <p class="fs-5 text-body-secondary mb-4">
-              Let AI handle the heavy lifting. Turn complex queries into immediate insights without writing code.
+              L'IA au service de vos opérations. Trois outils IA intégrés pour transformer vos questions en actions et en matchs complets.
             </p>
             <a href="#ai" class="text-decoration-none text-body-secondary small d-inline-flex align-items-center gap-2">
               <span class="text-label mb-0 text-body-secondary" style="color: inherit;">Explore AI features</span> <span>&rarr;</span>
@@ -1919,7 +1965,7 @@
         <div class="card bg-glass-transparent backdrop-blur-md border border-secondary border-opacity-25 rounded-4 overflow-hidden w-100 reveal delay-200">
           <div class="card-header bg-black bg-opacity-50 border-bottom border-secondary border-opacity-25 px-4 py-3 d-flex align-items-center gap-3">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white text-opacity-50"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-            <span class="font-monospace text-white text-opacity-50" style="font-size: 0.86rem;">stadli/app/ai/insight_query.tsx</span>
+            <span class="font-monospace text-white text-opacity-50 mockup-file-path">stadli/app/ai/insight_query.tsx</span>
             <div class="d-flex gap-2 ms-auto">
               <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
               <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
@@ -1989,8 +2035,8 @@
                       </div>
 
                       <div class="ai-stats-card">
-                        <div class="ai-card-label" style="margin-bottom: 4px;">Next on-sale</div>
-                        <div style="color: var(--stadli-white); font-size: 13px;">Playoff pre-sale &mdash; 1,240 waitlisted</div>
+                        <div class="ai-card-label">Next on-sale</div>
+                        <div class="ai-leaders-name">Playoff pre-sale &mdash; 1,240 waitlisted</div>
                       </div>
                     </div>
 
@@ -2046,7 +2092,7 @@
           </div>
           <div class="col-12 col-lg-5 offset-lg-1 reveal delay-100">
             <p class="fs-5 text-body-secondary mb-4">
-              Commerce built for live events. Sell more than tickets. Manage complex venue topographies natively.
+              La billetterie qui vit avec vos fans: Billets, forfaits, parking et produits dérivés dans un seul panier unifié.
             </p>
             <a href="#commerce" class="text-decoration-none text-body-secondary small d-inline-flex align-items-center gap-2">
               <span class="text-label mb-0 text-body-secondary" style="color: inherit;">Explore ticketing</span> <span>&rarr;</span>
@@ -2058,7 +2104,7 @@
         <div class="card bg-glass-transparent backdrop-blur-md border border-secondary border-opacity-25 rounded-4 overflow-hidden w-100 reveal delay-200">
           <div class="card-header bg-black bg-opacity-50 border-bottom border-secondary border-opacity-25 px-4 py-3 d-flex align-items-center gap-3">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white text-opacity-50"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-            <span class="font-monospace text-white text-opacity-50" style="font-size: 0.86rem;">stadli/app/ticketing/seatmap_renderer.tsx</span>
+            <span class="font-monospace text-white text-opacity-50 mockup-file-path">stadli/app/ticketing/seatmap_renderer.tsx</span>
             <div class="d-flex gap-2 ms-auto">
               <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
               <div class="rounded-circle bg-secondary bg-opacity-50" style="width: 12px; height: 12px;"></div>
@@ -2137,36 +2183,15 @@
       </div>
     </section>
 
-    <!-- Demo Form -->
-    <section id="demo" class="border-top pb-5 pb-lg-6" style="background: linear-gradient(rgba(1, 1, 1, 0.85), rgba(1, 1, 1, 0.85)), url('https://placehold.co/1920x1080/000000/333333?text=Crowd+Background') center/cover no-repeat;">
+    <!-- Demo CTA -->
+    <section id="demo" class="border-top py-5 py-lg-6" style="background: linear-gradient(rgba(1, 1, 1, 0.85), rgba(1, 1, 1, 0.85)), url('https://placehold.co/1920x1080/000000/333333?text=Crowd+Background') center/cover no-repeat;">
       <div class="container-fluid px-4 px-md-5 text-center">
-        <div style="max-width: 500px; margin: 0 auto;">
+        <div style="max-width: 600px; margin: 0 auto;">
           <h2 class="mb-3 reveal">Voyez Stadli en action.</h2>
-          <p class="text-body-secondary fs-5 mb-5 reveal delay-100">
-            Let's talk about your game plan.
+          <p class="text-body-secondary fs-5 mb-4 reveal delay-100">
+            Parlons-nous de votre plan de match. Réservez votre démo aujourd'hui.
           </p>
-          
-          <form class="text-start border p-4 p-md-5 rounded-4 bg-glass backdrop-blur-md reveal delay-200">
-            <div class="mb-4">
-              <label class="form-label text-label text-body-secondary mb-2">Work email</label>
-              <input type="email" class="form-control bg-body border-secondary text-body-color px-3 py-2" placeholder="name@organization.com">
-            </div>
-            <div class="row g-3 mb-4">
-              <div class="col-12 col-sm-6">
-                <label class="form-label text-label text-body-secondary mb-2">First name</label>
-                <input type="text" class="form-control bg-body border-secondary px-3 py-2">
-              </div>
-              <div class="col-12 col-sm-6">
-                <label class="form-label text-label text-body-secondary mb-2">Last name</label>
-                <input type="text" class="form-control bg-body border-secondary px-3 py-2">
-              </div>
-            </div>
-            <div class="mb-4">
-              <label class="form-label text-label text-body-secondary mb-2">Organization</label>
-              <input type="text" class="form-control bg-body border-secondary px-3 py-2">
-            </div>
-            <button type="submit" class="btn btn-primary w-100 py-3 mt-2">Request demo</button>
-          </form>
+          <button type="button" class="btn btn-primary btn-lg px-5 py-3 reveal delay-200" data-bs-toggle="modal" data-bs-target="#demoModal">Request demo</button>
         </div>
       </div>
     </section>
@@ -2217,6 +2242,45 @@
     </div>
   </footer>
 
+  <!-- Demo Request Modal -->
+  <div class="modal fade" id="demoModal" tabindex="-1" aria-labelledby="demoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content bg-body border border-secondary border-opacity-25">
+        <div class="modal-header border-bottom border-secondary border-opacity-25">
+          <div>
+            <h5 class="modal-title mb-1" id="demoModalLabel">Voyez Stadli en action.</h5>
+            <p class="text-body-secondary small mb-0">Parlons-nous de votre plan de match. Réservez votre démo aujourd'hui.</p>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <form>
+            <div class="mb-4">
+              <label class="form-label text-label text-body-secondary mb-2">Work email</label>
+              <input type="email" class="form-control bg-body border-secondary text-body-color px-3 py-2" placeholder="name@organization.com">
+            </div>
+            <div class="row g-3 mb-4">
+              <div class="col-12 col-sm-6">
+                <label class="form-label text-label text-body-secondary mb-2">First name</label>
+                <input type="text" class="form-control bg-body border-secondary px-3 py-2">
+              </div>
+              <div class="col-12 col-sm-6">
+                <label class="form-label text-label text-body-secondary mb-2">Last name</label>
+                <input type="text" class="form-control bg-body border-secondary px-3 py-2">
+              </div>
+            </div>
+            <div class="mb-4">
+              <label class="form-label text-label text-body-secondary mb-2">Organization</label>
+              <input type="text" class="form-control bg-body border-secondary px-3 py-2">
+            </div>
+            <button type="submit" class="btn btn-primary w-100 py-3 mt-2">Request demo</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       // Navbar Scroll Logic
