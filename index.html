@@ -1925,7 +1925,15 @@
       .mockup-bento .bento-ai-action { padding: 0.5rem 0.9rem; border-radius: 0.4rem; }
       .mockup-bento .bento-feed-wrapper { min-height: 7.25rem; margin-top: 0.6rem; }
       .mockup-bento .bento-feed .feed-set { gap: 0.7rem; padding-bottom: 0.7rem; }
-      .mockup-bento .bento-rev-chart { height: 55%; }
+      .mockup-bento .bento-revenue { min-height: 9.5rem; }
+      .mockup-bento .bento-rev-chart { height: 60%; }
+      /* Segment badge uses an inline cqi-clamped font-size (mins at
+         5.7px), which becomes illegible in the narrow fan card on
+         mobile — bump it back up with a rem-based override. */
+      .mockup-bento .bento-fan .badge {
+        font-size: 0.6rem !important;
+        padding: 0.2rem 0.55rem !important;
+      }
 
       /* 2. Marketing campaign builder — sidebar stacks horizontally
          above the email preview, acting like a compact toolbar. */
