@@ -322,7 +322,7 @@
       content: "";
       position: absolute;
       top: 0; left: -100%; width: 200%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(var(--bs-emphasis-color-rgb), 0.15), transparent);
+      background: linear-gradient(90deg, transparent, rgba(var(--bs-emphasis-color-rgb), 0.1), transparent);
       animation: badge-shimmer 2.4s ease-in-out infinite;
     }
     @keyframes badge-shimmer {
@@ -346,7 +346,7 @@
         90deg,
         transparent 0%,
         transparent 35%,
-        rgba(var(--bs-emphasis-color-rgb), 0.35) 50%,
+        rgba(var(--bs-emphasis-color-rgb), 0.1) 50%,
         transparent 65%,
         transparent 100%
       );
@@ -354,8 +354,10 @@
       pointer-events: none;
     }
     @keyframes ai-zone-shimmer {
-      0%   { transform: translateX(-25%); }
-      100% { transform: translateX(25%); }
+      0%   { transform: translateX(-50%); opacity: 0; }
+      25%  { opacity: 1; }
+      75%  { opacity: 1; }
+      100% { transform: translateX(50%); opacity: 0; }
     }
 
     /* Spectrum Classes for Marketing ONLY */
@@ -717,7 +719,7 @@
         90deg,
         transparent 0%,
         transparent 35%,
-        rgba(var(--bs-emphasis-color-rgb), 0.35) 50%,
+        rgba(var(--bs-emphasis-color-rgb), 0.1) 50%,
         transparent 65%,
         transparent 100%
       );
@@ -1466,7 +1468,7 @@
         90deg,
         transparent 0%,
         transparent 40%,
-        rgba(255, 255, 255, 0.12) 50%,
+        rgba(255, 255, 255, 0.1) 50%,
         transparent 60%,
         transparent 100%
       );
@@ -1570,7 +1572,7 @@
         90deg,
         transparent 0%,
         transparent 35%,
-        rgba(255, 255, 255, 0.35) 50%,
+        rgba(255, 255, 255, 0.1) 50%,
         transparent 65%,
         transparent 100%
       );
