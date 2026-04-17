@@ -1736,12 +1736,27 @@
       padding: 2.7cqi;
       min-width: 0;
     }
-    .mockup-commerce .cart-seatmap img {
+    .mockup-commerce .cart-seatmap img,
+    .mockup-commerce .cart-seatmap svg {
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
       border-radius: 8px;
     }
+    .seatmap-svg .seatmap-shell,
+    .seatmap-svg .seatmap-field-bg { fill: #1a2028; }
+    .seatmap-svg .seatmap-pitch { fill: #56a550; }
+    .seatmap-svg .seatmap-pitch-line { stroke: #ffffff; stroke-opacity: 0.4; stroke-width: 3; fill: none; }
+    .seatmap-svg .seatmap-pitch-dot { fill: #ffffff; fill-opacity: 0.4; }
+    .seatmap-svg .seat-section {
+      fill: #727b89;
+      stroke: #1a2028;
+      stroke-width: 4;
+      cursor: pointer;
+      transition: fill 0.15s ease;
+    }
+    .seatmap-svg .seat-section:hover { fill: #9aa3af; }
+    .seatmap-svg .seat-section.is-selected { fill: #56a550; }
     .mockup-commerce .cart-panel {
       width: 40cqi;
       min-width: 40cqi;
@@ -3292,7 +3307,48 @@
 
                   <!-- Left: Seat Map -->
                   <div class="cart-seatmap">
-                    <img src="seatmap.svg" alt="Plan des sièges du stade">
+                    <svg class="seatmap-svg" viewBox="0 0 1536 1536" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plan des sièges du stade">
+                      <ellipse class="seatmap-shell" cx="768" cy="768" rx="720" ry="620"/>
+                      <g>
+                        <path class="seat-section" data-section="U1" d="M1477.9,778.7 A710,610 0 0 1 1428.6,991.5 L1289,940.2 A560,470 0 0 0 1327.9,776.2Z"/>
+                        <path class="seat-section" data-section="U2" d="M1419.1,1011.3 A710,610 0 0 1 1278.8,1191.7 L1170.8,1094.5 A560,470 0 0 0 1281.5,955.4Z"/>
+                        <path class="seat-section" data-section="U3" d="M1261.2,1206.8 A710,610 0 0 1 1051.1,1327.4 L991.3,1199 A560,470 0 0 0 1157,1106.1Z"/>
+                        <path class="seat-section" data-section="U4" d="M1028.2,1335.6 A710,610 0 0 1 780.4,1377.9 L777.8,1237.9 A560,470 0 0 0 973.2,1205.3Z"/>
+                        <path class="seat-section" data-section="U5" d="M755.6,1377.9 A710,610 0 0 1 507.8,1335.6 L562.8,1205.3 A560,470 0 0 0 758.2,1237.9Z"/>
+                        <path class="seat-section" data-section="U6" d="M484.9,1327.4 A710,610 0 0 1 274.8,1206.8 L379,1106.1 A560,470 0 0 0 544.7,1199Z"/>
+                        <path class="seat-section" data-section="U7" d="M257.2,1191.7 A710,610 0 0 1 116.9,1011.3 L254.5,955.4 A560,470 0 0 0 365.2,1094.5Z"/>
+                        <path class="seat-section" data-section="U8" d="M107.4,991.5 A710,610 0 0 1 58.1,778.7 L208.1,776.2 A560,470 0 0 0 247,940.2Z"/>
+                        <path class="seat-section" data-section="U9" d="M58.1,757.3 A710,610 0 0 1 107.4,544.5 L247,595.8 A560,470 0 0 0 208.1,759.8Z"/>
+                        <path class="seat-section" data-section="U10" d="M116.9,524.7 A710,610 0 0 1 257.2,344.3 L365.2,441.5 A560,470 0 0 0 254.5,580.6Z"/>
+                        <path class="seat-section" data-section="U11" d="M274.8,329.2 A710,610 0 0 1 484.9,208.6 L544.7,337 A560,470 0 0 0 379,429.9Z"/>
+                        <path class="seat-section" data-section="U12" d="M507.8,200.4 A710,610 0 0 1 755.6,158.1 L758.2,298.1 A560,470 0 0 0 562.8,330.7Z"/>
+                        <path class="seat-section" data-section="U13" d="M780.4,158.1 A710,610 0 0 1 1028.2,200.4 L973.2,330.7 A560,470 0 0 0 777.8,298.1Z"/>
+                        <path class="seat-section" data-section="U14" d="M1051.1,208.6 A710,610 0 0 1 1261.2,329.2 L1157,429.9 A560,470 0 0 0 991.3,337Z"/>
+                        <path class="seat-section" data-section="U15" d="M1278.8,344.3 A710,610 0 0 1 1419.1,524.7 L1281.5,580.6 A560,470 0 0 0 1170.8,441.5Z"/>
+                        <path class="seat-section" data-section="U16" d="M1428.6,544.5 A710,610 0 0 1 1477.9,757.3 L1327.9,759.8 A560,470 0 0 0 1289,595.8Z"/>
+                        <path class="seat-section" data-section="L1" d="M1317.9,776 A550,460 0 0 1 1279.7,936.6 L1140.2,885.3 A400,320 0 0 0 1167.9,773.6Z"/>
+                        <path class="seat-section" data-section="L2" d="M1272.4,951.4 A550,460 0 0 1 1163.7,1087.5 L1055.7,990.3 A400,320 0 0 0 1134.8,895.6Z"/>
+                        <path class="seat-section" data-section="L3" d="M1150,1098.9 A550,460 0 0 1 987.3,1189.8 L927.5,1061.5 A400,320 0 0 0 1045.8,998.2Z"/>
+                        <path class="seat-section" data-section="L4" d="M969.6,1196 A550,460 0 0 1 777.6,1227.9 L775,1088 A400,320 0 0 0 914.6,1065.7Z"/>
+                        <path class="seat-section" data-section="L5" d="M758.4,1227.9 A550,460 0 0 1 566.4,1196 L621.4,1065.7 A400,320 0 0 0 761,1088Z"/>
+                        <path class="seat-section" data-section="L6" d="M548.7,1189.8 A550,460 0 0 1 386,1098.9 L490.2,998.2 A400,320 0 0 0 608.5,1061.5Z"/>
+                        <path class="seat-section" data-section="L7" d="M372.3,1087.5 A550,460 0 0 1 263.6,951.4 L401.2,895.6 A400,320 0 0 0 480.3,990.3Z"/>
+                        <path class="seat-section" data-section="L8" d="M256.3,936.6 A550,460 0 0 1 218.1,776 L368.1,773.6 A400,320 0 0 0 395.8,885.3Z"/>
+                        <path class="seat-section" data-section="L9" d="M218.1,760 A550,460 0 0 1 256.3,599.4 L395.8,650.7 A400,320 0 0 0 368.1,762.4Z"/>
+                        <path class="seat-section" data-section="L10" d="M263.6,584.6 A550,460 0 0 1 372.3,448.5 L480.3,545.7 A400,320 0 0 0 401.2,640.4Z"/>
+                        <path class="seat-section" data-section="L11" d="M386,437.1 A550,460 0 0 1 548.7,346.2 L608.5,474.5 A400,320 0 0 0 490.2,537.8Z"/>
+                        <path class="seat-section" data-section="L12" d="M566.4,340 A550,460 0 0 1 758.4,308.1 L761,448 A400,320 0 0 0 621.4,470.3Z"/>
+                        <path class="seat-section" data-section="L13" d="M777.6,308.1 A550,460 0 0 1 969.6,340 L914.6,470.3 A400,320 0 0 0 775,448Z"/>
+                        <path class="seat-section" data-section="L14" d="M987.3,346.2 A550,460 0 0 1 1150,437.1 L1045.8,537.8 A400,320 0 0 0 927.5,474.5Z"/>
+                        <path class="seat-section" data-section="L15" d="M1163.7,448.5 A550,460 0 0 1 1272.4,584.6 L1134.8,640.4 A400,320 0 0 0 1055.7,545.7Z"/>
+                        <path class="seat-section" data-section="L16" d="M1279.7,599.4 A550,460 0 0 1 1317.9,760 L1167.9,762.4 A400,320 0 0 0 1140.2,650.7Z"/>
+                      </g>
+                      <ellipse class="seatmap-field-bg" cx="768" cy="768" rx="395" ry="315"/>
+                      <rect class="seatmap-pitch" x="498" y="598" width="540" height="340" rx="6"/>
+                      <line class="seatmap-pitch-line" x1="768" y1="598" x2="768" y2="938"/>
+                      <circle class="seatmap-pitch-line" cx="768" cy="768" r="45"/>
+                      <circle class="seatmap-pitch-dot" cx="768" cy="768" r="4"/>
+                    </svg>
                   </div>
 
                   <!-- Right: Cart -->
@@ -3506,6 +3562,11 @@
 
       document.querySelectorAll('.reveal, .reveal-slow').forEach(element => {
         revealObserver.observe(element);
+      });
+
+      // Seat map — toggle section selection on tap
+      document.querySelectorAll('.seatmap-svg .seat-section').forEach(section => {
+        section.addEventListener('click', () => section.classList.toggle('is-selected'));
       });
 
       // Generic Smooth Animator
