@@ -354,8 +354,10 @@
       pointer-events: none;
     }
     @keyframes ai-zone-shimmer {
-      0%   { transform: translateX(-25%); }
-      100% { transform: translateX(25%); }
+      0%   { transform: translateX(-50%); opacity: 0; }
+      25%  { opacity: 1; }
+      75%  { opacity: 1; }
+      100% { transform: translateX(50%); opacity: 0; }
     }
 
     /* Spectrum Classes for Marketing ONLY */
@@ -860,6 +862,7 @@
       mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
       -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
       margin-bottom: -2rem;
+      position: relative;
     }
     @media (min-width: 768px) {
       .hero-dashboard-card {
@@ -874,6 +877,46 @@
         -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
         margin-bottom: -150px;
       }
+    }
+
+    /* Subtle perimeter shimmer rotating around the hero mockup. A bright arc
+       in a conic gradient sweeps continuously; the ring is carved out via
+       a padding-mask composite trick so only the border glows. The card's
+       bottom fade-mask naturally softens the shimmer as it reaches the
+       bottom edge, so the loop feels continuous. */
+    @property --hero-shimmer-angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
+    .hero-dashboard-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1.5px;
+      background: conic-gradient(
+        from var(--hero-shimmer-angle, 0deg),
+        transparent 0deg,
+        transparent 30deg,
+        rgba(255, 255, 255, 0.55) 55deg,
+        transparent 80deg,
+        transparent 360deg
+      );
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
+      pointer-events: none;
+      animation: hero-mockup-shimmer 8s linear infinite;
+      z-index: 4;
+    }
+    @keyframes hero-mockup-shimmer {
+      to { --hero-shimmer-angle: 360deg; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-dashboard-card::before { animation: none; opacity: 0; }
     }
 
     /* ── Marketing — Email Builder ── */

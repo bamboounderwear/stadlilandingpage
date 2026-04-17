@@ -354,8 +354,10 @@
       pointer-events: none;
     }
     @keyframes ai-zone-shimmer {
-      0%   { transform: translateX(-25%); }
-      100% { transform: translateX(25%); }
+      0%   { transform: translateX(-50%); opacity: 0; }
+      25%  { opacity: 1; }
+      75%  { opacity: 1; }
+      100% { transform: translateX(50%); opacity: 0; }
     }
 
     /* Spectrum Classes for Marketing ONLY */
