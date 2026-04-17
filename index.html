@@ -2011,28 +2011,33 @@
         border-radius: 0.25rem;
       }
 
-      /* 4. Analytics dashboard — stack metric cards vertically, hide
-         secondary table columns (date + sold) so the table breathes. */
+      /* 4. Analytics dashboard — 2-up metric cards (revenue + conversion
+         side by side) with the third spanning the full row below, then
+         a simplified table. Saves vertical space vs. a 1-column stack. */
       .mockup-analytics { padding: 1.25rem 1rem; gap: 1rem; }
       .mockup-analytics .ana-grid {
-        grid-template-columns: 1fr;
-        gap: 0.75rem;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.6rem;
         max-width: none;
       }
       .mockup-analytics .ana-card {
-        padding: 0.85rem 1rem;
+        padding: 0.75rem 0.85rem;
+        min-width: 0;
+      }
+      .mockup-analytics .ana-card:nth-child(3) {
+        grid-column: 1 / -1;
       }
       .mockup-analytics .ana-label {
-        font-size: 0.62rem;
-        margin-bottom: 0.35rem;
+        font-size: 0.58rem;
+        margin-bottom: 0.3rem;
       }
       .mockup-analytics .ana-value {
-        font-size: 1.5rem;
-        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+        margin-bottom: 0.4rem;
         line-height: 1.1;
       }
       .mockup-analytics .ana-trend {
-        height: 1.8rem;
+        height: 1.6rem;
         margin-top: 0;
       }
 
@@ -2155,7 +2160,8 @@
        ("147 174,84 $US") don't overflow card edges. */
     @container (max-width: 420px) {
       .mockup-bento .bento-value { font-size: 1.4rem; }
-      .mockup-analytics .ana-value { font-size: 1.25rem; }
+      .mockup-analytics .ana-value { font-size: 1.05rem; }
+      .mockup-analytics .ana-card { padding: 0.65rem 0.75rem; }
       .mockup-ai .ai-card-value { font-size: 1.25rem; }
     }
   </style>
