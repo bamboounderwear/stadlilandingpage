@@ -1799,6 +1799,13 @@
     .mockup-commerce .cart-seatmap svg .is-active {
       filter: brightness(1.15) hue-rotate(-10deg);
     }
+    /* Override the seatmap SVG's baked-in blue palette with spectrum
+       tokens from NEW_DESIGN — permitted on marketing surfaces. The
+       map.svg groups sections into three classes; we map them as a
+       cool→warm pricing-tier gradient from outer deck to pitch-side. */
+    .mockup-commerce .cart-seatmap svg .cls-1 { fill: var(--spec-teal); }
+    .mockup-commerce .cart-seatmap svg .cls-2 { fill: var(--spec-blue); }
+    .mockup-commerce .cart-seatmap svg .cls-3 { fill: var(--spec-rose); }
     @media (prefers-reduced-motion: reduce) {
       .mockup-commerce .cart-seatmap svg path,
       .mockup-commerce .cart-seatmap svg polygon,
