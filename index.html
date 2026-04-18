@@ -570,35 +570,6 @@
       }
     }
 
-    /* Seatmap section build-in — each <path>/<polygon> inside the
-       seatmap SVG fades + scales in with a per-element delay set by
-       JS (--seat-delay), radiating outward from the pitch so the
-       stadium feels like it is being assembled section by section.
-       transform-box: fill-box anchors the scale at each shape's own
-       centroid instead of the SVG origin. */
-    .cart-seatmap svg :is(path, polygon) {
-      transform-box: fill-box;
-      transform-origin: center;
-      transition: opacity 520ms ease-out, transform 520ms cubic-bezier(0.2, 0.8, 0.2, 1);
-      /* Base offset lets the container finish fading in (mockup-stagger
-         --stagger-base is 350ms) before sections start materializing. */
-      transition-delay: calc(450ms + var(--seat-delay, 0ms));
-      will-change: opacity, transform;
-    }
-    .cart-seatmap:not(.seatmap-built) svg :is(path, polygon) {
-      opacity: 0;
-      transform: scale(0.6);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .cart-seatmap svg :is(path, polygon),
-      .cart-seatmap:not(.seatmap-built) svg :is(path, polygon) {
-        transition: none !important;
-        opacity: 1 !important;
-        transform: none !important;
-      }
-    }
-
     /* ============================================
        MOCKUP FRAMES — Fluid UI previews
        Registered as an inline-size container so inner
@@ -1779,8 +1750,27 @@
     }
     .mockup-commerce .cart-seatmap svg path,
     .mockup-commerce .cart-seatmap svg polygon {
-      transition: filter 0.2s ease;
       cursor: pointer;
+      /* Build-in animation: each section fades + scales from its own
+         centroid (transform-box: fill-box) when .seatmap-built is added.
+         --seat-delay is set per-element in JS, keyed off distance from
+         the pitch so the stadium assembles from center outward.
+         Base offset lets the container finish fading in
+         (mockup-stagger --stagger-base is 350ms) before sections start. */
+      transform-box: fill-box;
+      transform-origin: center;
+      transition: filter 0.2s ease,
+                  opacity 520ms ease-out,
+                  transform 520ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      transition-delay: 0s,
+                        calc(450ms + var(--seat-delay, 0ms)),
+                        calc(450ms + var(--seat-delay, 0ms));
+      will-change: opacity, transform;
+    }
+    .mockup-commerce .cart-seatmap:not(.seatmap-built) svg path,
+    .mockup-commerce .cart-seatmap:not(.seatmap-built) svg polygon {
+      opacity: 0;
+      transform: scale(0.6);
     }
     .mockup-commerce .cart-seatmap svg path:hover,
     .mockup-commerce .cart-seatmap svg polygon:hover,
@@ -1788,6 +1778,17 @@
     .mockup-commerce .cart-seatmap svg polygon:active,
     .mockup-commerce .cart-seatmap svg .is-active {
       filter: brightness(1.15) hue-rotate(-10deg);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .mockup-commerce .cart-seatmap svg path,
+      .mockup-commerce .cart-seatmap svg polygon,
+      .mockup-commerce .cart-seatmap:not(.seatmap-built) svg path,
+      .mockup-commerce .cart-seatmap:not(.seatmap-built) svg polygon {
+        transition: filter 0.2s ease !important;
+        transition-delay: 0s !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
     }
     .mockup-commerce .cart-panel {
       width: 40cqi;
