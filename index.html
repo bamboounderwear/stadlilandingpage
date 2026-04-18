@@ -3552,12 +3552,22 @@
 
           const sections = Array.from(svg.querySelectorAll('path, polygon'));
 
-          // Stagger the reveal by distance from the seatmap's center so the
-          // stadium "builds" outward from the pitch. Falls back to document
-          // order if getBBox is unavailable (e.g. display:none ancestors).
-          const vb = svg.viewBox && svg.viewBox.baseVal;
-          const cx = vb ? vb.x + vb.width / 2 : 0;
-          const cy = vb ? vb.y + vb.height / 2 : 0;
+          // Stagger the reveal by distance from the seatmap's actual content
+          // center so the stadium "builds" symmetrically outward from the
+          // pitch. The SVG viewBox can be wider than the drawn content, so
+          // we derive the center from svg.getBBox() (the union of all
+          // rendered paths) rather than the viewBox — otherwise mirrored
+          // left/right sections get different delays. Falls back to
+          // document order if getBBox is unavailable.
+          let cx = 0, cy = 0;
+          try {
+            const sb = svg.getBBox();
+            cx = sb.x + sb.width / 2;
+            cy = sb.y + sb.height / 2;
+          } catch (_) {
+            const vb = svg.viewBox && svg.viewBox.baseVal;
+            if (vb) { cx = vb.x + vb.width / 2; cy = vb.y + vb.height / 2; }
+          }
           const measured = sections.map((el, i) => {
             let dist = i;
             try {
