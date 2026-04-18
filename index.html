@@ -570,6 +570,35 @@
       }
     }
 
+    /* Seatmap section build-in — each <path>/<polygon> inside the
+       seatmap SVG fades + scales in with a per-element delay set by
+       JS (--seat-delay), radiating outward from the pitch so the
+       stadium feels like it is being assembled section by section.
+       transform-box: fill-box anchors the scale at each shape's own
+       centroid instead of the SVG origin. */
+    .cart-seatmap svg :is(path, polygon) {
+      transform-box: fill-box;
+      transform-origin: center;
+      transition: opacity 520ms ease-out, transform 520ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      /* Base offset lets the container finish fading in (mockup-stagger
+         --stagger-base is 350ms) before sections start materializing. */
+      transition-delay: calc(450ms + var(--seat-delay, 0ms));
+      will-change: opacity, transform;
+    }
+    .cart-seatmap:not(.seatmap-built) svg :is(path, polygon) {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cart-seatmap svg :is(path, polygon),
+      .cart-seatmap:not(.seatmap-built) svg :is(path, polygon) {
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+
     /* ============================================
        MOCKUP FRAMES — Fluid UI previews
        Registered as an inline-size container so inner
@@ -3497,13 +3526,48 @@
           host.innerHTML = '';
           host.appendChild(svg);
 
-          const sections = svg.querySelectorAll('path, polygon');
+          const sections = Array.from(svg.querySelectorAll('path, polygon'));
+
+          // Stagger the reveal by distance from the seatmap's center so the
+          // stadium "builds" outward from the pitch. Falls back to document
+          // order if getBBox is unavailable (e.g. display:none ancestors).
+          const vb = svg.viewBox && svg.viewBox.baseVal;
+          const cx = vb ? vb.x + vb.width / 2 : 0;
+          const cy = vb ? vb.y + vb.height / 2 : 0;
+          const measured = sections.map((el, i) => {
+            let dist = i;
+            try {
+              const b = el.getBBox();
+              const dx = b.x + b.width / 2 - cx;
+              const dy = b.y + b.height / 2 - cy;
+              dist = Math.hypot(dx, dy);
+            } catch (_) {}
+            return { el, dist, i };
+          });
+          const maxDist = measured.reduce((m, s) => Math.max(m, s.dist), 0) || 1;
+          const totalMs = 2200;
+          measured.forEach(({ el, dist }) => {
+            const delay = Math.round((dist / maxDist) * totalMs);
+            el.style.setProperty('--seat-delay', delay + 'ms');
+          });
+
           sections.forEach((el) => {
             el.addEventListener('click', () => {
               sections.forEach((s) => { if (s !== el) s.classList.remove('is-active'); });
               el.classList.toggle('is-active');
             });
           });
+
+          // Trigger the staggered build-in once the seatmap scrolls into view.
+          const buildObserver = new IntersectionObserver((entries, obs) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                host.classList.add('seatmap-built');
+                obs.disconnect();
+              }
+            });
+          }, { threshold: 0.2 });
+          buildObserver.observe(host);
         } catch (e) {
           console.error('Seatmap failed to load', e);
         }
