@@ -1736,11 +1736,29 @@
       padding: 2.7cqi;
       min-width: 0;
     }
-    .mockup-commerce .cart-seatmap img {
+    .mockup-commerce .cart-seatmap img,
+    .mockup-commerce .cart-seatmap svg {
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
       border-radius: 8px;
+    }
+    .mockup-commerce .cart-seatmap svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .mockup-commerce .cart-seatmap svg path,
+    .mockup-commerce .cart-seatmap svg polygon {
+      transition: filter 0.2s ease;
+      cursor: pointer;
+    }
+    .mockup-commerce .cart-seatmap svg path:hover,
+    .mockup-commerce .cart-seatmap svg polygon:hover,
+    .mockup-commerce .cart-seatmap svg path:active,
+    .mockup-commerce .cart-seatmap svg polygon:active,
+    .mockup-commerce .cart-seatmap svg .is-active {
+      filter: brightness(1.15) hue-rotate(-10deg);
     }
     .mockup-commerce .cart-panel {
       width: 40cqi;
@@ -3291,9 +3309,7 @@
                 <div class="mockup-commerce mockup-stagger">
 
                   <!-- Left: Seat Map -->
-                  <div class="cart-seatmap">
-                    <img src="map.svg" alt="Plan des sièges du stade">
-                  </div>
+                  <div class="cart-seatmap" data-seatmap-src="map.svg" role="img" aria-label="Plan des sièges du stade"></div>
 
                   <!-- Right: Cart -->
                   <div class="cart-panel">
@@ -3468,6 +3484,30 @@
     document.addEventListener('DOMContentLoaded', function() {
       // Bootstrap Tooltips
       document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => new bootstrap.Tooltip(el));
+
+      // Inline seatmap SVG so individual sections can be interactive
+      document.querySelectorAll('[data-seatmap-src]').forEach(async (host) => {
+        try {
+          const res = await fetch(host.dataset.seatmapSrc);
+          const markup = await res.text();
+          const doc = new DOMParser().parseFromString(markup, 'image/svg+xml');
+          const svg = doc.querySelector('svg');
+          if (!svg) return;
+          svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+          host.innerHTML = '';
+          host.appendChild(svg);
+
+          const sections = svg.querySelectorAll('path, polygon');
+          sections.forEach((el) => {
+            el.addEventListener('click', () => {
+              sections.forEach((s) => { if (s !== el) s.classList.remove('is-active'); });
+              el.classList.toggle('is-active');
+            });
+          });
+        } catch (e) {
+          console.error('Seatmap failed to load', e);
+        }
+      });
 
       // Navbar Scroll Logic
       const navbar = document.getElementById('navbar');
