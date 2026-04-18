@@ -1750,16 +1750,13 @@
     }
     .mockup-commerce .cart-seatmap svg path,
     .mockup-commerce .cart-seatmap svg polygon {
-      transform-box: fill-box;
-      transform-origin: center;
-      transition: transform 0.2s ease, filter 0.2s ease;
+      transition: filter 0.2s ease;
       cursor: pointer;
     }
-    .mockup-commerce .cart-seatmap svg path:hover,
-    .mockup-commerce .cart-seatmap svg polygon:hover,
+    .mockup-commerce .cart-seatmap svg path:active,
+    .mockup-commerce .cart-seatmap svg polygon:active,
     .mockup-commerce .cart-seatmap svg .is-active {
-      transform: scale(1.04);
-      filter: brightness(1.25);
+      filter: brightness(1.15) hue-rotate(-10deg);
     }
     .mockup-commerce .cart-panel {
       width: 40cqi;
