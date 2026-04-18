@@ -3579,7 +3579,10 @@
             return { el, dist, i };
           });
           const maxDist = measured.reduce((m, s) => Math.max(m, s.dist), 0) || 1;
-          const totalMs = 2200;
+          // Total spread between the first and last section to start their
+          // drop-in. Smaller values tighten the cascade so the stadium
+          // feels like it's materializing more-or-less at once.
+          const totalMs = 900;
           measured.forEach(({ el, dist }) => {
             const delay = Math.round((dist / maxDist) * totalMs);
             el.style.setProperty('--seat-delay', delay + 'ms');
