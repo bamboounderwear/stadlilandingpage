@@ -1751,10 +1751,10 @@
     .mockup-commerce .cart-seatmap svg path,
     .mockup-commerce .cart-seatmap svg polygon {
       cursor: pointer;
-      /* Snappy filter transition is for hover/.is-active. The build-in
-         fade/drop/blur is handled by a keyframe animation (below) so
-         it can animate filter without stretching the hover transition. */
-      transition: filter 0.2s ease;
+      /* Snappy fill transition colors the section in on hover/.is-active.
+         The build-in fade/drop/blur is handled by a keyframe animation
+         (below) so it can animate filter without stretching hover. */
+      transition: fill 0.2s ease;
       will-change: opacity, transform, filter;
     }
     /* Initial resting state before the reveal fires — matches the
@@ -1792,20 +1792,24 @@
         filter: blur(0);
       }
     }
+    /* Monochrome dark-mode rest state — the three classes in map.svg
+       are re-mapped to neutral grays so the stadium reads as quiet
+       structure against the dark card. Slight tonal step between
+       rings keeps the concentric shape legible without any hue. */
+    .mockup-commerce .cart-seatmap svg .cls-1 { fill: var(--stadli-gray-600); }
+    .mockup-commerce .cart-seatmap svg .cls-2 { fill: var(--stadli-gray-700); }
+    .mockup-commerce .cart-seatmap svg .cls-3 { fill: var(--stadli-gray-800); }
+    /* Color only appears on interaction — hovered / tapped / selected
+       sections flip to the brand accent so the affordance is obvious
+       against the monochrome bowl. Overrides the .cls-* rules above
+       because it is a more specific selector (pseudo-class + .is-active). */
     .mockup-commerce .cart-seatmap svg path:hover,
     .mockup-commerce .cart-seatmap svg polygon:hover,
     .mockup-commerce .cart-seatmap svg path:active,
     .mockup-commerce .cart-seatmap svg polygon:active,
     .mockup-commerce .cart-seatmap svg .is-active {
-      filter: brightness(1.15) hue-rotate(-10deg);
+      fill: var(--spec-teal);
     }
-    /* Override the seatmap SVG's baked-in blue palette with spectrum
-       tokens from NEW_DESIGN — permitted on marketing surfaces. The
-       map.svg groups sections into three classes; we map them as a
-       cool→warm pricing-tier gradient from outer deck to pitch-side. */
-    .mockup-commerce .cart-seatmap svg .cls-1 { fill: var(--spec-teal); }
-    .mockup-commerce .cart-seatmap svg .cls-2 { fill: var(--spec-blue); }
-    .mockup-commerce .cart-seatmap svg .cls-3 { fill: var(--spec-rose); }
     @media (prefers-reduced-motion: reduce) {
       .mockup-commerce .cart-seatmap svg path,
       .mockup-commerce .cart-seatmap svg polygon,
@@ -1814,7 +1818,7 @@
       .mockup-commerce .cart-seatmap.seatmap-built svg path,
       .mockup-commerce .cart-seatmap.seatmap-built svg polygon {
         animation: none !important;
-        transition: filter 0.2s ease !important;
+        transition: fill 0.2s ease !important;
         opacity: 1 !important;
         transform: none !important;
         filter: none !important;
