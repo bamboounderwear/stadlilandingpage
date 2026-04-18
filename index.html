@@ -1751,24 +1751,46 @@
     .mockup-commerce .cart-seatmap svg path,
     .mockup-commerce .cart-seatmap svg polygon {
       cursor: pointer;
-      /* Build-in animation: each section drops in from above when
-         .seatmap-built is added. --seat-delay is set per-element in
-         JS, keyed off distance from the pitch so the stadium falls
-         into place from the center outward. Base offset lets the
-         container finish fading in (mockup-stagger --stagger-base is
-         350ms) before sections start. */
-      transition: filter 0.2s ease,
-                  opacity 600ms ease-out,
-                  transform 600ms cubic-bezier(0.33, 0, 0.2, 1);
-      transition-delay: 0s,
-                        calc(450ms + var(--seat-delay, 0ms)),
-                        calc(450ms + var(--seat-delay, 0ms));
-      will-change: opacity, transform;
+      /* Snappy filter transition is for hover/.is-active. The build-in
+         fade/drop/blur is handled by a keyframe animation (below) so
+         it can animate filter without stretching the hover transition. */
+      transition: filter 0.2s ease;
+      will-change: opacity, transform, filter;
     }
+    /* Initial resting state before the reveal fires — matches the
+       `from` keyframe so the element has something to show during the
+       moment between SVG injection and .seatmap-built being added. */
     .mockup-commerce .cart-seatmap:not(.seatmap-built) svg path,
     .mockup-commerce .cart-seatmap:not(.seatmap-built) svg polygon {
       opacity: 0;
       transform: translateY(-140px);
+      filter: blur(12px);
+    }
+    /* Build-in: each section drops from above, de-blurs, and fades in.
+       --seat-delay is set per-element in JS, keyed off distance from
+       the pitch so the stadium falls into place from the center
+       outward. Base offset lets the container finish fading in
+       (mockup-stagger --stagger-base is 350ms) before sections start.
+       animation-fill-mode: backwards applies the `from` state during
+       the delay; after the animation ends we let the element fall
+       back to its default state (opacity 1, no transform, no filter)
+       so hover filters work normally. */
+    .mockup-commerce .cart-seatmap.seatmap-built svg path,
+    .mockup-commerce .cart-seatmap.seatmap-built svg polygon {
+      animation: seatmap-drop-in 680ms cubic-bezier(0.33, 0, 0.2, 1) backwards;
+      animation-delay: calc(450ms + var(--seat-delay, 0ms));
+    }
+    @keyframes seatmap-drop-in {
+      from {
+        opacity: 0;
+        transform: translateY(-140px);
+        filter: blur(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+      }
     }
     .mockup-commerce .cart-seatmap svg path:hover,
     .mockup-commerce .cart-seatmap svg polygon:hover,
@@ -1781,11 +1803,14 @@
       .mockup-commerce .cart-seatmap svg path,
       .mockup-commerce .cart-seatmap svg polygon,
       .mockup-commerce .cart-seatmap:not(.seatmap-built) svg path,
-      .mockup-commerce .cart-seatmap:not(.seatmap-built) svg polygon {
+      .mockup-commerce .cart-seatmap:not(.seatmap-built) svg polygon,
+      .mockup-commerce .cart-seatmap.seatmap-built svg path,
+      .mockup-commerce .cart-seatmap.seatmap-built svg polygon {
+        animation: none !important;
         transition: filter 0.2s ease !important;
-        transition-delay: 0s !important;
         opacity: 1 !important;
         transform: none !important;
+        filter: none !important;
       }
     }
     .mockup-commerce .cart-panel {
