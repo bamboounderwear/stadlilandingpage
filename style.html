@@ -1798,6 +1798,125 @@
       text-transform: uppercase;
       margin-top: 0.1rem;
     }
+
+    /* Style Guide — Charts */
+    .chart-card {
+      background-color: var(--bs-tertiary-bg);
+      border: 1px solid var(--bs-border-color);
+      border-radius: 0.75rem;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .chart-card-body {
+      padding: 1.1rem 1.1rem 0.6rem 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+    .chart-card-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--bs-secondary-color);
+    }
+    .chart-card-title {
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: var(--bs-emphasis-color);
+      letter-spacing: -0.01em;
+    }
+    .chart-card-value {
+      font-size: 1.55rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+      color: var(--bs-emphasis-color);
+      line-height: 1.15;
+      margin-top: 0.15rem;
+    }
+    .chart-card-delta {
+      font-size: 0.78rem;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+    .chart-card-delta.up   { color: var(--bs-success); }
+    .chart-card-delta.down { color: var(--bs-danger); }
+    .chart-card-delta.flat { color: var(--bs-secondary); }
+
+    .chart-svg-wrap {
+      padding: 0.25rem 1.1rem 1rem 1.1rem;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+    }
+    .chart-svg-wrap svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      overflow: visible;
+    }
+    .chart-grid-line {
+      stroke: var(--bs-border-color);
+      stroke-width: 1;
+      stroke-dasharray: 3 4;
+    }
+    .chart-axis-label {
+      font-size: 9px;
+      fill: var(--bs-tertiary-color);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+      letter-spacing: 0.04em;
+    }
+
+    .chart-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem 1rem;
+      padding: 0 1.1rem 1rem 1.1rem;
+      margin-top: auto;
+    }
+    .chart-legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.72rem;
+      color: var(--bs-secondary-color);
+      font-variant-numeric: tabular-nums;
+    }
+    .chart-legend-dot {
+      width: 0.55rem;
+      height: 0.55rem;
+      border-radius: 2px;
+      flex: 0 0 auto;
+    }
+
+    /* Sparkline KPI tiles */
+    .sparkline-tile {
+      padding: 0.9rem 1rem 0.75rem 1rem;
+      border-right: 1px solid var(--bs-border-color);
+      border-bottom: 1px solid var(--bs-border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      min-height: 120px;
+    }
+    /* Mobile (col-6 → 2 per row): remove right border on even columns */
+    @media (max-width: 767.98px) {
+      .sparkline-grid > div:nth-of-type(2n) .sparkline-tile { border-right: 0; }
+    }
+    /* Desktop (col-md-3 → 4 per row): remove right border only on last column */
+    @media (min-width: 768px) {
+      .sparkline-grid > div:last-of-type .sparkline-tile { border-right: 0; }
+      .sparkline-grid > div:nth-last-of-type(-n+4) .sparkline-tile { border-bottom: 0; }
+    }
+    .sparkline-tile .chart-card-value { font-size: 1.25rem; }
+    .sparkline-svg {
+      height: 28px;
+      width: 100%;
+      margin-top: 0.35rem;
+    }
+    .sparkline-svg svg { width: 100%; height: 100%; overflow: visible; }
   </style>
 </head>
 <body>
@@ -2150,6 +2269,279 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        <!-- Data-viz / Charts -->
+        <div class="reveal mb-5">
+          <div class="d-flex align-items-baseline justify-content-between mb-3">
+            <h2 class="h3 mb-0">Data-viz</h2>
+            <span class="text-label text-body-secondary">Graphiques · Sémantiques</span>
+          </div>
+          <hr class="mt-0 mb-4">
+          <p class="small text-body-secondary mb-4" style="max-width: 640px;">
+            Les couleurs sémantiques portent toujours un sens&nbsp;: <span style="color: var(--bs-success);">succès</span>, <span style="color: var(--bs-warning);">avertissement</span>, <span style="color: var(--bs-danger);">danger</span>, <span style="color: var(--bs-info);">information</span>. Utilisez-les pour encoder la performance, pas pour décorer.
+          </p>
+
+          <div class="row g-3">
+
+            <!-- Chart 1: Area (Success) — Revenue trend -->
+            <div class="col-12 col-lg-6">
+              <div class="chart-card">
+                <div class="chart-card-body">
+                  <span class="chart-card-eyebrow">Revenus billetterie</span>
+                  <span class="chart-card-title">30 derniers jours</span>
+                  <span class="chart-card-value">1 284 500&nbsp;€</span>
+                  <span class="chart-card-delta up">▲ 12,4&nbsp;% vs période précédente</span>
+                </div>
+                <div class="chart-svg-wrap">
+                  <svg viewBox="0 0 400 180" preserveAspectRatio="none">
+                    <line x1="0" y1="40"  x2="400" y2="40"  class="chart-grid-line"/>
+                    <line x1="0" y1="90"  x2="400" y2="90"  class="chart-grid-line"/>
+                    <line x1="0" y1="140" x2="400" y2="140" class="chart-grid-line"/>
+                    <path d="M0,150 L14,145 L28,148 L42,138 L56,142 L70,130 L84,134 L98,120 L112,128 L126,112 L140,118 L154,100 L168,108 L182,92 L196,98 L210,80 L224,86 L238,72 L252,78 L266,60 L280,68 L294,52 L308,58 L322,42 L336,48 L350,34 L364,38 L378,24 L400,18 L400,180 L0,180 Z"
+                          fill="var(--bs-success)" fill-opacity="0.16"/>
+                    <path d="M0,150 L14,145 L28,148 L42,138 L56,142 L70,130 L84,134 L98,120 L112,128 L126,112 L140,118 L154,100 L168,108 L182,92 L196,98 L210,80 L224,86 L238,72 L252,78 L266,60 L280,68 L294,52 L308,58 L322,42 L336,48 L350,34 L364,38 L378,24 L400,18"
+                          fill="none" stroke="var(--bs-success)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+                    <circle cx="400" cy="18" r="3.5" fill="var(--bs-success)"/>
+                  </svg>
+                </div>
+                <div class="chart-legend">
+                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--bs-success);"></span>Revenus nets</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chart 2: Multi-line (Info vs. Danger) — Sessions vs. abandons -->
+            <div class="col-12 col-lg-6">
+              <div class="chart-card">
+                <div class="chart-card-body">
+                  <span class="chart-card-eyebrow">Conversions — 14 semaines</span>
+                  <span class="chart-card-title">Sessions vs. paniers abandonnés</span>
+                  <span class="chart-card-value">68,2&nbsp;%</span>
+                  <span class="chart-card-delta up">▲ 4,1&nbsp;pts de conversion</span>
+                </div>
+                <div class="chart-svg-wrap">
+                  <svg viewBox="0 0 400 180" preserveAspectRatio="none">
+                    <line x1="0" y1="40"  x2="400" y2="40"  class="chart-grid-line"/>
+                    <line x1="0" y1="90"  x2="400" y2="90"  class="chart-grid-line"/>
+                    <line x1="0" y1="140" x2="400" y2="140" class="chart-grid-line"/>
+                    <!-- Info: sessions (rising) -->
+                    <path d="M0,130 L30,124 L60,118 L90,110 L120,105 L150,94 L180,90 L210,82 L240,76 L270,68 L300,62 L330,52 L360,46 L400,36"
+                          fill="none" stroke="var(--bs-info)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+                    <!-- Danger: abandons (falling) -->
+                    <path d="M0,60 L30,64 L60,72 L90,70 L120,78 L150,82 L180,88 L210,94 L240,96 L270,108 L300,112 L330,124 L360,130 L400,138"
+                          fill="none" stroke="var(--bs-danger)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="4 3"/>
+                    <circle cx="400" cy="36"  r="3.5" fill="var(--bs-info)"/>
+                    <circle cx="400" cy="138" r="3.5" fill="var(--bs-danger)"/>
+                  </svg>
+                </div>
+                <div class="chart-legend">
+                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--bs-info);"></span>Sessions converties</span>
+                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--bs-danger);"></span>Paniers abandonnés</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chart 3: Grouped bars (Success / Warning / Danger) — Performance -->
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="chart-card">
+                <div class="chart-card-body">
+                  <span class="chart-card-eyebrow">Performance par match</span>
+                  <span class="chart-card-title">Statut vs. cible</span>
+                  <span class="chart-card-value">7&nbsp;/&nbsp;10</span>
+                  <span class="chart-card-delta up">au-dessus de la cible</span>
+                </div>
+                <div class="chart-svg-wrap">
+                  <svg viewBox="0 0 400 180" preserveAspectRatio="none">
+                    <line x1="0" y1="30"  x2="400" y2="30"  class="chart-grid-line"/>
+                    <line x1="0" y1="90"  x2="400" y2="90"  class="chart-grid-line"/>
+                    <line x1="0" y1="150" x2="400" y2="150" class="chart-grid-line"/>
+                    <!-- 10 bars, colored by performance -->
+                    <rect x="8"   y="42"  width="28" height="108" rx="2" fill="var(--bs-success)"/>
+                    <rect x="48"  y="58"  width="28" height="92"  rx="2" fill="var(--bs-success)"/>
+                    <rect x="88"  y="78"  width="28" height="72"  rx="2" fill="var(--bs-warning)"/>
+                    <rect x="128" y="34"  width="28" height="116" rx="2" fill="var(--bs-success)"/>
+                    <rect x="168" y="96"  width="28" height="54"  rx="2" fill="var(--bs-danger)"/>
+                    <rect x="208" y="50"  width="28" height="100" rx="2" fill="var(--bs-success)"/>
+                    <rect x="248" y="86"  width="28" height="64"  rx="2" fill="var(--bs-warning)"/>
+                    <rect x="288" y="66"  width="28" height="84"  rx="2" fill="var(--bs-success)"/>
+                    <rect x="328" y="110" width="28" height="40"  rx="2" fill="var(--bs-danger)"/>
+                    <rect x="368" y="46"  width="28" height="104" rx="2" fill="var(--bs-success)"/>
+                    <!-- Target line -->
+                    <line x1="0" y1="74" x2="400" y2="74" stroke="var(--bs-secondary)" stroke-width="1.5" stroke-dasharray="5 4"/>
+                  </svg>
+                </div>
+                <div class="chart-legend">
+                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--bs-success);"></span>Atteint</span>
+                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--bs-warning);"></span>Sous cible</span>
+                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--bs-danger);"></span>Critique</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chart 4: Donut — Répartition revenus -->
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="chart-card">
+                <div class="chart-card-body">
+                  <span class="chart-card-eyebrow">Canaux de vente</span>
+                  <span class="chart-card-title">Répartition du revenu</span>
+                  <span class="chart-card-value">5&nbsp;canaux</span>
+                  <span class="chart-card-delta flat">Part directe dominante</span>
+                </div>
+                <div class="chart-svg-wrap">
+                  <svg viewBox="0 0 260 180" preserveAspectRatio="xMidYMid meet">
+                    <g transform="translate(130 90) rotate(-90)">
+                      <!-- circumference = 2 * PI * 60 ≈ 376.99 -->
+                      <!-- Primary 42%  -> 158.33, offset 0 -->
+                      <circle r="60" fill="none" stroke="var(--bs-primary)" stroke-width="22"
+                              stroke-dasharray="158.33 376.99" stroke-dashoffset="0"/>
+                      <!-- Success 26% -> 98.02, offset -158.33 -->
+                      <circle r="60" fill="none" stroke="var(--bs-success)" stroke-width="22"
+                              stroke-dasharray="98.02 376.99" stroke-dashoffset="-158.33"/>
+                      <!-- Warning 18% -> 67.86, offset -256.35 -->
+                      <circle r="60" fill="none" stroke="var(--bs-warning)" stroke-width="22"
+                              stroke-dasharray="67.86 376.99" stroke-dashoffset="-256.35"/>
+                      <!-- Info 10%    -> 37.70, offset -324.21 -->
+                      <circle r="60" fill="none" stroke="var(--bs-info)" stroke-width="22"
+                              stroke-dasharray="37.70 376.99" stroke-dashoffset="-324.21"/>
+                      <!-- Danger 4%   -> 15.08, offset -361.91 -->
+                      <circle r="60" fill="none" stroke="var(--bs-danger)" stroke-width="22"
+                              stroke-dasharray="15.08 376.99" stroke-dashoffset="-361.91"/>
+                    </g>
+                    <text x="130" y="88" text-anchor="middle" font-size="18" font-weight="600" fill="var(--bs-emphasis-color)" style="font-variant-numeric: tabular-nums;">1,28&nbsp;M€</text>
+                    <text x="130" y="104" text-anchor="middle" font-size="9" fill="var(--bs-tertiary-color)" letter-spacing="0.1em">TOTAL Q3</text>
+                  </svg>
+                </div>
+                <div class="chart-legend">
+                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--bs-primary);"></span>Direct 42&nbsp;%</span>
+                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--bs-success);"></span>Abonnés 26&nbsp;%</span>
+                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--bs-warning);"></span>Revendeurs 18&nbsp;%</span>
+                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--bs-info);"></span>Partenaires 10&nbsp;%</span>
+                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--bs-danger);"></span>Remboursé 4&nbsp;%</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chart 5: Stacked horizontal bar — Ticket status -->
+            <div class="col-12 col-lg-4">
+              <div class="chart-card">
+                <div class="chart-card-body">
+                  <span class="chart-card-eyebrow">Inventaire billets — PSG vs OM</span>
+                  <span class="chart-card-title">Statut de l'inventaire</span>
+                  <span class="chart-card-value">47 812 / 50 000</span>
+                  <span class="chart-card-delta up">95,6&nbsp;% de remplissage</span>
+                </div>
+                <div class="chart-svg-wrap" style="aspect-ratio: 16 / 10;">
+                  <svg viewBox="0 0 400 180" preserveAspectRatio="none">
+                    <!-- Full stacked bar: 60% success (vendus), 20% warning (réservés), 12% info (disponibles), 8% danger (remboursés) -->
+                    <g>
+                      <rect x="0"   y="30" width="240" height="48" fill="var(--bs-success)"/>
+                      <rect x="240" y="30" width="80"  height="48" fill="var(--bs-warning)"/>
+                      <rect x="320" y="30" width="48"  height="48" fill="var(--bs-info)"/>
+                      <rect x="368" y="30" width="32"  height="48" fill="var(--bs-danger)"/>
+                    </g>
+                    <!-- Labels -->
+                    <text x="120" y="60" text-anchor="middle" class="chart-axis-label" fill="#ffffff" style="fill: var(--stadli-white); font-weight: 600;">60 %</text>
+                    <text x="280" y="60" text-anchor="middle" class="chart-axis-label" fill="#ffffff" style="fill: var(--stadli-white); font-weight: 600;">20 %</text>
+                    <text x="344" y="60" text-anchor="middle" class="chart-axis-label" fill="#ffffff" style="fill: var(--stadli-white); font-weight: 600;">12 %</text>
+                    <!-- Scale ticks -->
+                    <text x="0"   y="100" class="chart-axis-label">0</text>
+                    <text x="200" y="100" text-anchor="middle" class="chart-axis-label">25 K</text>
+                    <text x="400" y="100" text-anchor="end" class="chart-axis-label">50 K</text>
+                    <!-- Capacity target -->
+                    <line x1="0" y1="130" x2="400" y2="130" class="chart-grid-line"/>
+                    <text x="0" y="150" class="chart-axis-label">CIBLE 90&nbsp;%</text>
+                    <rect x="0" y="156" width="360" height="6" rx="3" fill="var(--bs-border-color)"/>
+                    <rect x="0" y="156" width="342" height="6" rx="3" fill="var(--bs-success)"/>
+                  </svg>
+                </div>
+                <div class="chart-legend">
+                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--bs-success);"></span>Vendus</span>
+                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--bs-warning);"></span>Réservés</span>
+                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--bs-info);"></span>Disponibles</span>
+                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--bs-danger);"></span>Remboursés</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chart 6: Sparkline KPI grid -->
+            <div class="col-12">
+              <div class="chart-card">
+                <div class="chart-card-body">
+                  <span class="chart-card-eyebrow">Tableau de bord temps réel</span>
+                  <span class="chart-card-title">Indicateurs clés — 24 dernières heures</span>
+                </div>
+                <div class="row g-0 mt-2 sparkline-grid" style="border-top: 1px solid var(--bs-border-color);">
+
+                  <div class="col-6 col-md-3">
+                    <div class="sparkline-tile">
+                      <span class="chart-card-eyebrow">Billets vendus / h</span>
+                      <span class="chart-card-value">1 284</span>
+                      <span class="chart-card-delta up">▲ 8,2 %</span>
+                      <div class="sparkline-svg">
+                        <svg viewBox="0 0 200 40" preserveAspectRatio="none">
+                          <path d="M0,30 L15,28 L30,32 L45,24 L60,26 L75,20 L90,22 L105,16 L120,18 L135,12 L150,14 L165,8 L180,10 L200,4"
+                                fill="none" stroke="var(--bs-success)" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+                          <path d="M0,30 L15,28 L30,32 L45,24 L60,26 L75,20 L90,22 L105,16 L120,18 L135,12 L150,14 L165,8 L180,10 L200,4 L200,40 L0,40 Z"
+                                fill="var(--bs-success)" fill-opacity="0.16"/>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-6 col-md-3">
+                    <div class="sparkline-tile">
+                      <span class="chart-card-eyebrow">Temps de réponse API</span>
+                      <span class="chart-card-value">142&nbsp;ms</span>
+                      <span class="chart-card-delta down">▲ 14 ms (latence)</span>
+                      <div class="sparkline-svg">
+                        <svg viewBox="0 0 200 40" preserveAspectRatio="none">
+                          <path d="M0,28 L15,26 L30,24 L45,28 L60,22 L75,26 L90,18 L105,22 L120,14 L135,18 L150,10 L165,16 L180,8 L200,6"
+                                fill="none" stroke="var(--bs-warning)" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+                          <path d="M0,28 L15,26 L30,24 L45,28 L60,22 L75,26 L90,18 L105,22 L120,14 L135,18 L150,10 L165,16 L180,8 L200,6 L200,40 L0,40 Z"
+                                fill="var(--bs-warning)" fill-opacity="0.16"/>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-6 col-md-3">
+                    <div class="sparkline-tile">
+                      <span class="chart-card-eyebrow">Taux d'échec paiement</span>
+                      <span class="chart-card-value">3,4&nbsp;%</span>
+                      <span class="chart-card-delta down">▲ 1,2 pt vs hier</span>
+                      <div class="sparkline-svg">
+                        <svg viewBox="0 0 200 40" preserveAspectRatio="none">
+                          <path d="M0,32 L15,30 L30,28 L45,30 L60,26 L75,24 L90,26 L105,20 L120,22 L135,16 L150,18 L165,12 L180,14 L200,8"
+                                fill="none" stroke="var(--bs-danger)" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+                          <path d="M0,32 L15,30 L30,28 L45,30 L60,26 L75,24 L90,26 L105,20 L120,22 L135,16 L150,18 L165,12 L180,14 L200,8 L200,40 L0,40 Z"
+                                fill="var(--bs-danger)" fill-opacity="0.16"/>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-6 col-md-3">
+                    <div class="sparkline-tile">
+                      <span class="chart-card-eyebrow">Nouveaux abonnés</span>
+                      <span class="chart-card-value">218</span>
+                      <span class="chart-card-delta flat">stable 24 h</span>
+                      <div class="sparkline-svg">
+                        <svg viewBox="0 0 200 40" preserveAspectRatio="none">
+                          <path d="M0,20 L15,18 L30,22 L45,16 L60,24 L75,20 L90,18 L105,22 L120,16 L135,20 L150,22 L165,18 L180,20 L200,18"
+                                fill="none" stroke="var(--bs-info)" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+                          <path d="M0,20 L15,18 L30,22 L45,16 L60,24 L75,20 L90,18 L105,22 L120,16 L135,20 L150,22 L165,18 L180,20 L200,18 L200,40 L0,40 Z"
+                                fill="var(--bs-info)" fill-opacity="0.16"/>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
 
