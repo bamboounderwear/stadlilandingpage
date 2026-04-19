@@ -733,8 +733,8 @@
     .bento-ai-action {
       margin-top: auto;
       align-self: flex-start;
-      background-color: var(--stadli-white);
-      color: var(--stadli-black);
+      background-color: transparent;
+      color: var(--stadli-white);
       padding: 0.8cqi 1.5cqi;
       border-radius: 0.6cqi;
       font-size: clamp(7.6px, 1.33cqi, 24.7px);
@@ -742,7 +742,12 @@
       display: inline-flex;
       align-items: center;
       gap: 0.6cqi;
-      border: none;
+      border: 1px solid var(--stadli-gray-700);
+    }
+    .bento-ai-action:hover {
+      background-color: var(--stadli-gray-800);
+      color: var(--stadli-white);
+      border-color: var(--stadli-gray-600);
     }
 
     /* 4. Fan Profile (Small Bottom Middle) */
@@ -853,23 +858,23 @@
        large negative margin and aggressive mask would hide nearly all of it.
        Scale both up on wider viewports where the mockup has room to breathe. */
     .hero-dashboard-card {
-      mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+      mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
       margin-bottom: -2rem;
       position: relative;
     }
     @media (min-width: 768px) {
       .hero-dashboard-card {
-        mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
-        -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+        mask-image: linear-gradient(to bottom, black 88%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to bottom, black 88%, transparent 100%);
         margin-bottom: -5rem;
       }
     }
     @media (min-width: 992px) {
       .hero-dashboard-card {
-        mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
-        -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
-        margin-bottom: -150px;
+        mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+        margin-bottom: -80px;
       }
     }
 
