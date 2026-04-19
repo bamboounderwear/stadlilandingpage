@@ -2329,16 +2329,16 @@
                     <!-- Info: sessions (rising) -->
                     <path d="M0,130 L30,124 L60,118 L90,110 L120,105 L150,94 L180,90 L210,82 L240,76 L270,68 L300,62 L330,52 L360,46 L400,36"
                           fill="none" stroke="var(--spec-cyan)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-                    <!-- Danger: abandons (falling) -->
+                    <!-- Neutral: abandons (falling) -->
                     <path d="M0,60 L30,64 L60,72 L90,70 L120,78 L150,82 L180,88 L210,94 L240,96 L270,108 L300,112 L330,124 L360,130 L400,138"
-                          fill="none" stroke="var(--spec-red)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="4 3"/>
+                          fill="none" stroke="var(--bs-secondary)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="4 3"/>
                     <circle cx="400" cy="36"  r="3.5" fill="var(--spec-cyan)"/>
-                    <circle cx="400" cy="138" r="3.5" fill="var(--spec-red)"/>
+                    <circle cx="400" cy="138" r="3.5" fill="var(--bs-secondary)"/>
                   </svg>
                 </div>
                 <div class="chart-legend">
                   <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--spec-cyan);"></span>Sessions converties</span>
-                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--spec-red);"></span>Paniers abandonnés</span>
+                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--bs-secondary);"></span>Paniers abandonnés</span>
                 </div>
               </div>
             </div>
@@ -2360,13 +2360,13 @@
                     <!-- 10 bars, colored by performance -->
                     <rect x="8"   y="42"  width="28" height="108" rx="2" fill="var(--spec-green)"/>
                     <rect x="48"  y="58"  width="28" height="92"  rx="2" fill="var(--spec-green)"/>
-                    <rect x="88"  y="78"  width="28" height="72"  rx="2" fill="var(--spec-orange)"/>
+                    <rect x="88"  y="78"  width="28" height="72"  rx="2" fill="var(--spec-green)" fill-opacity="0.25"/>
                     <rect x="128" y="34"  width="28" height="116" rx="2" fill="var(--spec-green)"/>
-                    <rect x="168" y="96"  width="28" height="54"  rx="2" fill="var(--spec-red)"/>
+                    <rect x="168" y="96"  width="28" height="54"  rx="2" fill="var(--spec-green)" fill-opacity="0.25"/>
                     <rect x="208" y="50"  width="28" height="100" rx="2" fill="var(--spec-green)"/>
-                    <rect x="248" y="86"  width="28" height="64"  rx="2" fill="var(--spec-orange)"/>
+                    <rect x="248" y="86"  width="28" height="64"  rx="2" fill="var(--spec-green)" fill-opacity="0.25"/>
                     <rect x="288" y="66"  width="28" height="84"  rx="2" fill="var(--spec-green)"/>
-                    <rect x="328" y="110" width="28" height="40"  rx="2" fill="var(--spec-red)"/>
+                    <rect x="328" y="110" width="28" height="40"  rx="2" fill="var(--spec-green)" fill-opacity="0.25"/>
                     <rect x="368" y="46"  width="28" height="104" rx="2" fill="var(--spec-green)"/>
                     <!-- Target line -->
                     <line x1="0" y1="74" x2="400" y2="74" stroke="var(--bs-secondary)" stroke-width="1.5" stroke-dasharray="5 4"/>
@@ -2374,8 +2374,7 @@
                 </div>
                 <div class="chart-legend">
                   <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--spec-green);"></span>Atteint</span>
-                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--spec-orange);"></span>Sous cible</span>
-                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--spec-red);"></span>Critique</span>
+                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--spec-green); opacity: 0.25;"></span>Sous cible</span>
                 </div>
               </div>
             </div>
@@ -2393,20 +2392,20 @@
                   <svg viewBox="0 0 260 180" preserveAspectRatio="xMidYMid meet">
                     <g transform="translate(130 90) rotate(-90)">
                       <!-- circumference = 2 * PI * 60 ≈ 376.99 -->
-                      <!-- Violet 42%  -> 158.33, offset 0 -->
+                      <!-- Violet 42% (hero) -->
                       <circle r="60" fill="none" stroke="var(--spec-violet)" stroke-width="22"
                               stroke-dasharray="158.33 376.99" stroke-dashoffset="0"/>
-                      <!-- Green 26% -> 98.02, offset -158.33 -->
-                      <circle r="60" fill="none" stroke="var(--spec-green)" stroke-width="22"
+                      <!-- Neutral 26% -->
+                      <circle r="60" fill="none" stroke="var(--bs-secondary)" stroke-opacity="0.85" stroke-width="22"
                               stroke-dasharray="98.02 376.99" stroke-dashoffset="-158.33"/>
-                      <!-- Orange 18% -> 67.86, offset -256.35 -->
-                      <circle r="60" fill="none" stroke="var(--spec-orange)" stroke-width="22"
+                      <!-- Neutral 18% -->
+                      <circle r="60" fill="none" stroke="var(--bs-secondary)" stroke-opacity="0.6" stroke-width="22"
                               stroke-dasharray="67.86 376.99" stroke-dashoffset="-256.35"/>
-                      <!-- Cyan 10%   -> 37.70, offset -324.21 -->
-                      <circle r="60" fill="none" stroke="var(--spec-cyan)" stroke-width="22"
+                      <!-- Neutral 10% -->
+                      <circle r="60" fill="none" stroke="var(--bs-secondary)" stroke-opacity="0.4" stroke-width="22"
                               stroke-dasharray="37.70 376.99" stroke-dashoffset="-324.21"/>
-                      <!-- Red 4%     -> 15.08, offset -361.91 -->
-                      <circle r="60" fill="none" stroke="var(--spec-red)" stroke-width="22"
+                      <!-- Neutral 4% -->
+                      <circle r="60" fill="none" stroke="var(--bs-secondary)" stroke-opacity="0.25" stroke-width="22"
                               stroke-dasharray="15.08 376.99" stroke-dashoffset="-361.91"/>
                     </g>
                     <text x="130" y="88" text-anchor="middle" font-size="18" font-weight="600" fill="var(--bs-emphasis-color)" style="font-variant-numeric: tabular-nums;">1,28&nbsp;M€</text>
@@ -2415,10 +2414,10 @@
                 </div>
                 <div class="chart-legend">
                   <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--spec-violet);"></span>Direct 42&nbsp;%</span>
-                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--spec-green);"></span>Abonnés 26&nbsp;%</span>
-                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--spec-orange);"></span>Revendeurs 18&nbsp;%</span>
-                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--spec-cyan);"></span>Partenaires 10&nbsp;%</span>
-                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--spec-red);"></span>Remboursé 4&nbsp;%</span>
+                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--bs-secondary); opacity: 0.85;"></span>Abonnés 26&nbsp;%</span>
+                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--bs-secondary); opacity: 0.6;"></span>Revendeurs 18&nbsp;%</span>
+                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--bs-secondary); opacity: 0.4;"></span>Partenaires 10&nbsp;%</span>
+                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--bs-secondary); opacity: 0.25;"></span>Remboursé 4&nbsp;%</span>
                 </div>
               </div>
             </div>
@@ -2437,14 +2436,12 @@
                     <!-- Full stacked bar: 60% success (vendus), 20% warning (réservés), 12% info (disponibles), 8% danger (remboursés) -->
                     <g>
                       <rect x="0"   y="30" width="240" height="48" fill="var(--spec-green)"/>
-                      <rect x="240" y="30" width="80"  height="48" fill="var(--spec-orange)"/>
-                      <rect x="320" y="30" width="48"  height="48" fill="var(--spec-cyan)"/>
-                      <rect x="368" y="30" width="32"  height="48" fill="var(--spec-red)"/>
+                      <rect x="240" y="30" width="80"  height="48" fill="var(--bs-secondary)" fill-opacity="0.7"/>
+                      <rect x="320" y="30" width="48"  height="48" fill="var(--bs-secondary)" fill-opacity="0.45"/>
+                      <rect x="368" y="30" width="32"  height="48" fill="var(--bs-secondary)" fill-opacity="0.25"/>
                     </g>
-                    <!-- Labels -->
+                    <!-- Hero label -->
                     <text x="120" y="60" text-anchor="middle" class="chart-axis-label" fill="#ffffff" style="fill: var(--stadli-white); font-weight: 600;">60 %</text>
-                    <text x="280" y="60" text-anchor="middle" class="chart-axis-label" fill="#ffffff" style="fill: var(--stadli-white); font-weight: 600;">20 %</text>
-                    <text x="344" y="60" text-anchor="middle" class="chart-axis-label" fill="#ffffff" style="fill: var(--stadli-white); font-weight: 600;">12 %</text>
                     <!-- Scale ticks -->
                     <text x="0"   y="100" class="chart-axis-label">0</text>
                     <text x="200" y="100" text-anchor="middle" class="chart-axis-label">25 K</text>
@@ -2457,10 +2454,10 @@
                   </svg>
                 </div>
                 <div class="chart-legend">
-                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--spec-green);"></span>Vendus</span>
-                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--spec-orange);"></span>Réservés</span>
-                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--spec-cyan);"></span>Disponibles</span>
-                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--spec-red);"></span>Remboursés</span>
+                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--spec-green);"></span>Vendus 60&nbsp;%</span>
+                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--bs-secondary); opacity: 0.7;"></span>Réservés 20&nbsp;%</span>
+                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--bs-secondary); opacity: 0.45;"></span>Disponibles 12&nbsp;%</span>
+                  <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--bs-secondary); opacity: 0.25;"></span>Remboursés 8&nbsp;%</span>
                 </div>
               </div>
             </div>
@@ -2498,9 +2495,9 @@
                       <div class="sparkline-svg">
                         <svg viewBox="0 0 200 40" preserveAspectRatio="none">
                           <path d="M0,28 L15,26 L30,24 L45,28 L60,22 L75,26 L90,18 L105,22 L120,14 L135,18 L150,10 L165,16 L180,8 L200,6"
-                                fill="none" stroke="var(--spec-orange)" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+                                fill="none" stroke="var(--spec-red)" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
                           <path d="M0,28 L15,26 L30,24 L45,28 L60,22 L75,26 L90,18 L105,22 L120,14 L135,18 L150,10 L165,16 L180,8 L200,6 L200,40 L0,40 Z"
-                                fill="var(--spec-orange)" fill-opacity="0.22"/>
+                                fill="var(--spec-red)" fill-opacity="0.22"/>
                         </svg>
                       </div>
                     </div>
@@ -2530,9 +2527,9 @@
                       <div class="sparkline-svg">
                         <svg viewBox="0 0 200 40" preserveAspectRatio="none">
                           <path d="M0,20 L15,18 L30,22 L45,16 L60,24 L75,20 L90,18 L105,22 L120,16 L135,20 L150,22 L165,18 L180,20 L200,18"
-                                fill="none" stroke="var(--spec-cyan)" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+                                fill="none" stroke="var(--bs-secondary)" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
                           <path d="M0,20 L15,18 L30,22 L45,16 L60,24 L75,20 L90,18 L105,22 L120,16 L135,20 L150,22 L165,18 L180,20 L200,18 L200,40 L0,40 Z"
-                                fill="var(--spec-cyan)" fill-opacity="0.22"/>
+                                fill="var(--bs-secondary)" fill-opacity="0.22"/>
                         </svg>
                       </div>
                     </div>
