@@ -1,0 +1,902 @@
+<!doctype html>
+<html lang="fr" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <title>Stadli — Sales Pitch</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="stadli-tokens.css" />
+  <style>
+    /* ───── Page reset ───── */
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      overflow: hidden;
+    }
+
+    /* ───── Tokens (deck-scoped) ───── */
+    :root {
+      /* Projection-appropriate type scale for 1920x1080 */
+      --fs-display:  160px;  /* hero slide 1 wordmark */
+      --fs-title:    92px;   /* section titles */
+      --fs-h:        64px;   /* slide titles */
+      --fs-lead:     44px;   /* lead / body-large */
+      --fs-body:     32px;   /* body */
+      --fs-small:    26px;   /* captions, labels */
+      --fs-label:    24px;   /* uppercase meta */
+
+      /* Spacing */
+      --pad-x: 120px;
+      --pad-y: 100px;
+      --pad-b: 96px;
+
+      /* Palette (deck) */
+      --bg:        #010101;
+      --bg-soft:   #0a0a0a;
+      --bg-card:   #121212;
+      --border:    #1f1f1f;
+      --border-strong: #2a2a2a;
+      --fg:        #f5f5f5;
+      --fg-muted:  #9a9a9a;
+      --fg-dim:    #5c5c5c;
+      --accent:    #7b2ff7; /* --spec-violet, used sparingly */
+    }
+
+    deck-stage {
+      background: #000;
+    }
+
+    /* ───── Slide frame ───── */
+    .slide {
+      font-family: var(--stadli-font-sans);
+      background: var(--bg);
+      color: var(--fg);
+      box-sizing: border-box;
+      padding: var(--pad-y) var(--pad-x) var(--pad-b);
+      display: flex;
+      flex-direction: column;
+      letter-spacing: -0.01em;
+    }
+
+    /* ───── Chrome (persistent header/footer) ───── */
+    .chrome-top,
+    .chrome-bot {
+      position: absolute;
+      left: var(--pad-x);
+      right: var(--pad-x);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: var(--fs-label);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-weight: 500;
+      color: var(--fg-dim);
+    }
+    .chrome-top { top: 56px; }
+    .chrome-bot { bottom: 56px; }
+
+    .chrome-top .wordmark {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .chrome-top .wordmark svg {
+      height: 28px;
+      width: auto;
+      fill: var(--fg);
+    }
+    .chrome-bot .idx { font-variant-numeric: tabular-nums; }
+
+    /* ───── Typography primitives ───── */
+    .eyebrow {
+      font-size: var(--fs-label);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-weight: 500;
+      color: var(--fg-dim);
+      margin: 0 0 40px;
+    }
+    .eyebrow .dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      vertical-align: 1px;
+      margin-right: 14px;
+    }
+    .title {
+      font-size: var(--fs-h);
+      font-weight: 500;
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      margin: 0;
+      text-wrap: balance;
+    }
+    .lead {
+      font-size: var(--fs-lead);
+      font-weight: 400;
+      line-height: 1.22;
+      letter-spacing: -0.02em;
+      color: var(--fg);
+      text-wrap: pretty;
+      margin: 0;
+    }
+    .body {
+      font-size: var(--fs-body);
+      line-height: 1.45;
+      color: var(--fg-muted);
+      margin: 0;
+      max-width: 22ch;
+    }
+    .small {
+      font-size: var(--fs-small);
+      color: var(--fg-muted);
+      line-height: 1.4;
+    }
+    .num {
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ───── Grid helpers ───── */
+    .row { display: flex; }
+    .col { display: flex; flex-direction: column; }
+    .gap-lg { gap: 64px; }
+    .gap-md { gap: 40px; }
+    .gap-sm { gap: 24px; }
+    .fill { flex: 1; min-height: 0; }
+
+    /* ══════════════════════════════════════════════════════════════
+       Slide 1 — Hero / cover
+       ══════════════════════════════════════════════════════════════ */
+    .s-cover {
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .s-cover .bg {
+      position: absolute;
+      inset: 0;
+      background: url('assets/fans-popcorn.jpg') center/cover no-repeat;
+      opacity: 0.38;
+    }
+    .s-cover .scrim {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.88) 100%);
+    }
+    .s-cover .inner {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      padding: var(--pad-y) var(--pad-x) var(--pad-b);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .s-cover .wordmark-xl img {
+      height: 180px;
+      width: auto;
+      display: block;
+    }
+    .chrome-top .wordmark img {
+      height: 28px;
+      width: auto;
+      display: block;
+    }
+    .s-cover .pitch {
+      font-size: var(--fs-lead);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      color: var(--fg);
+      max-width: 18ch;
+      line-height: 1.15;
+      margin: 36px 0 0;
+      text-wrap: balance;
+    }
+    .s-cover .pitch em {
+      font-style: normal;
+      color: var(--fg-muted);
+    }
+    .s-cover .meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      font-size: var(--fs-label);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--fg-muted);
+      font-weight: 500;
+    }
+    .s-cover .meta .tagline { color: var(--fg); }
+
+    /* ══════════════════════════════════════════════════════════════
+       Section-title style slides (2, 3, 5, 6, 7)
+       ══════════════════════════════════════════════════════════════ */
+    .s-section .eyebrow-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 0;
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       Slide 2 — Qui nous sommes
+       ══════════════════════════════════════════════════════════════ */
+    .s-who {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 96px;
+      align-items: center;
+    }
+    .s-who .title { font-size: 88px; }
+    .s-who .lead { margin-top: 44px; max-width: 18ch; }
+    .s-who .image {
+      height: 720px;
+      background: url('assets/fans-mascot.jpg') center/cover no-repeat;
+      border: 1px solid var(--border);
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       Slide 3 — Problème / Solution
+       ══════════════════════════════════════════════════════════════ */
+    .s-prob .title { font-size: 84px; margin-bottom: 80px; text-wrap: balance; max-width: 22ch; }
+    .s-prob .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      flex: 1;
+    }
+    .s-prob .pane {
+      padding-top: 32px;
+      border-top: 1px solid var(--border-strong);
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .s-prob .pane-label {
+      font-size: var(--fs-label);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-weight: 500;
+      color: var(--fg-dim);
+    }
+    .s-prob .pane.solution .pane-label { color: var(--accent); }
+    .s-prob .pane h3 {
+      font-size: 48px;
+      font-weight: 500;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      margin: 0;
+      text-wrap: balance;
+    }
+    .s-prob .pane.problem h3 { color: var(--fg-muted); }
+    .s-prob .pane ul {
+      list-style: none;
+      padding: 0;
+      margin: 16px 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .s-prob .pane li {
+      font-size: var(--fs-body);
+      line-height: 1.35;
+      color: var(--fg-muted);
+      padding-left: 28px;
+      position: relative;
+    }
+    .s-prob .pane li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 18px;
+      width: 14px;
+      height: 1px;
+      background: var(--fg-dim);
+    }
+    .s-prob .pane.solution li { color: var(--fg); }
+    .s-prob .pane.solution li::before { background: var(--accent); }
+
+    /* ══════════════════════════════════════════════════════════════
+       Slide 4 — Features
+       ══════════════════════════════════════════════════════════════ */
+    .s-feat .head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 56px;
+    }
+    .s-feat .title { font-size: 72px; }
+    .s-feat .count {
+      font-size: 160px;
+      font-weight: 500;
+      line-height: 0.85;
+      letter-spacing: -0.05em;
+      color: var(--fg);
+      font-variant-numeric: tabular-nums;
+    }
+    .s-feat .count sub {
+      font-size: var(--fs-label);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--fg-dim);
+      vertical-align: middle;
+      margin-left: 18px;
+      font-weight: 500;
+      position: relative;
+      bottom: 14px;
+    }
+    .s-feat .grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 1fr;
+      gap: 0;
+      border-top: 1px solid var(--border-strong);
+      border-left: 1px solid var(--border-strong);
+    }
+    .s-feat .cell {
+      padding: 28px 36px;
+      border-right: 1px solid var(--border-strong);
+      border-bottom: 1px solid var(--border-strong);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 0;
+    }
+    .s-feat .cell .n {
+      font-size: var(--fs-label);
+      color: var(--fg-dim);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.14em;
+      font-weight: 500;
+    }
+    .s-feat .cell h4 {
+      font-size: 36px;
+      font-weight: 500;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+    .s-feat .cell p {
+      font-size: 24px;
+      color: var(--fg-muted);
+      line-height: 1.3;
+      margin: 10px 0 0;
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       Slide 5 — Roadmap
+       ══════════════════════════════════════════════════════════════ */
+    .s-road .title { font-size: 88px; margin-bottom: 96px; }
+    .s-road .track {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      position: relative;
+      border-top: 1px solid var(--border-strong);
+      padding-top: 48px;
+    }
+    .s-road .track::before {
+      content: "";
+      position: absolute;
+      left: 0; right: 0;
+      top: -6px;
+      height: 11px;
+      background:
+        radial-gradient(circle at 0 50%, var(--fg) 0 5px, transparent 6px),
+        radial-gradient(circle at 50% 50%, var(--accent) 0 5px, transparent 6px),
+        radial-gradient(circle at 100% 50%, var(--fg-dim) 0 5px, transparent 6px);
+    }
+    .s-road .milestone {
+      padding-right: 48px;
+    }
+    .s-road .milestone .version {
+      font-size: 72px;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin: 0;
+    }
+    .s-road .milestone.current .version { color: var(--fg); }
+    .s-road .milestone.next .version { color: var(--fg); }
+    .s-road .milestone.next .version::after {
+      content: "";
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-left: 18px;
+      vertical-align: 14px;
+    }
+    .s-road .milestone .when {
+      font-size: var(--fs-label);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--fg-dim);
+      font-weight: 500;
+      margin: 16px 0 32px;
+    }
+    .s-road .milestone.next .when { color: var(--accent); }
+    .s-road .milestone h4 {
+      font-size: 48px;
+      font-weight: 500;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin: 0 0 20px;
+      text-wrap: balance;
+    }
+    .s-road .milestone p {
+      font-size: var(--fs-body);
+      color: var(--fg-muted);
+      line-height: 1.4;
+      margin: 0;
+      max-width: 18ch;
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       Slide 6 — Intégration
+       ══════════════════════════════════════════════════════════════ */
+    .s-int {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 120px;
+      align-items: center;
+    }
+    .s-int .left .title { font-size: 84px; max-width: 12ch; }
+    .s-int .left .lead { margin-top: 44px; max-width: 16ch; }
+    .s-int .hero-num {
+      font-size: 440px;
+      font-weight: 500;
+      line-height: 0.82;
+      letter-spacing: -0.06em;
+      color: var(--fg);
+      font-variant-numeric: tabular-nums;
+      display: flex;
+      align-items: flex-start;
+    }
+    .s-int .hero-num .unit {
+      font-size: 56px;
+      letter-spacing: -0.02em;
+      color: var(--fg-muted);
+      margin: 36px 0 0 24px;
+      line-height: 1.1;
+      font-weight: 400;
+      max-width: 8ch;
+    }
+    .s-int .steps {
+      margin-top: 56px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      font-size: var(--fs-small);
+      color: var(--fg-muted);
+      flex-wrap: wrap;
+    }
+    .s-int .steps span {
+      padding: 10px 20px;
+      border: 1px solid var(--border-strong);
+      border-radius: 50rem;
+    }
+    .s-int .steps .arr { border: 0; padding: 0 4px; color: var(--fg-dim); }
+
+    /* ══════════════════════════════════════════════════════════════
+       Slide 7 — Proposition
+       ══════════════════════════════════════════════════════════════ */
+    .s-val .title { font-size: 96px; margin-bottom: 80px; max-width: 16ch; }
+    .s-val .title .tout { color: var(--accent); }
+    .s-val .benefits {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      border-top: 1px solid var(--border-strong);
+    }
+    .s-val .ben {
+      padding: 56px 56px 56px 0;
+      border-right: 1px solid var(--border-strong);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 400px;
+    }
+    .s-val .ben:last-child { border-right: 0; padding-right: 0; }
+    .s-val .ben:not(:first-child) { padding-left: 56px; }
+    .s-val .ben .n {
+      font-size: var(--fs-label);
+      color: var(--fg-dim);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.18em;
+      font-weight: 500;
+    }
+    .s-val .ben h3 {
+      font-size: 64px;
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin: 0;
+    }
+    .s-val .ben p {
+      font-size: var(--fs-body);
+      color: var(--fg-muted);
+      line-height: 1.35;
+      margin: 20px 0 0;
+      max-width: 14ch;
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       Slide 8 — Contact
+       ══════════════════════════════════════════════════════════════ */
+    .s-contact {
+      justify-content: space-between;
+    }
+    .s-contact .eyebrow { margin-bottom: 0; }
+    .s-contact .big {
+      font-size: 200px;
+      font-weight: 500;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      margin: 0;
+      text-wrap: balance;
+    }
+    .s-contact .big .and { color: var(--fg-muted); }
+    .s-contact .foot {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 48px;
+      padding-top: 36px;
+      border-top: 1px solid var(--border-strong);
+    }
+    .s-contact .foot .k {
+      font-size: var(--fs-label);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--fg-dim);
+      font-weight: 500;
+      margin-bottom: 14px;
+    }
+    .s-contact .foot .v {
+      font-size: 36px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      color: var(--fg);
+    }
+
+    /* Slide-level: hide chrome on cover */
+    .s-cover ~ * { }
+
+    /* tiny version mark bottom right of every slide via chrome-bot */
+  </style>
+</head>
+<body>
+
+<deck-stage width="1920" height="1080">
+
+  <!-- ══════════════════════════════════════════════════════
+       1 · COVER
+       ══════════════════════════════════════════════════════ -->
+  <section class="slide s-cover" data-label="01 Stadli">
+    <div class="bg"></div>
+    <div class="scrim"></div>
+    <div class="inner">
+      <div class="wordmark-xl">
+        <img src="assets/stadli-wordmark.png" alt="Stadli" />
+      </div>
+      <div>
+        <p class="pitch">L'intelligence événementielle,<br/><em>tout-en-un.</em></p>
+      </div>
+      <div class="meta">
+        <span class="tagline">Sales Presentation · 2026</span>
+        <span>Confidentiel</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       2 · QUI NOUS SOMMES
+       ══════════════════════════════════════════════════════ -->
+  <section class="slide s-section s-who" data-label="02 Qui nous sommes">
+    <div class="chrome-top">
+      <span class="wordmark">
+        <img src="assets/stadli-wordmark.png" alt="Stadli" />
+      </span>
+      <span>02 — Qui sommes-nous</span>
+    </div>
+
+    <div class="col">
+      <p class="eyebrow"><span class="dot"></span>02 · Qui sommes-nous</p>
+      <h1 class="title">L'équipe derrière Stadli.</h1>
+      <p class="lead">Opérateurs de stades, ingénieurs, et fans. Nous construisons l'outil que nous aurions voulu avoir.</p>
+    </div>
+
+    <div class="image" aria-hidden="true"></div>
+
+    <div class="chrome-bot">
+      <span>Stadli</span>
+      <span class="idx">02 / 08</span>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       3 · PROBLÈME / SOLUTION
+       ══════════════════════════════════════════════════════ -->
+  <section class="slide s-prob" data-label="03 Problématique">
+    <div class="chrome-top">
+      <span class="wordmark">Stadli</span>
+      <span>03 — La problématique</span>
+    </div>
+
+    <p class="eyebrow"><span class="dot"></span>03 · La problématique</p>
+    <h1 class="title">Une équipe, dix outils, zéro vue d'ensemble.</h1>
+
+    <div class="compare">
+      <div class="pane problem">
+        <span class="pane-label">Aujourd'hui</span>
+        <h3>Les équipes jonglent entre des systèmes qui ne se parlent pas.</h3>
+        <ul>
+          <li>Billetterie, CRM, commerces, marketing : silotés.</li>
+          <li>Données dispersées, rapports faits à la main.</li>
+          <li>Aucune visibilité sur le fan, ni sur la revenue par siège.</li>
+        </ul>
+      </div>
+      <div class="pane solution">
+        <span class="pane-label">Avec Stadli</span>
+        <h3>Une plateforme unique, du ticket au per cap.</h3>
+        <ul>
+          <li>Toutes les opérations sur une seule source de vérité.</li>
+          <li>Le fan suivi de la première visite au renouvellement.</li>
+          <li>Rapports et comparables prêts, en temps réel.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>Stadli</span>
+      <span class="idx">03 / 08</span>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       4 · FEATURES
+       ══════════════════════════════════════════════════════ -->
+  <section class="slide s-feat" data-label="04 Plateforme">
+    <div class="chrome-top">
+      <span class="wordmark">Stadli</span>
+      <span>04 — La plateforme</span>
+    </div>
+
+    <div class="head">
+      <div>
+        <p class="eyebrow"><span class="dot"></span>04 · La plateforme</p>
+        <h1 class="title">Neuf modules.<br/>Une seule plateforme.</h1>
+      </div>
+      <div class="count">09<sub>modules</sub></div>
+    </div>
+
+    <div class="grid">
+      <div class="cell">
+        <span class="n">01</span>
+        <div>
+          <h4>Billetterie</h4>
+          <p>Vente, scan, plan de salle.</p>
+        </div>
+      </div>
+      <div class="cell">
+        <span class="n">02</span>
+        <div>
+          <h4>Commerces</h4>
+          <p>F&amp;B, boutique, concessions.</p>
+        </div>
+      </div>
+      <div class="cell">
+        <span class="n">03</span>
+        <div>
+          <h4>CRM</h4>
+          <p>Un dossier par fan.</p>
+        </div>
+      </div>
+      <div class="cell">
+        <span class="n">04</span>
+        <div>
+          <h4>Marketing Email</h4>
+          <p>Campagnes ciblées, segmentées.</p>
+        </div>
+      </div>
+      <div class="cell">
+        <span class="n">05</span>
+        <div>
+          <h4>Marketing SMS</h4>
+          <p>Déclenché au bon moment.</p>
+        </div>
+      </div>
+      <div class="cell">
+        <span class="n">06</span>
+        <div>
+          <h4>Survey &amp; Engagement</h4>
+          <p>La voix du fan, en continu.</p>
+        </div>
+      </div>
+      <div class="cell">
+        <span class="n">07</span>
+        <div>
+          <h4>Dashboard &amp; Comparables</h4>
+          <p>KPIs et benchmarks vs. league.</p>
+        </div>
+      </div>
+      <div class="cell">
+        <span class="n">08</span>
+        <div>
+          <h4>Features IA</h4>
+          <p>Segments, prédictions, copy.</p>
+        </div>
+      </div>
+      <div class="cell">
+        <span class="n">09</span>
+        <div>
+          <h4>Report Per Cap</h4>
+          <p>Revenue par siège, par match.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>Stadli</span>
+      <span class="idx">04 / 08</span>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       5 · ROADMAP
+       ══════════════════════════════════════════════════════ -->
+  <section class="slide s-road" data-label="05 Roadmap">
+    <div class="chrome-top">
+      <span class="wordmark">Stadli</span>
+      <span>05 — Roadmap</span>
+    </div>
+
+    <p class="eyebrow"><span class="dot"></span>05 · Roadmap</p>
+    <h1 class="title">Où nous allons.</h1>
+
+    <div class="track">
+      <div class="milestone current">
+        <h2 class="version">V1</h2>
+        <p class="when">Aujourd'hui — en production</p>
+        <h4>La plateforme opérationnelle.</h4>
+        <p>Billetterie, CRM, commerces, marketing, analytics — tout connecté.</p>
+      </div>
+      <div class="milestone next">
+        <h2 class="version">V2</h2>
+        <p class="when">Prochaine étape</p>
+        <h4>Modèle prédictif.</h4>
+        <p>Anticiper l'affluence, le per cap, et la rétention fan par fan.</p>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>Stadli</span>
+      <span class="idx">05 / 08</span>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       6 · INTÉGRATION
+       ══════════════════════════════════════════════════════ -->
+  <section class="slide s-int" data-label="06 Intégration">
+    <div class="chrome-top">
+      <span class="wordmark">Stadli</span>
+      <span>06 — Intégration</span>
+    </div>
+
+    <div class="left">
+      <p class="eyebrow"><span class="dot"></span>06 · Intégration</p>
+      <h1 class="title">En production,<br/>en deux&nbsp;semaines.</h1>
+      <p class="lead">Import des données, formation des équipes, mise en ligne. Sans friction, sans refonte.</p>
+      <div class="steps">
+        <span>Kick-off</span>
+        <span class="arr">→</span>
+        <span>Import &amp; setup</span>
+        <span class="arr">→</span>
+        <span>Formation</span>
+        <span class="arr">→</span>
+        <span>Go live</span>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="hero-num">
+        &lt;2<div class="unit">semaines<br/>pour être opérationnel</div>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>Stadli</span>
+      <span class="idx">06 / 08</span>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       7 · PROPOSITION DE VALEUR
+       ══════════════════════════════════════════════════════ -->
+  <section class="slide s-val" data-label="07 Proposition">
+    <div class="chrome-top">
+      <span class="wordmark">Stadli</span>
+      <span>07 — Proposition</span>
+    </div>
+
+    <p class="eyebrow"><span class="dot"></span>07 · Proposition de valeur</p>
+    <h1 class="title"><span class="tout">Tout-en-un.</span><br/>Pour de vrai.</h1>
+
+    <div class="benefits">
+      <div class="ben">
+        <span class="n">01</span>
+        <div>
+          <h3>Une seule plateforme.</h3>
+          <p>Neuf modules, une interface, une équipe à former.</p>
+        </div>
+      </div>
+      <div class="ben">
+        <span class="n">02</span>
+        <div>
+          <h3>Cost saving.</h3>
+          <p>Remplace 6 à 10 SaaS. Un seul contrat, une seule facture.</p>
+        </div>
+      </div>
+      <div class="ben">
+        <span class="n">03</span>
+        <div>
+          <h3>Plus d'API.</h3>
+          <p>Les données sont déjà connectées. Rien à recoller.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>Stadli</span>
+      <span class="idx">07 / 08</span>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       8 · CONTACT
+       ══════════════════════════════════════════════════════ -->
+  <section class="slide s-contact" data-label="08 Parlons-en">
+    <div class="chrome-top">
+      <span class="wordmark">Stadli</span>
+      <span>08 — Contact</span>
+    </div>
+
+    <p class="eyebrow"><span class="dot"></span>08 · Parlons-en</p>
+
+    <h1 class="big">Discutons<br/><span class="and">de votre saison.</span></h1>
+
+    <div class="foot">
+      <div>
+        <div class="k">Contact</div>
+        <div class="v">hello@stadli.io</div>
+      </div>
+      <div>
+        <div class="k">Site</div>
+        <div class="v">stadli.io</div>
+      </div>
+      <div>
+        <div class="k">Demo</div>
+        <div class="v">stadli.io/demo</div>
+      </div>
+    </div>
+
+    <div class="chrome-bot">
+      <span>Stadli</span>
+      <span class="idx">08 / 08</span>
+    </div>
+  </section>
+
+</deck-stage>
+
+<script src="deck-stage.js"></script>
+</body>
+</html>
