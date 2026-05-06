@@ -18,7 +18,7 @@ Design system for a Bootstrap 5 + SCSS SaaS (ticketing platform) deployed on Clo
 **Stack:** Hono · Bootstrap 5 · SCSS · Bootstrap Icons · Cloudflare Workers
 
 ---
-
+ 
 ## Core Philosophy
 
 1. **Bootstrap utilities first** — if a Bootstrap utility class can do it, use it. Never write custom CSS for something Bootstrap already covers.
