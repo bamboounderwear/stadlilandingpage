@@ -1,0 +1,2314 @@
+<!DOCTYPE html>
+<html lang="fr-CA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stadli — Intelligence événementielle</title>
+<meta name="description" content="La plateforme événementielle des franchises sportives modernes. Billetterie, marketing, analytique et IA dans une seule expérience.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Surface */
+  --canvas: #010101;
+  --surface: #080808;
+  --surface-elevated: #1a1a1a;
+  --hairline: #161616;
+  --hairline-strong: #303030;
+  /* Text */
+  --ink: #ffffff;
+  --body: #e8e8e8;
+  --muted: #929292;
+  --muted-soft: #6a6a6a;
+  /* Spectrum */
+  --spec-red: #fe0000;
+  --spec-orange: #fe5619;
+  --spec-lime: #ecfc3b;
+  --spec-green: #44d62b;
+  --spec-teal: #00d4a8;
+  --spec-cyan: #00b0d8;
+  --spec-blue: #0140f0;
+  --spec-violet: #7b2ff7;
+  --spec-magenta: #d633ff;
+  --spec-rose: #f6166e;
+  /* House gradients */
+  --grad-stadium: linear-gradient(135deg, #d633ff, #7b2ff7);
+  --grad-pitch: linear-gradient(135deg, #ecfc3b, #00d4a8);
+  --grad-tribune: linear-gradient(135deg, #fe5619, #f6166e);
+
+  --section: 152px;
+  --max: 1280px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: 'Helvetica Neue', 'Helvetica Now', Inter, sans-serif;
+  font-size: 17px;
+  line-height: 1.55;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Global film grain */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 200;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+  mix-blend-mode: overlay;
+}
+
+a { color: inherit; }
+
+img { display: block; max-width: 100%; }
+
+::selection { background: var(--ink); color: var(--canvas); }
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--canvas); }
+::-webkit-scrollbar-thumb { background: var(--hairline-strong); border-radius: 4px; }
+
+/* ============== TYPOGRAPHY ============== */
+.t-manifesto {
+  font-size: clamp(48px, 9vw, 104px);
+  line-height: 1.02;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+.t-display {
+  font-size: clamp(46px, 7vw, 92px);
+  line-height: 1.05;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+.t-heading {
+  font-size: clamp(32px, 4vw, 56px);
+  line-height: 1.10;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.t-title {
+  font-size: 21px;
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+.t-label {
+  font-size: 13px;
+  line-height: 1.3;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.t-mono {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--muted-soft);
+}
+.tabular { font-variant-numeric: tabular-nums; }
+.body-text { color: var(--body); }
+.muted-text { color: var(--muted); }
+
+/* ============== NAV ============== */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  height: 64px;
+  display: flex; align-items: center;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  backdrop-filter: blur(0) saturate(100%);
+  -webkit-backdrop-filter: blur(0) saturate(100%);
+  transition: background .3s ease, border-bottom-color .3s ease, backdrop-filter .3s ease, -webkit-backdrop-filter .3s ease;
+}
+.nav.scrolled {
+  background: rgba(1,1,1,0.6);
+  border-bottom-color: var(--hairline);
+  backdrop-filter: blur(24px) saturate(120%);
+  -webkit-backdrop-filter: blur(24px) saturate(120%);
+}
+.nav-inner {
+  width: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 32px;
+}
+.logo { height: 24px; display: flex; align-items: center; }
+.logo img { height: 100%; }
+.nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+.nav-links a {
+  color: var(--body); text-decoration: none;
+  font-size: 14px; font-weight: 500;
+  transition: color .15s;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 16px;
+  background: var(--ink); color: var(--canvas);
+  text-decoration: none; border-radius: 6px;
+  font-size: 13px; font-weight: 600;
+  transition: background .2s;
+  white-space: nowrap;
+}
+.nav-cta:hover { background: var(--body); }
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+}
+
+/* ============== BUTTONS ============== */
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 16px 22px;
+  background: var(--ink); color: var(--canvas);
+  text-decoration: none; border-radius: 6px;
+  font-size: 15px; font-weight: 600;
+  transition: background .2s;
+  border: none; cursor: pointer;
+}
+.btn-primary:hover { background: var(--body); }
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 15px 22px;
+  background: transparent; color: var(--ink);
+  text-decoration: none; border-radius: 6px;
+  font-size: 15px; font-weight: 600;
+  border: 1px solid var(--hairline-strong);
+  transition: border-color .2s;
+}
+.btn-secondary:hover { border-color: var(--ink); }
+.arrow { display: inline-block; transition: transform .2s; font-weight: 400; }
+a:hover .arrow, button:hover .arrow { transform: translateX(4px); }
+
+/* ============== HERO ============== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  padding: 152px 32px 72px;
+  display: flex; align-items: flex-end;
+  overflow: hidden;
+}
+.hero-video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+.hero-overlay {
+  position: absolute; inset: 0; z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(1,1,1,0.5) 0%, rgba(1,1,1,0.25) 30%, rgba(1,1,1,0.65) 75%, rgba(1,1,1,0.95) 100%),
+    radial-gradient(ellipse at 80% 20%, rgba(1,1,1,0.0), rgba(1,1,1,0.4));
+}
+.hero-grain {
+  position: absolute; inset: 0; z-index: 2;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>");
+  mix-blend-mode: overlay;
+}
+.hero-inner {
+  position: relative; z-index: 3;
+  width: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.hero-tagline {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-bottom: 40px;
+  padding: 7px 14px 7px 12px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 9999px;
+  background: rgba(8,8,8,0.55);
+  backdrop-filter: blur(8px);
+}
+.hero-tagline-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--spec-lime);
+  box-shadow: 0 0 12px var(--spec-lime);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+.hero-tagline-text {
+  font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.14em;
+  color: var(--ink);
+}
+.hero h1 {
+  margin-bottom: 36px;
+  max-width: 16ch;
+}
+.hero h1 .accent {
+  color: var(--muted);
+}
+.hero-sub {
+  font-size: 19px; color: var(--body);
+  max-width: 56ch; margin-bottom: 48px;
+  line-height: 1.5;
+}
+.hero-actions {
+  display: flex; gap: 12px; flex-wrap: wrap;
+}
+.hero-meta {
+  margin-top: 96px;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  border-top: 1px solid var(--hairline-strong);
+  padding-top: 28px;
+}
+.hero-meta-num {
+  font-size: clamp(28px, 3vw, 36px);
+  font-weight: 500; letter-spacing: -0.025em;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 6px;
+}
+.hero-meta-label {
+  font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--muted);
+  font-weight: 600;
+}
+@media (max-width: 768px) {
+  .hero { padding: 120px 24px 48px; }
+  .hero-meta { grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 64px; }
+}
+
+/* ============== SECTION ============== */
+section.product {
+  padding: var(--section) 32px;
+  position: relative;
+}
+.product-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.section-header {
+  display: flex; justify-content: space-between; align-items: center;
+  border-top: 1px solid var(--hairline-strong);
+  padding-top: 24px;
+  margin-bottom: 88px;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.section-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--muted-soft);
+  letter-spacing: 0.05em;
+}
+.section-cat {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 14px 6px 11px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 9999px;
+  background: var(--surface);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.section-cat-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--muted);
+}
+.section-cat[data-tone="marketing"] .section-cat-dot {
+  background: var(--spec-orange);
+  box-shadow: 0 0 10px rgba(254, 86, 25, 0.55);
+}
+.section-cat[data-tone="crm"] .section-cat-dot {
+  background: var(--spec-teal);
+  box-shadow: 0 0 10px rgba(0, 212, 168, 0.55);
+}
+.section-cat[data-tone="analytics"] .section-cat-dot {
+  background: var(--spec-lime);
+  box-shadow: 0 0 10px rgba(236, 252, 59, 0.5);
+}
+.section-cat[data-tone="ai"] .section-cat-dot {
+  background: var(--spec-violet);
+  box-shadow: 0 0 10px rgba(123, 47, 247, 0.6);
+}
+.section-cat[data-tone="tickets"] .section-cat-dot {
+  background: var(--spec-magenta);
+  box-shadow: 0 0 10px rgba(214, 51, 255, 0.55);
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 96px;
+  align-items: start;
+}
+.product-grid.reverse {
+  grid-template-columns: 1.15fr 1fr;
+}
+.product-grid.reverse .product-content { order: 2; }
+.product-grid.reverse .product-visual { order: 1; }
+@media (max-width: 1024px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: 56px;
+  }
+  .product-grid.reverse .product-content { order: 0; }
+  .product-grid.reverse .product-visual { order: 1; }
+}
+@media (max-width: 768px) {
+  section.product { padding: 96px 24px; }
+  .section-header { margin-bottom: 56px; }
+}
+
+.product-content { position: relative; }
+@media (min-width: 1025px) {
+  .product-content { position: sticky; top: 96px; }
+}
+.product-content h2 {
+  margin-bottom: 24px;
+  max-width: 14ch;
+}
+.product-content > p {
+  font-size: 19px; color: var(--body);
+  max-width: 44ch; margin-bottom: 36px;
+  line-height: 1.5;
+}
+
+.feature-list {
+  list-style: none;
+  margin-bottom: 40px;
+}
+.feature-list li {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 16px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 19px;
+  line-height: 1.3;
+  color: var(--ink);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+.feature-list li:first-child { border-top: 1px solid var(--hairline); }
+.feature-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--muted-soft);
+  padding-top: 7px;
+}
+
+.product-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--ink); text-decoration: none;
+  font-size: 14px; font-weight: 600;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--hairline-strong);
+  transition: border-color .2s;
+}
+.product-link:hover { border-bottom-color: var(--ink); }
+
+/* ============== VISUAL STACK (mockup + photo) ============== */
+.visual-stack {
+  display: flex; flex-direction: column;
+  gap: 16px;
+}
+.visual-stack-row {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 768px) {
+  .visual-stack-row { grid-template-columns: 1fr; }
+}
+
+.file-path-label {
+  display: flex; align-items: center; gap: 10px;
+  margin-top: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--muted-soft);
+}
+.file-path-label::before {
+  content: ''; width: 12px; height: 1px;
+  background: var(--hairline-strong);
+}
+
+/* ============== MOCKUP ============== */
+.mockup {
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+.mockup-bar {
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--hairline);
+  background: var(--surface);
+}
+.mockup-dots { display: flex; gap: 6px; }
+.mockup-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--hairline-strong);
+}
+.mockup-dot.live { background: var(--ink); }
+.mockup-bar-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  flex: 1;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mockup-bar-trail {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted-soft);
+}
+.mockup-body { padding: 20px; }
+
+/* ----- Mockup: Campagnes ----- */
+.mk-camp-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--hairline);
+}
+.mk-camp-title {
+  font-size: 15px; font-weight: 600;
+  letter-spacing: -0.005em;
+}
+.mk-camp-sub {
+  font-size: 11px; color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+.mk-camp-tabs {
+  display: flex; gap: 4px;
+  margin-bottom: 16px;
+}
+.mk-tab {
+  font-size: 12px; font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 6px;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid transparent;
+}
+.mk-tab.active {
+  color: var(--ink);
+  background: var(--surface-elevated);
+  border-color: var(--hairline-strong);
+}
+.mk-table {
+  display: flex; flex-direction: column;
+}
+.mk-row {
+  display: grid;
+  grid-template-columns: 2.4fr 1fr 0.9fr 0.9fr;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  font-size: 12.5px;
+  border-bottom: 1px solid var(--hairline);
+}
+.mk-row.head {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  padding: 8px 0 12px;
+  border-bottom: 1px solid var(--hairline-strong);
+}
+.mk-row .num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.mk-row:last-child { border-bottom: none; }
+.mk-status {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 11.5px;
+  color: var(--body);
+}
+.mk-status-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--ink);
+}
+.mk-status-dot.idle { background: var(--muted-soft); }
+.mk-status-dot.draft {
+  background: transparent;
+  border: 1px solid var(--muted-soft);
+}
+.mk-camp-name {
+  font-weight: 500; color: var(--ink);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.mk-camp-name small {
+  display: block;
+  font-size: 10px;
+  color: var(--muted-soft);
+  font-weight: 400;
+  margin-top: 2px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ----- Mockup: Fan profile ----- */
+.mk-fan {
+  padding: 4px 0 8px;
+}
+.mk-fan-head {
+  display: flex; align-items: center; gap: 14px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--hairline);
+  margin-bottom: 18px;
+}
+.mk-avatar {
+  width: 48px; height: 48px;
+  border-radius: 9999px;
+  background: var(--surface-elevated);
+  border: 1px solid var(--hairline-strong);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 600; font-size: 16px;
+  color: var(--ink);
+  flex-shrink: 0;
+  letter-spacing: -0.01em;
+}
+.mk-fan-name {
+  font-size: 15px; font-weight: 600;
+  letter-spacing: -0.005em;
+}
+.mk-fan-meta {
+  font-size: 11.5px; color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  margin-top: 2px;
+}
+.mk-fan-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--hairline);
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  margin-bottom: 18px;
+  overflow: hidden;
+}
+.mk-fan-cell {
+  background: var(--surface);
+  padding: 10px 12px;
+}
+.mk-fan-cell-num {
+  font-size: 18px; font-weight: 500;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.mk-fan-cell-lab {
+  font-size: 10px;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--muted-soft);
+  margin-top: 2px;
+  font-weight: 600;
+}
+.mk-fan-tags {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-bottom: 18px;
+}
+.mk-tag {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: var(--surface-elevated);
+  border: 1px solid var(--hairline-strong);
+  color: var(--body);
+  font-weight: 500;
+}
+.mk-fan-time {
+  font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--muted);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.mk-event {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 12px;
+}
+.mk-event:last-child { border-bottom: none; }
+.mk-event-time {
+  color: var(--muted-soft);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding-top: 1px;
+}
+.mk-event-text { color: var(--body); }
+.mk-event-text strong { color: var(--ink); font-weight: 500; }
+
+/* ----- Fan sidebar (photo + fan card) ----- */
+.fan-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 0;
+}
+.fan-sidebar .photo {
+  flex: 0 0 auto;
+}
+.fan-card {
+  flex: 1 1 auto;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: 22px 22px 20px;
+  display: flex;
+  flex-direction: column;
+}
+.fan-card .t-label { margin-bottom: 14px; }
+.fan-card-quote {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  margin-bottom: 18px;
+  flex: 1 1 auto;
+}
+.fan-card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-top: 14px;
+  border-top: 1px solid var(--hairline);
+  font-size: 11px;
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.fan-card-meta strong {
+  color: var(--ink);
+  font-weight: 500;
+  font-family: 'Helvetica Neue', 'Helvetica Now', Inter, sans-serif;
+  font-size: 13px;
+  letter-spacing: -0.005em;
+}
+@media (max-width: 768px) {
+  .fan-card { padding: 20px; }
+}
+
+/* ----- Mockup: Analytics ----- */
+.mk-an-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--hairline);
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.mk-kpi { background: var(--surface); padding: 14px 16px; }
+.mk-kpi-lab {
+  font-size: 10px;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--muted);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.mk-kpi-num {
+  font-size: 22px; font-weight: 500;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 4px;
+}
+.mk-kpi-d {
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+.mk-kpi-d.up::before { content: '▲ '; color: var(--ink); }
+.mk-kpi-d.down::before { content: '▼ '; color: var(--muted); }
+
+.mk-chart-head {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 12px;
+}
+.mk-chart-title {
+  font-size: 13px; font-weight: 600;
+}
+.mk-chart-leg {
+  display: flex; gap: 12px; font-size: 10.5px;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--muted); font-weight: 700;
+}
+.mk-leg-item { display: inline-flex; align-items: center; gap: 6px; }
+.mk-leg-line {
+  width: 14px; height: 1.5px; background: var(--ink);
+}
+.mk-leg-line.dash {
+  background: repeating-linear-gradient(90deg, var(--muted-soft) 0 3px, transparent 3px 6px);
+}
+.mk-chart {
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  background: var(--surface);
+  padding: 12px;
+}
+.mk-chart svg { width: 100%; height: auto; display: block; }
+
+/* ----- Mockup: Cart / Billetterie ----- */
+.mk-cart-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--hairline);
+  margin-bottom: 8px;
+}
+.mk-cart-title {
+  font-size: 15px; font-weight: 600;
+  letter-spacing: -0.005em;
+}
+.mk-cart-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: var(--muted);
+}
+.mk-cart-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--hairline);
+  align-items: center;
+}
+.mk-cart-row:last-child { border-bottom: none; }
+.mk-cart-name {
+  font-size: 13px; font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+.mk-cart-meta {
+  font-size: 11px; color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+.mk-cart-amt {
+  font-size: 13.5px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.mk-cart-total {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding-top: 16px;
+  border-top: 1px solid var(--hairline-strong);
+  margin-top: 4px;
+}
+.mk-cart-total-lab {
+  font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--muted); font-weight: 700;
+}
+.mk-cart-total-amt {
+  font-size: 22px; font-weight: 500;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.mk-cart-cta {
+  margin-top: 16px;
+  width: 100%;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 13px;
+  background: var(--ink); color: var(--canvas);
+  border-radius: 6px; border: none;
+  font-size: 13px; font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* ----- Mockup: AI ----- */
+.mk-ai-prompt {
+  background: var(--surface-elevated);
+  border: 1px solid var(--hairline-strong);
+  border-radius: 8px;
+  padding: 14px 16px;
+  display: flex; align-items: flex-start; gap: 12px;
+  margin-bottom: 16px;
+}
+.mk-ai-icon {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--canvas);
+  border: 1px solid var(--hairline-strong);
+  flex-shrink: 0;
+  position: relative;
+}
+.mk-ai-icon::after {
+  content: ''; position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: var(--ink);
+  opacity: 0.3;
+}
+.mk-ai-prompt-text {
+  font-size: 13px; color: var(--body); line-height: 1.45;
+}
+.mk-ai-resp {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: 16px;
+  overflow: hidden;
+}
+.mk-ai-resp::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.04) 45%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 55%, transparent 70%);
+  background-size: 200% 100%;
+  animation: shimmer 5.5s linear infinite;
+  pointer-events: none;
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.mk-ai-resp-head {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 12px;
+  position: relative;
+}
+.mk-ai-resp-tag {
+  font-size: 9.5px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  padding: 3px 8px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 9999px;
+  color: var(--muted);
+}
+.mk-ai-thought {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: var(--muted-soft);
+}
+.mk-ai-resp-body {
+  position: relative;
+  font-size: 13.5px;
+  color: var(--body);
+  line-height: 1.55;
+  margin-bottom: 14px;
+}
+.mk-ai-resp-body strong { color: var(--ink); font-weight: 500; }
+.mk-ai-actions {
+  display: flex; gap: 6px;
+  flex-wrap: wrap;
+  position: relative;
+}
+.mk-ai-action {
+  font-size: 11.5px; font-weight: 500;
+  padding: 6px 12px;
+  background: var(--surface-elevated);
+  border: 1px solid var(--hairline-strong);
+  border-radius: 9999px;
+  color: var(--body);
+  cursor: pointer;
+}
+@media (prefers-reduced-motion: reduce) {
+  .mk-ai-resp::before { animation: none; display: none; }
+  .hero-tagline-dot { animation: none; }
+}
+
+/* ============== PHOTO ============== */
+.photo {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--surface);
+}
+.photo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.photo::after {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+}
+.photo.aspect-43 { aspect-ratio: 4/3; }
+.photo.aspect-11 { aspect-ratio: 1/1; }
+.photo.aspect-169 { aspect-ratio: 16/9; }
+.photo.aspect-65 { aspect-ratio: 6/5; }
+.photo.aspect-45 { aspect-ratio: 4/5; }
+.photo.aspect-34 { aspect-ratio: 3/4; }
+
+/* ============== ATMOSPHERE BREAK ============== */
+.atmosphere {
+  position: relative;
+  width: 100%;
+  height: 90vh;
+  min-height: 640px;
+  overflow: hidden;
+}
+.atmosphere img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.atmosphere::after {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+}
+.atmosphere-block {
+  position: absolute;
+  bottom: 48px;
+  left: 32px;
+  z-index: 2;
+  max-width: 540px;
+  background: var(--canvas);
+  padding: 36px 36px 32px;
+  border-radius: 8px;
+  border: 1px solid var(--hairline);
+}
+.atmosphere-block .t-label { margin-bottom: 18px; }
+.atmosphere-block-text {
+  font-size: 24px;
+  line-height: 1.35;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-bottom: 24px;
+}
+.atmosphere-block-meta {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding-top: 16px;
+  border-top: 1px solid var(--hairline);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+}
+@media (max-width: 768px) {
+  .atmosphere { height: 80vh; min-height: 500px; }
+  .atmosphere-block {
+    left: 16px; right: 16px; bottom: 24px;
+    padding: 24px;
+  }
+  .atmosphere-block-text { font-size: 18px; }
+}
+
+/* ============== MANIFESTO ============== */
+.manifesto {
+  background: var(--grad-tribune);
+  padding: var(--section) 32px;
+  position: relative;
+  overflow: hidden;
+}
+.manifesto::before {
+  /* darken the orange/lime end where contrast falls — type lives over the rose side */
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0.18) 100%);
+  pointer-events: none;
+}
+.manifesto-inner {
+  position: relative;
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.manifesto-meta-top {
+  display: flex; justify-content: space-between; align-items: baseline;
+  border-top: 1px solid rgba(1,1,1,0.35);
+  padding-top: 22px;
+  margin-bottom: 80px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--canvas);
+  flex-wrap: wrap; gap: 12px;
+}
+.manifesto h2 {
+  color: var(--canvas);
+  max-width: 14ch;
+  margin-bottom: 56px;
+}
+.manifesto-foot {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 32px;
+  border-top: 1px solid rgba(1,1,1,0.35);
+  padding-top: 24px;
+}
+.manifesto-foot.simple {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--canvas);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.manifesto-foot-item-lab {
+  font-size: 10px;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--canvas);
+  font-weight: 700;
+  opacity: 0.7;
+  margin-bottom: 6px;
+}
+.manifesto-foot-item-val {
+  font-size: 14px;
+  color: var(--canvas);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+.manifesto-foot-item-val.large {
+  font-size: 28px;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 768px) {
+  .manifesto-foot { grid-template-columns: 1fr 1fr; }
+  .manifesto-meta-top { margin-bottom: 48px; }
+}
+
+/* ============== CTA SECTION ============== */
+.final {
+  position: relative;
+  padding: var(--section) 32px;
+  overflow: hidden;
+  min-height: 88vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--canvas);
+}
+.final-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+.final-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 900px 620px at center, rgba(1,1,1,0.55) 0%, rgba(1,1,1,0.32) 50%, rgba(1,1,1,0.18) 100%),
+    linear-gradient(180deg, rgba(1,1,1,0.18) 0%, rgba(1,1,1,0) 22%, rgba(1,1,1,0) 78%, rgba(1,1,1,0.5) 100%);
+}
+.final::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+}
+.final-inner {
+  position: relative;
+  z-index: 3;
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 16px;
+  width: 100%;
+}
+.final-mark { margin-bottom: 28px; }
+.final h2 {
+  margin-bottom: 20px;
+  max-width: none;
+}
+.final-sub {
+  font-size: 21px;
+  color: var(--body);
+  line-height: 1.45;
+  margin-bottom: 44px;
+  letter-spacing: -0.005em;
+}
+.final-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+@media (max-width: 768px) {
+  .final { min-height: 72vh; padding: 96px 20px; }
+  .final-sub { font-size: 18px; margin-bottom: 32px; }
+}
+
+/* ============== FOOTER ============== */
+footer {
+  padding: 88px 32px 40px;
+  border-top: 1px solid var(--hairline);
+}
+.foot-inner { max-width: var(--max); margin: 0 auto; }
+.foot-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 56px;
+  padding-bottom: 64px;
+  border-bottom: 1px solid var(--hairline);
+}
+@media (max-width: 768px) {
+  .foot-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+}
+.foot-brand-logo { height: 22px; margin-bottom: 24px; }
+.foot-brand-logo img { height: 100%; }
+.foot-brand-text {
+  font-size: 14px; color: var(--body);
+  max-width: 32ch; line-height: 1.6;
+  margin-bottom: 24px;
+}
+.foot-brand-mark {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: var(--muted-soft);
+}
+.foot-col h4 {
+  font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-bottom: 18px;
+  font-weight: 700;
+}
+.foot-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.foot-col a {
+  color: var(--body); text-decoration: none; font-size: 14px;
+  transition: color .15s;
+}
+.foot-col a:hover { color: var(--ink); }
+.foot-bottom {
+  padding-top: 28px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px; color: var(--muted);
+  flex-wrap: wrap; gap: 16px;
+}
+.foot-bottom-meta {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ============== REVEAL ============== */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  filter: blur(8px);
+  transition: opacity .9s cubic-bezier(.2,.6,.2,1), transform .9s cubic-bezier(.2,.6,.2,1), filter .9s cubic-bezier(.2,.6,.2,1);
+}
+.reveal.in {
+  opacity: 1;
+  transform: none;
+  filter: blur(0);
+}
+.reveal.d1 { transition-delay: .08s; }
+.reveal.d2 { transition-delay: .16s; }
+.reveal.d3 { transition-delay: .24s; }
+.reveal.d4 { transition-delay: .32s; }
+.reveal.d5 { transition-delay: .40s; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; filter: none; transition: none; }
+  .hero-video { display: none; }
+}
+
+/* Focus rings */
+:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.55);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ============== MODAL ============== */
+body.modal-open { overflow: hidden; }
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.modal.open {
+  display: flex;
+  animation: modal-in .25s ease-out;
+}
+@keyframes modal-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(1,1,1,0.78);
+  backdrop-filter: blur(14px) saturate(120%);
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+}
+.modal-panel {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 580px;
+  max-height: 92vh;
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid var(--hairline-strong);
+  border-radius: 12px;
+  padding: 44px 44px 36px;
+  animation: modal-panel-in .35s cubic-bezier(.2,.6,.2,1);
+}
+@keyframes modal-panel-in {
+  from { opacity: 0; transform: translateY(12px) scale(.98); }
+  to { opacity: 1; transform: none; }
+}
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 9999px;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+  padding: 0;
+}
+.modal-close:hover {
+  border-color: var(--ink);
+  background: var(--surface-elevated);
+}
+.modal-head {
+  margin-bottom: 28px;
+}
+.modal-head .t-label {
+  margin-bottom: 18px;
+}
+.modal-title {
+  font-size: 28px;
+  line-height: 1.18;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 12px;
+  max-width: 22ch;
+}
+.modal-lead {
+  font-size: 15px;
+  color: var(--body);
+  line-height: 1.5;
+  max-width: 38ch;
+}
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.form-field {
+  display: flex;
+  flex-direction: column;
+}
+.form-field label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.label-opt {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  color: var(--muted-soft);
+}
+.form-field input,
+.form-field textarea {
+  background: var(--canvas);
+  border: 1px solid var(--hairline-strong);
+  border-radius: 6px;
+  padding: 12px 14px;
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--ink);
+  line-height: 1.4;
+  transition: border-color .15s;
+  width: 100%;
+}
+.form-field input:focus,
+.form-field textarea:focus {
+  border-color: var(--ink);
+  outline: none;
+}
+.form-field input:hover,
+.form-field textarea:hover {
+  border-color: var(--muted-soft);
+}
+.form-field textarea {
+  resize: vertical;
+  min-height: 96px;
+  line-height: 1.5;
+  font-family: inherit;
+}
+.modal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 12px;
+  padding-top: 22px;
+  border-top: 1px solid var(--hairline);
+  flex-wrap: wrap;
+}
+.modal-mark {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted-soft);
+}
+.modal-submit {
+  padding: 13px 20px;
+  font-size: 14px;
+}
+
+/* Success state */
+.modal-success {
+  text-align: center;
+  padding: 12px 0 8px;
+}
+.modal-success-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 9999px;
+  border: 1px solid var(--hairline-strong);
+  margin-bottom: 28px;
+  font-size: 18px;
+  color: var(--ink);
+  font-weight: 400;
+}
+.modal-success-title {
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.018em;
+  margin-bottom: 12px;
+  color: var(--ink);
+}
+.modal-success-sub {
+  font-size: 15px;
+  color: var(--body);
+  line-height: 1.5;
+  max-width: 38ch;
+  margin: 0 auto;
+}
+
+@media (max-width: 600px) {
+  .modal { padding: 16px; }
+  .modal-panel { padding: 32px 24px 28px; }
+  .form-row { grid-template-columns: 1fr; gap: 18px; }
+  .modal-title { font-size: 22px; }
+  .modal-actions { flex-direction: column; align-items: stretch; }
+  .modal-submit { width: 100%; justify-content: center; }
+  .modal-mark { text-align: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal.open,
+  .modal-panel { animation: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============== NAV ============== -->
+<nav class="nav" aria-label="Navigation principale">
+  <div class="nav-inner">
+    <a href="#" class="logo" aria-label="Stadli, retour à l'accueil">
+      <img src="https://raw.githubusercontent.com/bamboounderwear/stadlilandingpage/ba0c4bcd99713c1a9e4665898eb18c8122049698/logo.svg" alt="Stadli">
+    </a>
+    <ul class="nav-links">
+      <li><a href="#campagnes">Campagnes</a></li>
+      <li><a href="#fans">Fans</a></li>
+      <li><a href="#analytique">Analytique</a></li>
+      <li><a href="#ia">IA</a></li>
+      <li><a href="#billetterie">Billetterie</a></li>
+    </ul>
+    <a href="#" class="nav-cta" data-modal="demo">Demander une démo <span class="arrow">→</span></a>
+  </div>
+</nav>
+
+<!-- ============== HERO ============== -->
+<section class="hero">
+  <video class="hero-video" autoplay muted loop playsinline poster="https://stadlilandingpage.pages.dev/emailhero.jpg" aria-hidden="true">
+    <source src="https://stadlilandingpage.pages.dev/hero-background.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay" aria-hidden="true"></div>
+  <div class="hero-grain" aria-hidden="true"></div>
+
+  <div class="hero-inner">
+    <div class="hero-tagline reveal">
+      <span class="hero-tagline-dot" aria-hidden="true"></span>
+      <span class="hero-tagline-text">Intelligence événementielle</span>
+    </div>
+
+    <h1 class="t-display reveal d1">
+      La plateforme pensée<br>
+      pour vos fans.
+    </h1>
+
+    <p class="hero-sub reveal d2">
+      Billetterie, CRM, campagnes et analytique connectés dans un seul outil.
+    </p>
+
+    <div class="hero-actions reveal d3">
+      <a href="#" class="btn-primary" data-modal="demo">Demander une démo <span class="arrow">→</span></a>
+      <a href="#campagnes" class="btn-secondary">Voir la plateforme <span class="arrow">→</span></a>
+    </div>
+
+    <div class="hero-meta reveal d4">
+      <div>
+        <div class="hero-meta-num">38</div>
+        <div class="hero-meta-label">Franchises actives</div>
+      </div>
+      <div>
+        <div class="hero-meta-num">2,4 M</div>
+        <div class="hero-meta-label">Partisans suivis</div>
+      </div>
+      <div>
+        <div class="hero-meta-num">142 850 $</div>
+        <div class="hero-meta-label">Revenu moyen / soir</div>
+      </div>
+      <div>
+        <div class="hero-meta-num">99,98 %</div>
+        <div class="hero-meta-label">Disponibilité matchnight</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== PRODUCT 1 — CAMPAGNES ============== -->
+<section class="product" id="campagnes">
+  <div class="product-inner">
+    <div class="section-header reveal">
+      <span class="section-num">01 / 05</span>
+      <span class="section-cat" data-tone="marketing">
+        <span class="section-cat-dot" aria-hidden="true"></span>
+        Marketing &amp; engagement
+      </span>
+    </div>
+
+    <div class="product-grid">
+      <div class="product-content">
+        <h2 class="t-heading reveal">Des campagnes qui connaissent vos fans.</h2>
+        <p class="reveal d1">Créez des campagnes, déclenchez des offres et mesurez l'impact en temps réel.</p>
+        <ul class="feature-list reveal d2">
+          <li>
+            <span class="feature-num">01</span>
+            <span class="feature-text">Déclencheurs comportementaux</span>
+          </li>
+          <li>
+            <span class="feature-num">02</span>
+            <span class="feature-text">Multi-canal natif</span>
+          </li>
+          <li>
+            <span class="feature-num">03</span>
+            <span class="feature-text">Tests A/B en continu</span>
+          </li>
+          <li>
+            <span class="feature-num">04</span>
+            <span class="feature-text">Modèles prêts à l'emploi</span>
+          </li>
+        </ul>
+        <a href="#" class="product-link reveal d3">Voir les campagnes <span class="arrow">→</span></a>
+      </div>
+
+      <div class="product-visual">
+        <div class="visual-stack reveal d2">
+          <div class="mockup">
+            <div class="mockup-bar">
+              <div class="mockup-dots">
+                <div class="mockup-dot"></div>
+                <div class="mockup-dot"></div>
+                <div class="mockup-dot"></div>
+              </div>
+              <div class="mockup-bar-title">Stadli — Campaigns</div>
+              <div class="mockup-bar-trail">v 4.12</div>
+            </div>
+            <div class="mockup-body">
+              <div class="mk-camp-head">
+                <div>
+                  <div class="mk-camp-title">Campagnes actives</div>
+                  <div class="mk-camp-sub">Saison 2026 · Match #14 · 5 nov</div>
+                </div>
+                <div class="mk-camp-sub">Mise à jour il y a 38 s</div>
+              </div>
+              <div class="mk-camp-tabs">
+                <button class="mk-tab active">En cours · 7</button>
+                <button class="mk-tab">Brouillons</button>
+                <button class="mk-tab">Archives</button>
+              </div>
+              <div class="mk-table">
+                <div class="mk-row head">
+                  <div>Campagne</div>
+                  <div>Statut</div>
+                  <div class="num">Envoyés</div>
+                  <div class="num">Conv.</div>
+                </div>
+                <div class="mk-row">
+                  <div class="mk-camp-name">Retour à la maison · Match #14<small>déclencheur · 14 j absence</small></div>
+                  <div><span class="mk-status"><span class="mk-status-dot"></span> Diffusion</span></div>
+                  <div class="num tabular">12 480</div>
+                  <div class="num tabular">8,2 %</div>
+                </div>
+                <div class="mk-row">
+                  <div class="mk-camp-name">Forfait familial · 4 + 2<small>segment · familles banlieue</small></div>
+                  <div><span class="mk-status"><span class="mk-status-dot"></span> Diffusion</span></div>
+                  <div class="num tabular">3 642</div>
+                  <div class="num tabular">14,7 %</div>
+                </div>
+                <div class="mk-row">
+                  <div class="mk-camp-name">Rappel stationnement · 5 nov<small>SMS · 24 h avant</small></div>
+                  <div><span class="mk-status"><span class="mk-status-dot idle"></span> Programmée</span></div>
+                  <div class="num tabular">— —</div>
+                  <div class="num tabular">— —</div>
+                </div>
+                <div class="mk-row">
+                  <div class="mk-camp-name">Renouvellement saison 2026-27<small>cohorte · détenteurs A+</small></div>
+                  <div><span class="mk-status"><span class="mk-status-dot"></span> Diffusion</span></div>
+                  <div class="num tabular">1 048</div>
+                  <div class="num tabular">31,4 %</div>
+                </div>
+                <div class="mk-row">
+                  <div class="mk-camp-name">Boutique · chandail rétro<small>panier abandonné</small></div>
+                  <div><span class="mk-status"><span class="mk-status-dot draft"></span> Brouillon</span></div>
+                  <div class="num tabular">— —</div>
+                  <div class="num tabular">— —</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="file-path-label">stadli/app/campaigns/builder.tsx</div>
+
+          <div class="visual-stack-row" style="margin-top: 16px;">
+            <div class="photo aspect-43">
+              <img src="https://stadlilandingpage.pages.dev/emailhero.jpg" alt="Partisans réagissant pendant un soir de match, capturés en couleur documentaire">
+            </div>
+            <div class="photo aspect-43">
+              <img src="https://stadlilandingpage.pages.dev/9d68add116347c4ed11c35ca0fee5583.jpg" alt="Atmosphère de tribune, foule en mouvement">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== PRODUCT 2 — CONNAISSANCE FANS ============== -->
+<section class="product" id="fans">
+  <div class="product-inner">
+    <div class="section-header reveal">
+      <span class="section-num">02 / 05</span>
+      <span class="section-cat" data-tone="crm">
+        <span class="section-cat-dot" aria-hidden="true"></span>
+        CRM &amp; segmentation
+      </span>
+    </div>
+
+    <div class="product-grid reverse">
+      <div class="product-content">
+        <h2 class="t-heading reveal">Connaissez vos fans comme jamais.</h2>
+        <p class="reveal d1">Segmentation dynamique, suivi de fidélité et historique complet des interactions avec vos partisans.</p>
+        <ul class="feature-list reveal d2">
+          <li>
+            <span class="feature-num">01</span>
+            <span class="feature-text">Profil unifié</span>
+          </li>
+          <li>
+            <span class="feature-num">02</span>
+            <span class="feature-text">Segments vivants</span>
+          </li>
+          <li>
+            <span class="feature-num">03</span>
+            <span class="feature-text">Score de fidélité</span>
+          </li>
+          <li>
+            <span class="feature-num">04</span>
+            <span class="feature-text">Historique complet</span>
+          </li>
+        </ul>
+        <a href="#" class="product-link reveal d3">Voir le CRM <span class="arrow">→</span></a>
+      </div>
+
+      <div class="product-visual">
+        <div class="visual-stack reveal d2">
+          <div class="visual-stack-row">
+            <div class="mockup">
+              <div class="mockup-bar">
+                <div class="mockup-dots">
+                  <div class="mockup-dot"></div>
+                  <div class="mockup-dot"></div>
+                  <div class="mockup-dot"></div>
+                </div>
+                <div class="mockup-bar-title">Fan · #ST-48 219</div>
+                <div class="mockup-bar-trail">CRM</div>
+              </div>
+              <div class="mockup-body">
+                <div class="mk-fan">
+                  <div class="mk-fan-head">
+                    <div class="mk-avatar">MT</div>
+                    <div>
+                      <div class="mk-fan-name">Marie-Pier Tremblay</div>
+                      <div class="mk-fan-meta">Membre depuis 2019 · Rive-Sud</div>
+                    </div>
+                  </div>
+                  <div class="mk-fan-grid">
+                    <div class="mk-fan-cell">
+                      <div class="mk-fan-cell-num tabular">87</div>
+                      <div class="mk-fan-cell-lab">Score</div>
+                    </div>
+                    <div class="mk-fan-cell">
+                      <div class="mk-fan-cell-num tabular">42</div>
+                      <div class="mk-fan-cell-lab">Présences</div>
+                    </div>
+                    <div class="mk-fan-cell">
+                      <div class="mk-fan-cell-num tabular">3 240 $</div>
+                      <div class="mk-fan-cell-lab">12 mois</div>
+                    </div>
+                  </div>
+                  <div class="mk-fan-tags">
+                    <span class="mk-tag">Détentrice saison · A+</span>
+                    <span class="mk-tag">Famille</span>
+                    <span class="mk-tag">Boutique active</span>
+                    <span class="mk-tag">App mobile</span>
+                  </div>
+                  <div class="mk-fan-time">Activité récente</div>
+                  <div class="mk-event">
+                    <div class="mk-event-time">14:02</div>
+                    <div class="mk-event-text"><strong>Achat boutique</strong> — chandail rétro · 86,00 $</div>
+                  </div>
+                  <div class="mk-event">
+                    <div class="mk-event-time">11:48</div>
+                    <div class="mk-event-text"><strong>Ouverture courriel</strong> — Forfait familial · 4 + 2</div>
+                  </div>
+                  <div class="mk-event">
+                    <div class="mk-event-time">Hier</div>
+                    <div class="mk-event-text"><strong>Présence match #13</strong> — entrée 19:08 · siège A-12-04</div>
+                  </div>
+                  <div class="mk-event">
+                    <div class="mk-event-time">3 nov</div>
+                    <div class="mk-event-text"><strong>Renouvellement</strong> saison 2026-27 amorcé</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="fan-sidebar">
+              <div class="photo aspect-45">
+                <img src="https://github.com/bamboounderwear/stadlilandingpage/blob/main/assets/fans-mascot.jpg?raw=true" alt="Marie-Pier dans les tribunes avec sa famille pendant un soir de match" onerror="this.onerror=null;this.src='https://stadlilandingpage.pages.dev/9d68add116347c4ed11c35ca0fee5583.jpg';">
+              </div>
+              <div class="fan-card">
+                <div class="t-label">Partisane · #ST-48 219</div>
+                <p class="fan-card-quote">« Stadli connaît mon siège, mes enfants, et pourquoi je n'étais pas là samedi. C'est plus que je peux dire de mon ancienne carte de saison. »</p>
+                <div class="fan-card-meta">
+                  <strong>Marie-Pier Tremblay</strong>
+                  <span>Saison 2019 →</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="file-path-label">stadli/app/fans/profile.tsx</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== PRODUCT 3 — ANALYTIQUE ============== -->
+<section class="product" id="analytique">
+  <div class="product-inner">
+    <div class="section-header reveal">
+      <span class="section-num">03 / 05</span>
+      <span class="section-cat" data-tone="analytics">
+        <span class="section-cat-dot" aria-hidden="true"></span>
+        Analytique &amp; objectifs
+      </span>
+    </div>
+
+    <div class="product-grid">
+      <div class="product-content">
+        <h2 class="t-heading reveal">L'analytique qui éclaire vos décisions.</h2>
+        <p class="reveal d1">Les réponses sont dans vos données. Tableaux de bord en temps réel, objectifs de vente et comparaisons par période.</p>
+        <ul class="feature-list reveal d2">
+          <li>
+            <span class="feature-num">01</span>
+            <span class="feature-text">Données live matchnight</span>
+          </li>
+          <li>
+            <span class="feature-num">02</span>
+            <span class="feature-text">Objectifs par match</span>
+          </li>
+          <li>
+            <span class="feature-num">03</span>
+            <span class="feature-text">Comparaisons saison/saison</span>
+          </li>
+          <li>
+            <span class="feature-num">04</span>
+            <span class="feature-text">Pistes d'audit complètes</span>
+          </li>
+        </ul>
+        <a href="#" class="product-link reveal d3">Voir les tableaux de bord <span class="arrow">→</span></a>
+      </div>
+
+      <div class="product-visual">
+        <div class="visual-stack reveal d2">
+          <div class="mockup">
+            <div class="mockup-bar">
+              <div class="mockup-dots">
+                <div class="mockup-dot live"></div>
+                <div class="mockup-dot"></div>
+                <div class="mockup-dot"></div>
+              </div>
+              <div class="mockup-bar-title">Analytics — Matchnight live</div>
+              <div class="mockup-bar-trail">19:42 · en direct</div>
+            </div>
+            <div class="mockup-body">
+              <div class="mk-an-grid">
+                <div class="mk-kpi">
+                  <div class="mk-kpi-lab">Revenus du soir</div>
+                  <div class="mk-kpi-num tabular">142 850,00 $</div>
+                  <div class="mk-kpi-d up tabular">+ 12,4 % vs M#13</div>
+                </div>
+                <div class="mk-kpi">
+                  <div class="mk-kpi-lab">Présence</div>
+                  <div class="mk-kpi-num tabular">11 248</div>
+                  <div class="mk-kpi-d up tabular">+ 3,8 % vs cible</div>
+                </div>
+                <div class="mk-kpi">
+                  <div class="mk-kpi-lab">Panier moyen</div>
+                  <div class="mk-kpi-num tabular">38,42 $</div>
+                  <div class="mk-kpi-d down tabular">- 1,2 % vs M#13</div>
+                </div>
+              </div>
+
+              <div class="mk-chart-head">
+                <div class="mk-chart-title">Revenus par heure</div>
+                <div class="mk-chart-leg">
+                  <span class="mk-leg-item"><span class="mk-leg-line"></span> Ce soir</span>
+                  <span class="mk-leg-item"><span class="mk-leg-line dash"></span> Match #13</span>
+                </div>
+              </div>
+              <div class="mk-chart">
+                <svg viewBox="0 0 600 220" preserveAspectRatio="none" aria-label="Graphique des revenus par heure">
+                  <!-- grid -->
+                  <g stroke="#161616" stroke-width="1">
+                    <line x1="0" y1="40" x2="600" y2="40"/>
+                    <line x1="0" y1="90" x2="600" y2="90"/>
+                    <line x1="0" y1="140" x2="600" y2="140"/>
+                    <line x1="0" y1="190" x2="600" y2="190"/>
+                  </g>
+                  <!-- y-axis labels -->
+                  <g fill="#6a6a6a" font-family="JetBrains Mono, monospace" font-size="9">
+                    <text x="6" y="36">160 k</text>
+                    <text x="6" y="86">120 k</text>
+                    <text x="6" y="136">80 k</text>
+                    <text x="6" y="186">40 k</text>
+                  </g>
+                  <!-- prev period (dashed) -->
+                  <polyline fill="none" stroke="#6a6a6a" stroke-width="1.5" stroke-dasharray="4 4"
+                    points="50,180 110,165 170,150 230,135 290,118 350,98 410,78 470,72 530,68 580,64"/>
+                  <!-- current (solid white) -->
+                  <polyline fill="none" stroke="#ffffff" stroke-width="2"
+                    points="50,182 110,160 170,138 230,118 290,92 350,72 410,55 470,46 530,40 580,34"/>
+                  <!-- markers -->
+                  <g fill="#ffffff">
+                    <circle cx="580" cy="34" r="3.5"/>
+                  </g>
+                  <g fill="#080808" stroke="#ffffff" stroke-width="1.5">
+                    <circle cx="350" cy="72" r="3"/>
+                  </g>
+                  <!-- x-axis -->
+                  <g fill="#6a6a6a" font-family="JetBrains Mono, monospace" font-size="9">
+                    <text x="48" y="210">17 h</text>
+                    <text x="168" y="210">18 h</text>
+                    <text x="288" y="210">19 h</text>
+                    <text x="408" y="210">20 h</text>
+                    <text x="528" y="210">21 h</text>
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div class="file-path-label">stadli/app/analytics/dashboard.tsx</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== ATMOSPHERE BREAK ============== -->
+<section class="atmosphere" aria-label="Atmosphère matchnight">
+  <img src="https://stadlilandingpage.pages.dev/9d68add116347c4ed11c35ca0fee5583.jpg" alt="Tribunes pleines en début de match, lumière documentaire">
+  <div class="atmosphere-block">
+    <div class="t-label">Saison 2025–26 · Match #08</div>
+    <p class="atmosphere-block-text">« On savait quels partisans n'étaient pas revenus depuis février. On a déclenché une offre familiale jeudi matin. Vendredi soir, ils étaient assis à leur place. »</p>
+    <div class="atmosphere-block-meta">
+      <span>Directrice marketing · Franchise LNH</span>
+      <span>03 / nov / 2025</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============== PRODUCT 4 — IA ============== -->
+<section class="product" id="ia">
+  <div class="product-inner">
+    <div class="section-header reveal">
+      <span class="section-num">04 / 05</span>
+      <span class="section-cat" data-tone="ai">
+        <span class="section-cat-dot" aria-hidden="true"></span>
+        Intelligence artificielle
+      </span>
+    </div>
+
+    <div class="product-grid reverse">
+      <div class="product-content">
+        <h2 class="t-heading reveal">Transformez vos questions en actions.</h2>
+        <p class="reveal d1">L'IA au service de vos opérations. Trois outils IA intégrés pour transformer vos questions en actions et en matchs complets.</p>
+        <ul class="feature-list reveal d2">
+          <li>
+            <span class="feature-num">01</span>
+            <span class="feature-text">Copilote segmentation</span>
+          </li>
+          <li>
+            <span class="feature-num">02</span>
+            <span class="feature-text">Rédaction contextuelle</span>
+          </li>
+          <li>
+            <span class="feature-num">03</span>
+            <span class="feature-text">Plan matchnight</span>
+          </li>
+        </ul>
+        <a href="#" class="product-link reveal d3">Voir les outils IA <span class="arrow">→</span></a>
+      </div>
+
+      <div class="product-visual">
+        <div class="visual-stack reveal d2">
+          <div class="mockup">
+            <div class="mockup-bar">
+              <div class="mockup-dots">
+                <div class="mockup-dot"></div>
+                <div class="mockup-dot"></div>
+                <div class="mockup-dot"></div>
+              </div>
+              <div class="mockup-bar-title">Stadli IA — Copilote</div>
+              <div class="mockup-bar-trail">/ segments</div>
+            </div>
+            <div class="mockup-body">
+              <div class="mk-ai-prompt">
+                <div class="mk-ai-icon"></div>
+                <div class="mk-ai-prompt-text">« Trouve-moi les détentrices de saison qui ont manqué les deux derniers matchs et qui n'ont rien acheté à la boutique cette saison. »</div>
+              </div>
+              <div class="mk-ai-resp">
+                <div class="mk-ai-resp-head">
+                  <span class="mk-ai-resp-tag">Segment proposé</span>
+                  <span class="mk-ai-thought">construit en 1,4 s</span>
+                </div>
+                <div class="mk-ai-resp-body">
+                  <strong>« Détentrices à risque · M#12-13 »</strong> — 1&nbsp;284 partisans correspondent. Présence saison <span class="tabular">- 38 %</span>. Aucune transaction boutique depuis le 12 août. Score de fidélité moyen&nbsp;: <span class="tabular">62 / 100</span>.
+                </div>
+                <div class="mk-ai-actions">
+                  <button class="mk-ai-action" type="button">Créer le segment</button>
+                  <button class="mk-ai-action" type="button">Lancer une campagne</button>
+                  <button class="mk-ai-action" type="button">Affiner</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="file-path-label">stadli/app/ai/copilot.tsx</div>
+
+          <div class="visual-stack-row" style="margin-top: 16px;">
+            <div class="photo aspect-43">
+              <img src="https://github.com/bamboounderwear/stadlilandingpage/blob/main/assets/fans-mascot.jpg?raw=true" alt="Partisans posant avec la mascotte d'équipe" onerror="this.onerror=null;this.src='https://stadlilandingpage.pages.dev/9d68add116347c4ed11c35ca0fee5583.jpg';">
+            </div>
+            <div class="photo aspect-43">
+              <img src="https://stadlilandingpage.pages.dev/emailhero.jpg" alt="Match en cours, jeu de lumière sur la patinoire">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== PRODUCT 5 — BILLETTERIE ============== -->
+<section class="product" id="billetterie">
+  <div class="product-inner">
+    <div class="section-header reveal">
+      <span class="section-num">05 / 05</span>
+      <span class="section-cat" data-tone="tickets">
+        <span class="section-cat-dot" aria-hidden="true"></span>
+        Billetterie &amp; commerce
+      </span>
+    </div>
+
+    <div class="product-grid">
+      <div class="product-content">
+        <h2 class="t-heading reveal">Vendez plus que des billets.</h2>
+        <p class="reveal d1">La billetterie qui vit avec vos fans : billets, forfaits, parking et produits dérivés dans un seul panier unifié.</p>
+        <ul class="feature-list reveal d2">
+          <li>
+            <span class="feature-num">01</span>
+            <span class="feature-text">Panier unifié</span>
+          </li>
+          <li>
+            <span class="feature-num">02</span>
+            <span class="feature-text">Forfaits flexibles</span>
+          </li>
+          <li>
+            <span class="feature-num">03</span>
+            <span class="feature-text">Revente intégrée</span>
+          </li>
+          <li>
+            <span class="feature-num">04</span>
+            <span class="feature-text">Stationnement &amp; boutique</span>
+          </li>
+        </ul>
+        <a href="#" class="product-link reveal d3">Voir la billetterie <span class="arrow">→</span></a>
+      </div>
+
+      <div class="product-visual">
+        <div class="visual-stack reveal d2">
+          <div class="mockup">
+            <div class="mockup-bar">
+              <div class="mockup-dots">
+                <div class="mockup-dot"></div>
+                <div class="mockup-dot"></div>
+                <div class="mockup-dot"></div>
+              </div>
+              <div class="mockup-bar-title">Panier · #PA-04217</div>
+              <div class="mockup-bar-trail">FR-CA</div>
+            </div>
+            <div class="mockup-body">
+              <div class="mk-cart-head">
+                <div class="mk-cart-title">Votre panier</div>
+                <div class="mk-cart-count">5 articles · 1 forfait</div>
+              </div>
+              <div class="mk-cart-row">
+                <div>
+                  <div class="mk-cart-name">Billets section A · 4 places</div>
+                  <div class="mk-cart-meta">Match #14 · 5 nov · 19 h 30 · sièges A-12-04 → A-12-07</div>
+                </div>
+                <div class="mk-cart-amt tabular">344,00 $</div>
+              </div>
+              <div class="mk-cart-row">
+                <div>
+                  <div class="mk-cart-name">Forfait stationnement P2</div>
+                  <div class="mk-cart-meta">Lot couvert · accès dès 17 h 00</div>
+                </div>
+                <div class="mk-cart-amt tabular">28,00 $</div>
+              </div>
+              <div class="mk-cart-row">
+                <div>
+                  <div class="mk-cart-name">Chandail rétro · L</div>
+                  <div class="mk-cart-meta">Cueillette à la boutique · niveau 200</div>
+                </div>
+                <div class="mk-cart-amt tabular">86,00 $</div>
+              </div>
+              <div class="mk-cart-row">
+                <div>
+                  <div class="mk-cart-name">Crédit boutique · Détentrice A+</div>
+                  <div class="mk-cart-meta">Appliqué automatiquement</div>
+                </div>
+                <div class="mk-cart-amt tabular">- 15,00 $</div>
+              </div>
+              <div class="mk-cart-total">
+                <span class="mk-cart-total-lab">Total · taxes incluses</span>
+                <span class="mk-cart-total-amt tabular">443,00 $</span>
+              </div>
+              <button class="mk-cart-cta" type="button">Confirmer le paiement <span class="arrow">→</span></button>
+            </div>
+          </div>
+          <div class="file-path-label">stadli/app/tickets/cart.tsx</div>
+
+          <div class="visual-stack-row" style="margin-top: 16px;">
+            <div class="photo aspect-43">
+              <img src="https://stadlilandingpage.pages.dev/emailhero.jpg" alt="Partisan en file de billetterie, fin d'après-midi avant un match">
+            </div>
+            <div class="photo aspect-43">
+              <img src="https://stadlilandingpage.pages.dev/9d68add116347c4ed11c35ca0fee5583.jpg" alt="Foule de tribune, début de match">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FINAL CTA ============== -->
+<section class="final" id="demo">
+  <img class="final-bg" src="https://stadlilandingpage.pages.dev/emailhero.jpg" alt="Soir de match — l'instant avant que le jeu commence">
+  <div class="final-overlay" aria-hidden="true"></div>
+  <div class="final-inner">
+    <div class="t-label final-mark reveal">— Démo · Stadli</div>
+    <h2 class="t-heading reveal d1">Voyez Stadli en action.</h2>
+    <p class="final-sub reveal d2">Parlons-nous de votre plan de match.</p>
+    <div class="final-actions reveal d3">
+      <a href="#" class="btn-primary" data-modal="demo">Demander une démo <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FOOTER ============== -->
+<footer>
+  <div class="foot-inner">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand-logo">
+          <img src="https://raw.githubusercontent.com/bamboounderwear/stadlilandingpage/ba0c4bcd99713c1a9e4665898eb18c8122049698/logo.svg" alt="Stadli">
+        </div>
+        <p class="foot-brand-text">L'intelligence événementielle pour les franchises sportives qui veulent connaître leurs partisans aussi bien qu'elles connaissent leur jeu.</p>
+        <div class="foot-brand-mark">stadli.io · Montréal · 2026</div>
+      </div>
+      <div class="foot-col">
+        <h4>Plateforme</h4>
+        <ul>
+          <li><a href="#campagnes">Campagnes</a></li>
+          <li><a href="#fans">Connaissance fans</a></li>
+          <li><a href="#analytique">Analytique</a></li>
+          <li><a href="#ia">Outils IA</a></li>
+          <li><a href="#billetterie">Billetterie</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Entreprise</h4>
+        <ul>
+          <li><a href="#">À propos</a></li>
+          <li><a href="#">Carrières</a></li>
+          <li><a href="#">Études de cas</a></li>
+          <li><a href="#">Presse</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Ressources</h4>
+        <ul>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">Statut système</a></li>
+          <li><a href="#">Sécurité</a></li>
+          <li><a href="#">Confidentialité</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span class="foot-bottom-meta">© 2026 Stadli inc. · Tous droits réservés.</span>
+      <span class="foot-bottom-meta">FR-CA · v 4.12.0</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============== DEMO MODAL ============== -->
+<div class="modal" id="demo-modal" aria-hidden="true" role="dialog" aria-labelledby="demo-modal-title" aria-modal="true">
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-panel" role="document">
+    <button class="modal-close" type="button" aria-label="Fermer la fenêtre" data-close>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <path d="M2 2L12 12M12 2L2 12" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <div class="modal-content">
+      <div class="modal-head">
+        <div class="t-label">— Démo · 30 min</div>
+        <h3 id="demo-modal-title" class="modal-title">Voyons-nous tourner Stadli sur vos données.</h3>
+        <p class="modal-lead">Une équipe québécoise vous rappelle dans les 24 h ouvrables pour planifier la session.</p>
+      </div>
+
+      <form class="modal-form" id="demo-form" novalidate>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="form-name">Nom complet</label>
+            <input id="form-name" name="name" type="text" required autocomplete="name">
+          </div>
+          <div class="form-field">
+            <label for="form-email">Courriel professionnel</label>
+            <input id="form-email" name="email" type="email" required autocomplete="email">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="form-org">Organisation / franchise</label>
+            <input id="form-org" name="organization" type="text" required autocomplete="organization">
+          </div>
+          <div class="form-field">
+            <label for="form-role">Poste <span class="label-opt">facultatif</span></label>
+            <input id="form-role" name="role" type="text" autocomplete="organization-title">
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="form-message">Quelques mots sur votre saison <span class="label-opt">facultatif</span></label>
+          <textarea id="form-message" name="message" rows="4" placeholder="Taille de la franchise, plateforme actuelle, soirs de match à venir…"></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <span class="modal-mark">stadli.io · réponse en 24 h ouvrables</span>
+          <button type="submit" class="btn-primary modal-submit">Envoyer la demande <span class="arrow">→</span></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
+
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Respect reduced motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+  }
+
+  // ============== NAV SCROLL STATE ==============
+  (function () {
+    const nav = document.querySelector('.nav');
+    if (!nav) return;
+    const threshold = 24;
+    const onScroll = () => {
+      if (window.scrollY > threshold) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+
+  // ============== MODAL ==============
+  (function () {
+    const modal = document.getElementById('demo-modal');
+    if (!modal) return;
+
+    const triggers = document.querySelectorAll('[data-modal="demo"]');
+    const form = document.getElementById('demo-form');
+    const content = modal.querySelector('.modal-content');
+    const initialContentHTML = content.innerHTML;
+    let lastFocused = null;
+
+    function openModal(e) {
+      if (e) e.preventDefault();
+      lastFocused = document.activeElement;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+      // Reset to form state if previously submitted
+      if (!modal.querySelector('#demo-form')) {
+        content.innerHTML = initialContentHTML;
+        bindForm();
+      }
+      setTimeout(() => {
+        const firstInput = modal.querySelector('input');
+        if (firstInput) firstInput.focus();
+      }, 80);
+    }
+
+    function closeModal() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
+      if (lastFocused && lastFocused.focus) lastFocused.focus();
+    }
+
+    function bindForm() {
+      const f = modal.querySelector('#demo-form');
+      if (!f) return;
+      f.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // Basic validation
+        if (!f.checkValidity()) {
+          f.reportValidity();
+          return;
+        }
+        // Show success state
+        content.innerHTML = `
+          <div class="modal-success">
+            <div class="modal-success-mark" aria-hidden="true">→</div>
+            <div class="t-label" style="margin-bottom: 14px;">— Demande reçue</div>
+            <h3 class="modal-success-title">À très bientôt.</h3>
+            <p class="modal-success-sub">Un membre de l'équipe Stadli vous écrit dans les 24 h ouvrables pour planifier votre démo.</p>
+          </div>
+        `;
+      });
+    }
+
+    triggers.forEach(t => t.addEventListener('click', openModal));
+
+    // Delegated close handling so close buttons in success state still work
+    modal.addEventListener('click', (e) => {
+      const closer = e.target.closest('[data-close]');
+      if (closer) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    });
+
+    bindForm();
+  })();
+</script>
+
+</body>
+</html>
